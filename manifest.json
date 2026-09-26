@@ -1,0 +1,40 @@
+{
+  "build": "2026.9.25-20260926055859",
+  "cardVersion": "2026.9.25",
+  "builtAt": "2026-09-26T05:58:59.377Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "7",
+  "songMark": "1",
+  "updateUpdater": false,
+  "notes": "**小手机 · 身份卡**\r\n- 「当前角色」栏现在能纠正认错的人：填上正确的名字点「🔄 更新」，身份卡会重装成他，X站／布告板／成绩单也跟着换\r\n- 进身份卡、点「🔄 更新」都不再消耗生成——只查资料、按本地规则算分\r\n- 新增「✨ 精算」：想让 AI 按人设重新推算六维成绩与大学课表时点它（会消耗一次生成，平时用不到）\r\n- 角色资料不全时不再给一张空壳卡：卡片照常显示（缺的栏写「—」），缺什么浮在卡片上方写着——性别、年龄必填，学生还要年级与班级\r\n- 找不到角色的提示挪到卡片中央（以前挤在顶部小字里看不全）\r\n\r\n**小手机 · 布告板／X站／学校论坛**\r\n- 首次打开改由本机拼…",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "34a30177",
+    "firstMesLen": 30223
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "c786ec58",
+      "bytes": 876689
+    },
+    "updater.js": {
+      "hash": "b935e208",
+      "bytes": 22173
+    },
+    "songscript.js": {
+      "hash": "fd945f2b",
+      "bytes": 20933
+    },
+    "worldbook.json": {
+      "hash": "b3328edd",
+      "bytes": 6323767
+    },
+    "cardfields.json": {
+      "hash": "6a32e5a7",
+      "bytes": 866812
+    }
+  }
+}
