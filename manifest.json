@@ -1,0 +1,45 @@
+{
+  "build": "2026.10.2-20261002110652",
+  "cardVersion": "2026.10.2",
+  "builtAt": "2026-10-02T11:06:52.576Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "10",
+  "songMark": "1",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "**小手机 · 新增「钱包」应用**\r\n- 显示当前角色的现金、银行卡、欠款与总资产\r\n- 剧情里花钱、收零花钱、转账，钱包**自动**跟着变，不用手动记\r\n- 没写金额时按 2008 年物价估：买蛋糕 5~40 元、打车 10~35 元、一顿火锅 80~300 元 —— 跟角色有多少身家**无关**\r\n- 别人买单不算你的钱：2B 替你付、记在别人账上这类，钱包不动\r\n- 每笔收支都能在通知栏点开核对、改正\r\n\r\n**小手机 · 新增「信用贷」应用**\r\n- 固定额度 50 万、月息 15%；每月自动扣一次款，**只扣银行卡**\r\n- 还款顺序：**先冲欠款 → 再付本期利息 → 最后才还本…",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "57fcd34e",
+    "firstMesLen": 30223
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "34255de6",
+      "bytes": 1049715
+    },
+    "updater.js": {
+      "hash": "76cc8e0f",
+      "bytes": 25919
+    },
+    "songscript.js": {
+      "hash": "fd945f2b",
+      "bytes": 20933
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "eeb73a3b",
+      "bytes": 6365521
+    },
+    "cardfields.json": {
+      "hash": "d50c2d27",
+      "bytes": 866812
+    }
+  }
+}
