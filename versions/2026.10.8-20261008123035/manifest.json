@@ -1,0 +1,45 @@
+{
+  "build": "2026.10.8-20261008123035",
+  "cardVersion": "2026.10.8",
+  "builtAt": "2026-10-08T12:30:35.442Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "10",
+  "songMark": "4",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "**小手机 · 音乐**\r\r\n- 修：**唱歌时偶尔只冒出一串歌名文字、没有播放器**。AI 有时会把原作里的版本后缀（像「-New Arrange Ver.-」「-アイSolo Ver.-」）一起写进歌名，多出几个字就对不上、播放器掉成一串死文字。现在这类写法照样认得出\r\r\n- **歌名和收录清单写得不太一样也认**：日文原名（サインはB、名もなき何もかも、ダイヤモンドの純度……）、中文译名（偶像、无声之鱼、摘星之歌……）、只写曲目不写乐器（如「前前前世」「利兹与青鸟」）都能对上\r\r\n- 修：歌名标记写成半角方括号（[歌曲：X]）也认得出——以前只认全角【歌曲：X】，写成半角播放器就退化成一…",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "b2352628",
+    "firstMesLen": 30561
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "e1c4c6d6",
+      "bytes": 1853703
+    },
+    "updater.js": {
+      "hash": "76cc8e0f",
+      "bytes": 25919
+    },
+    "songscript.js": {
+      "hash": "9138de98",
+      "bytes": 25938
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "3869cdfa",
+      "bytes": 7565239
+    },
+    "cardfields.json": {
+      "hash": "13240ddb",
+      "bytes": 867537
+    }
+  }
+}

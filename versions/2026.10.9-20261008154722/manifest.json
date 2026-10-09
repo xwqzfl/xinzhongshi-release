@@ -1,0 +1,45 @@
+{
+  "build": "2026.10.9-20261008154722",
+  "cardVersion": "2026.10.9",
+  "builtAt": "2026-10-08T15:47:22.632Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "10",
+  "songMark": "4",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "**小手机 · 应用商店**\r\r\n- 新增应用商店：**14 个应用要自己装**（商店、身份卡、版本回顾、修复四个常驻）。点「安装」走约 3 秒的图标读条，装完才出现在主页；电话与相机装在底部\r\r\n- **长按已装应用的图标可以卸载**：图标抖起来、右上角冒出 ✕，点 ✕ 收走，点空白处退出\r\r\n- 卸载只收走图标，**钱、私信、帖子、催眠记录、相册全留在存档里**，回商店点一次「安装」就装回来\r\r\n- 商店页补了回主页的出口；一个应用都没装时，底部不再留一条空条\r\r\n\r\r\n**小手机 · 锁屏与身份**\r\r\n- 点悬浮球先看到锁屏（时间与日期），**长按指纹**才进手机；长按时外圈圆环走满，…",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "a40edc4d",
+    "firstMesLen": 30561
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "b557f0ce",
+      "bytes": 1904309
+    },
+    "updater.js": {
+      "hash": "76cc8e0f",
+      "bytes": 25919
+    },
+    "songscript.js": {
+      "hash": "9138de98",
+      "bytes": 25938
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "483d0cd4",
+      "bytes": 7565239
+    },
+    "cardfields.json": {
+      "hash": "4b7bb17b",
+      "bytes": 867537
+    }
+  }
+}
