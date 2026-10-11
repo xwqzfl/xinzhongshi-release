@@ -1,0 +1,45 @@
+{
+  "build": "2026.10.9-20261010135448",
+  "cardVersion": "2026.10.9",
+  "builtAt": "2026-10-10T13:54:48.763Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "12",
+  "songMark": "4",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "（以下为 2026.10.10 更新）\n\n**林家搬迁**\n\n- 夏玲带着理香、亚香搬出林宅，住进玲雅集团总部顶层——夏玲是公事太忙、常驻公司；理香亚香则是跟凌路太黏被夏玲撞见，被强行搬走的，顺带开始接触集团业务\n- A2 调去给凌耀当保镖；凌路的保镖换成阿娅，她顺带也管凌耀和真绫的饭\n- 雷姆、拉姆跟着理香亚香搬去集团顶楼，照顾母女三人的起居\n\n**生活动线**\n\n- **搬出去的女仆和护卫现在能看见了**。以前去做客，她们住哪间房是有写，人却在屋里\"消失\"——谁在门口、谁在厨房、几点当值，一概说不清。现在每处住处都写明了各人平时干什么、什么时候在\n- **搬出去的姐姐们，家里也热闹起来了*…",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "a40edc4d",
+    "firstMesLen": 30561
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "f1fc24a3",
+      "bytes": 1963249
+    },
+    "updater.js": {
+      "hash": "a6996ac9",
+      "bytes": 31223
+    },
+    "songscript.js": {
+      "hash": "9138de98",
+      "bytes": 25938
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "692902c4",
+      "bytes": 7656374
+    },
+    "cardfields.json": {
+      "hash": "4b7bb17b",
+      "bytes": 867537
+    }
+  }
+}
