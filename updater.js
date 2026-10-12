@@ -1,4 +1,4 @@
-/*XZS_UPDATER:13*/
+/*XZS_UPDATER:14*/
 // 新中市自动更新器 —— 本脚本默认**永不改动**，只做一件事：把卡内脚本与世界书换成云端最新版。
 // 为什么单独放一条脚本：更新器是整套东西里唯一「不能坏」的组件。它只改别的脚本的内容，
 // 默认不改自己，所以任何一次坏发布都锁不死玩家（要给更新器加新能力时，才在发布时带 --updater）。
@@ -53,6 +53,20 @@ var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
     var h = 0x811c9dc5;
     for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
     return ('0000000' + h.toString(16)).slice(-8);
+  }
+function fnv1a(s) {
+    var h = 0x811c9dc5;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
+    return ('0000000' + h.toString(16)).slice(-8);
+  }
+
+  // 正则脚本指纹（名字 + findRegex + replaceString）—— 跟发布端 rxScripts 的算法必须一致
+  // ⚠ 用 **TavernRegex** 的字段名（更新器从 ch.extensions.regex_scripts 读到的是这个格式）
+  function rxFp(list) {
+    var s = (list || []).map(function (r) {
+      return [String(r.script_name || ''), String(r.find_regex || ''), String(r.replace_string || '')].join('\u0001');
+    }).join('\u0002');
+    return fnv1a(s);
   }
 // 失败重试：fn 返回 Promise；失败后等 ms 再试，共 tries 次。写卡这种大请求靠它扛瞬时抖动。
   function withRetry(fn, tries, ms) {
@@ -320,11 +334,25 @@ var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
         var jbMark = jbScr ? (JB_MARK_RE.exec(String(jbScr.content || '')) || [])[1] : '';
         needJb = String(jbMark || '') !== String(mf.jbMark || '');
       }
-      if (!needScript && !needWb && !needCf && !needVer && !needUpdater && !needSong && !needJb) { if (manual) say('info', '已是最新版本（' + local + '）'); return; }
+      // 正则脚本（自定义开局 / 回退按钮 / 抗年龄截断）：**实检** —— 拿卡里现有的正则算指纹，
+      // 跟清单里记的对不上就补。不依赖 localStorage（玩家导回旧卡、清存储都能自愈）。
+      var needRx = false;
+      if (mf.payloads['regexscript.json'] && mf.regexFields) {
+        var curRx = [];
+        try {
+          curRx = (ch && ch.extensions && ch.extensions.regex_scripts) ||
+                  (ch && ch.data && ch.data.extensions && ch.data.extensions.regex_scripts) || [];
+        } catch (e) { curRx = []; }
+        if (!Array.isArray(curRx)) curRx = [];
+        needRx = (rxFp(curRx) !== String(mf.regexFields.fp || ''));
+        if (needRx) { try { console.log('[更新器] 正则核对', { mine: rxFp(curRx), want: mf.regexFields.fp, names: mf.regexFields.names }); } catch (e) {} }
+      }
+      if (!needScript && !needWb && !needCf && !needVer && !needUpdater && !needSong && !needJb && !needRx) { if (manual) say('info', '已是最新版本（' + local + '）'); return; }
       var todo = [];
       if (needScript) todo.push('卡内脚本');
       if (needSong) todo.push('唱歌播放器');
       if (needJb) todo.push('破限脚本');
+      if (needRx) todo.push('开局表单（正则）');
       if (needWb) todo.push('世界书');
       if (needCf) todo.push('卡字段（开场白等）');
       if (needVer) todo.push('卡版本号');
@@ -339,7 +367,7 @@ var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
       if (!ok) { say('info', '已取消更新'); return; }
 
       say('info', '正在下载：' + todo.join('、') + '…');
-      var shellText = '', wbText = '', cfText = '', updText = '', songText = '', jbText = '';
+      var shellText = '', wbText = '', cfText = '', updText = '', songText = '', jbText = '', rxText = '';
       var chain = Promise.resolve();
       if (needScript) chain = chain.then(function () {
         return fetchText('shell.js').then(function (t) {
@@ -383,11 +411,17 @@ var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
           if (fnv1a(t) !== mf.payloads['jailbreaks.json'].hash) throw new Error('破限脚本校验失败（缓存没过期？过几分钟再试）');
         });
       });
+      if (needRx) chain = chain.then(function () {
+        return fetchText('regexscript.json').then(function (t) {
+          rxText = t;
+          if (fnv1a(t) !== mf.payloads['regexscript.json'].hash) throw new Error('正则脚本校验失败（缓存没过期？过几分钟再试）');
+        });
+      });
       return chain.then(function () {
         if (needScript) lsSet(LS_BACKUP + '|' + mf.build, app.content);   // 旧脚本内容留档，出问题可回滚
         return wbText ? syncWorldbook(mf, wbText) : '世界书无需更新';
       }).then(function (wbMsg) {
-        if (!needScript && !needCf && !needVer && !needUpdater && !needSong && !needJb) return wbMsg;   // 只更新世界书时不用写卡
+        if (!needScript && !needCf && !needVer && !needUpdater && !needSong && !needJb && !needRx) return wbMsg;   // 只更新世界书时不用写卡
         if (!nm) throw new Error('读不到真实卡名，放弃写入（避免写坏卡）');
         var cf = null;
         if (cfText) { try { cf = JSON.parse(cfText); } catch (e) { cf = null; } }
@@ -429,6 +463,42 @@ var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
               }
             });
           }
+          if (needRx && rxText) {
+            var rxPack = null; try { rxPack = JSON.parse(rxText); } catch (e) { rxPack = null; }
+            var rxNew = (rxPack && rxPack.scripts) || [];
+            if (rxNew.length) {
+              var ext = c.extensions || (c.extensions = {});
+              var curList = Array.isArray(ext.regex_scripts) ? ext.regex_scripts.slice() : [];
+              // ⚠⚠ 2026-10-12 致命 bug 修复（推前复查抓到，未上过线）：
+              //   产物是 **TavernRegex** 格式（字段叫 script_name），而这里原来读的是 ST 格式的
+              //   `scriptName` → 每条的 nm 都是空串 → byName 只剩一个键 '' → **整张卡的正则
+              //   全被替换成同一条**（玩家自己加的正则也会被洗掉）。沙箱实测复现：
+              //   输入 5 条 → 输出 5 条「抗年龄截断」。
+              //   现在两种字段名都兼容，任何一边换格式都不会再洗卡。
+              function rxName(x) {
+                if (!x) return '';
+                if (x.script_name != null) return String(x.script_name);
+                if (x.scriptName != null) return String(x.scriptName);
+                return '';
+              }
+              var byName = {};
+              rxNew.forEach(function (s) { var nm = rxName(s); if (nm) byName[nm] = s; });
+              // 我们发的条目 → 整条换成新的；**玩家自己加的正则原样保留**
+              var out = curList.map(function (s) {
+                var nm = rxName(s);
+                return (nm && byName[nm]) ? byName[nm] : s;
+              });
+              rxNew.forEach(function (s) {
+                var nm = rxName(s);
+                if (!nm) return;
+                var has = false;
+                for (var q4 = 0; q4 < out.length; q4++) if (rxName(out[q4]) === nm) has = true;
+                if (!has) out.push(s);
+              });
+              lsSet(LS_BACKUP + '|rx|' + mf.build, JSON.stringify(curList));   // 旧的留档，出问题能回滚
+              ext.regex_scripts = out;
+            }
+          }
           if (cf) {
             // first_messages = [首楼, ...开场白]，扩展会按同样顺序拆回 first_mes / alternate_greetings，
             // 所以玩家那套「按序号指开场白」不会错位。
@@ -449,6 +519,7 @@ var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
           if (needSong) wbMsg += '｜唱歌播放器已更新';
           if (needVer) wbMsg += '｜卡版本号已同步为 ' + mf.cardVersion;
           if (needJb) wbMsg += '｜破限脚本已更新';
+          if (needRx) wbMsg += '｜开局表单（正则）已更新';
           if (needUpdater) wbMsg += '｜更新器已更新（重载后生效）';
           return wbMsg;
         });
