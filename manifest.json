@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.13-20261013142330",
+  "build": "2026.10.13-20261013150836",
   "cardVersion": "2026.10.13",
-  "builtAt": "2026-10-13T14:23:30.853Z",
+  "builtAt": "2026-10-13T15:08:36.479Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -28,8 +28,8 @@
   "regexMark": "c4c571ac",
   "payloads": {
     "shell.js": {
-      "hash": "d1e761b5",
-      "bytes": 2187238
+      "hash": "02bcabe3",
+      "bytes": 2193114
     },
     "updater.js": {
       "hash": "95683c20",
@@ -44,7 +44,7 @@
       "bytes": 43439
     },
     "worldbook.json": {
-      "hash": "f190ec16",
+      "hash": "256843c4",
       "bytes": 7749798
     },
     "cardfields.json": {
