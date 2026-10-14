@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.14-20261014131111",
+  "cardVersion": "2026.10.14",
+  "builtAt": "2026-10-14T13:11:11.900Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "14",
+  "songMark": "5",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "**小手机 · 拍照不再偷偷生成一轮剧情**\r\n\r\n- 修：**拍照以后不会再自己跑一轮酒馆生成了**。以前拍完照，手机在后台悄悄让酒馆续写一段剧情 —— 输入框变成「停止」按钮，你没注意就点了发送，那一段被掐断，之后再发消息就石沉大海\r\n- 现在**拍照只出照片**：「主角拍过这张照」这件事会跟着**下一轮剧情**一起带出去，别人自然会知道、也自然会提到，不用你多打一个字\r\n\r\n**小手机 · 重载酒馆不再回到初始状态**\r\n\r\n- 修：**保留聊天记录重载酒馆后，小手机不再清空回初始状态** —— 以前要重新登记一遍身份，登记完还可能弹「世界书未同步，请点击换角色」，下拉刷新也读不回东西\r…",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "55dcc9c7",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "2d052f3a"
+  },
+  "regexMark": "694607cb",
+  "payloads": {
+    "shell.js": {
+      "hash": "b321cfe0",
+      "bytes": 2237401
+    },
+    "updater.js": {
+      "hash": "95683c20",
+      "bytes": 36610
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "15fa7d47",
+      "bytes": 8012759
+    },
+    "cardfields.json": {
+      "hash": "bb0c6651",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "694607cb",
+      "bytes": 97497
+    }
+  }
+}
