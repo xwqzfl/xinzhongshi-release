@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.15-20261015160149",
+  "cardVersion": "2026.10.15",
+  "builtAt": "2026-10-15T16:01:49.394Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "14",
+  "songMark": "5",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "2026.10.15 校内导航重绘与小手机修复\n- 校园总图与室内改为RPG风格，调整建筑布局、食堂动线和绿茵步道；保留连廊、外挂楼梯与校外樱花庄。\n- 37张地图、253个房间；修复手机缩放拖动、卫生间页签、布告板与导航跳转。\n- 小手机各项AI生成统一使用API设置，支持多套API／模型预设，改善火山方舟兼容。\n- 自定义开局补齐小学、幼儿园及班级联动。\n详细内容见小手机「版本回顾」。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "ea949e30",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "d58a1b69",
+      "bytes": 2687740
+    },
+    "updater.js": {
+      "hash": "95683c20",
+      "bytes": 36610
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "4eac6412",
+      "bytes": 8018012
+    },
+    "cardfields.json": {
+      "hash": "d4f6b681",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
