@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.15-20261015160149",
-  "cardVersion": "2026.10.15",
-  "builtAt": "2026-10-15T16:01:49.394Z",
+  "build": "2026.10.16-20261016150334",
+  "cardVersion": "2026.10.16",
+  "builtAt": "2026-10-16T15:03:34.944Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,10 +10,10 @@
   "songMark": "5",
   "jbMark": 3,
   "updateUpdater": false,
-  "notes": "2026.10.15 校内导航重绘与小手机修复\n- 校园总图与室内改为RPG风格，调整建筑布局、食堂动线和绿茵步道；保留连廊、外挂楼梯与校外樱花庄。\n- 37张地图、253个房间；修复手机缩放拖动、卫生间页签、布告板与导航跳转。\n- 小手机各项AI生成统一使用API设置，支持多套API／模型预设，改善火山方舟兼容。\n- 自定义开局补齐小学、幼儿园及班级联动。\n详细内容见小手机「版本回顾」。",
+  "notes": "新增酒馆内电车乘客游戏：立体站台与车厢、选座、沿途和换乘互动，主API接续剧情；4线23站电车App；岛图重排与同源地理世界书；可用模型查询、校内主API与失败恢复、人物作息门禁、关系账本、统一剧情时间、衣料参数与描写细节。",
   "cardFields": {
     "greetings": 111,
-    "fp": "ea949e30",
+    "fp": "0a14e97d",
     "firstMesLen": 28002
   },
   "regexFields": {
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "d58a1b69",
-      "bytes": 2687740
+      "hash": "1fff0239",
+      "bytes": 3322270
     },
     "updater.js": {
       "hash": "95683c20",
@@ -44,11 +44,11 @@
       "bytes": 43439
     },
     "worldbook.json": {
-      "hash": "4eac6412",
-      "bytes": 8018012
+      "hash": "d35b5a02",
+      "bytes": 8029284
     },
     "cardfields.json": {
-      "hash": "d4f6b681",
+      "hash": "6ef1c431",
       "bytes": 864094
     },
     "regexscript.json": {

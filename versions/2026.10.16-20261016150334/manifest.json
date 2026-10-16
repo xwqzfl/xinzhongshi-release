@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.16-20261016150334",
+  "cardVersion": "2026.10.16",
+  "builtAt": "2026-10-16T15:03:34.944Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "14",
+  "songMark": "5",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "新增酒馆内电车乘客游戏：立体站台与车厢、选座、沿途和换乘互动，主API接续剧情；4线23站电车App；岛图重排与同源地理世界书；可用模型查询、校内主API与失败恢复、人物作息门禁、关系账本、统一剧情时间、衣料参数与描写细节。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "0a14e97d",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "1fff0239",
+      "bytes": 3322270
+    },
+    "updater.js": {
+      "hash": "95683c20",
+      "bytes": 36610
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "e58d890a",
+      "bytes": 43439
+    },
+    "worldbook.json": {
+      "hash": "d35b5a02",
+      "bytes": 8029284
+    },
+    "cardfields.json": {
+      "hash": "6ef1c431",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
