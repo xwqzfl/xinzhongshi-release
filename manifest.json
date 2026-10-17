@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.16-20261016162516",
-  "cardVersion": "2026.10.16",
-  "builtAt": "2026-10-16T16:25:16.244Z",
+  "build": "2026.10.17-20261017144752",
+  "cardVersion": "2026.10.17",
+  "builtAt": "2026-10-17T14:47:52.720Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,10 +10,10 @@
   "songMark": "5",
   "jbMark": 3,
   "updateUpdater": false,
-  "notes": "新增酒馆内电车乘客游戏：立体站台与车厢、选座、沿途和换乘互动，主API接续剧情；4线23站电车App；岛图重排与同源地理世界书；可用模型查询、校内主API与失败恢复、人物作息门禁、关系账本、统一剧情时间、衣料参数与描写细节；世界书新增车厢玩法「电车之狼」（隐蔽与高潮双数值）。",
+  "notes": "背包、网购与河海钓上线；电车补全具名乘客、同行就座与车厢卫生间；新增飞渡驾校、北岸渔具店、山溪垂钓点；剧情时间改为逐轮确认起止；29 个生成入口统一重试；世界书新增兰音Reine、黎歌Neeko；加强破限整理为 A 至 G 七条。",
   "cardFields": {
     "greetings": 111,
-    "fp": "0a14e97d",
+    "fp": "ec889076",
     "firstMesLen": 28002
   },
   "regexFields": {
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "e736b2d7",
-      "bytes": 3323392
+      "hash": "fdd1f532",
+      "bytes": 4033920
     },
     "updater.js": {
       "hash": "95683c20",
@@ -40,15 +40,15 @@
       "bytes": 26066
     },
     "jailbreaks.json": {
-      "hash": "e58d890a",
-      "bytes": 43439
+      "hash": "ff7e3cda",
+      "bytes": 63291
     },
     "worldbook.json": {
-      "hash": "fc5489e6",
-      "bytes": 8060902
+      "hash": "4dc83d9d",
+      "bytes": 8083478
     },
     "cardfields.json": {
-      "hash": "6ef1c431",
+      "hash": "53187f49",
       "bytes": 864094
     },
     "regexscript.json": {

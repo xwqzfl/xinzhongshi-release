@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.17-20261017144752",
+  "cardVersion": "2026.10.17",
+  "builtAt": "2026-10-17T14:47:52.720Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "14",
+  "songMark": "5",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "背包、网购与河海钓上线；电车补全具名乘客、同行就座与车厢卫生间；新增飞渡驾校、北岸渔具店、山溪垂钓点；剧情时间改为逐轮确认起止；29 个生成入口统一重试；世界书新增兰音Reine、黎歌Neeko；加强破限整理为 A 至 G 七条。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "ec889076",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "fdd1f532",
+      "bytes": 4033920
+    },
+    "updater.js": {
+      "hash": "95683c20",
+      "bytes": 36610
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "ff7e3cda",
+      "bytes": 63291
+    },
+    "worldbook.json": {
+      "hash": "4dc83d9d",
+      "bytes": 8083478
+    },
+    "cardfields.json": {
+      "hash": "53187f49",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
