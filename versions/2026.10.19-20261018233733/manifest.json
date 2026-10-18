@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.19-20261018233733",
+  "cardVersion": "2026.10.19",
+  "builtAt": "2026-10-18T15:37:33.855Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "16",
+  "songMark": "5",
+  "jbMark": 4,
+  "updateUpdater": false,
+  "notes": "修复“更新到10.19但小手机还是旧界面”：构建号递增校验已补齐，旧版更新器也能完整下载新版手机。保留10.19浅色主题、LINE、日历/论坛改版、应用管理与模型连接。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "1c6fc114",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "e52cef64",
+      "bytes": 4346116
+    },
+    "updater.js": {
+      "hash": "14788aad",
+      "bytes": 38715
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "ae6171c3",
+      "bytes": 280291
+    },
+    "worldbook.json": {
+      "hash": "bcad0fd9",
+      "bytes": 8808349
+    },
+    "cardfields.json": {
+      "hash": "7b56ddf9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
