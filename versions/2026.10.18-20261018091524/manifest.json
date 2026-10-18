@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.18-20261018091524",
+  "cardVersion": "2026.10.18",
+  "builtAt": "2026-10-18T09:15:24.565Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "15",
+  "songMark": "5",
+  "jbMark": 4,
+  "updateUpdater": false,
+  "notes": "小手机：存档恢复、待机时间兜底、钱包重复记账修复。世界书：兰音黎歌、overlord、鬼灭、极品家丁、Fate、学园默示录、媚雪儿、花街系、一拳超人英雄、楚美岚、松崎老师等大批角色与设定补全。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "7d3c80ab",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "c23136a2",
+      "bytes": 4086799
+    },
+    "updater.js": {
+      "hash": "938e008d",
+      "bytes": 37922
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "7cb066c8",
+      "bytes": 63291
+    },
+    "worldbook.json": {
+      "hash": "c930f42b",
+      "bytes": 8807911
+    },
+    "cardfields.json": {
+      "hash": "ae6160e9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
