@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.18-20261018071144",
+  "cardVersion": "2026.10.18",
+  "builtAt": "2026-10-18T07:11:45.108Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "14",
+  "songMark": "5",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "小手机：新增影库 App（需在应用商店安装，10 部种子影片、五维评分榜单、剧情回执自动入库）；X站直播加内容分级与筛选、加载失败重试、实时数值（观看/热度/关注/弹幕风向/打赏榜）与贵宾大额必点名致谢；催眠 App 新增气息遮蔽，平然改为世界层，解除不再截断到 200 字。世界书：新增兰音Reine、黎歌Neeko、overlord 23 条、鬼灭 19 条、极品家丁 32 条、Fate 灵基库、AV 拍摄与 X站平台条目。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "7d3c80ab",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "83a6b9cf",
+      "bytes": 4078490
+    },
+    "updater.js": {
+      "hash": "95683c20",
+      "bytes": 36610
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "ff7e3cda",
+      "bytes": 63291
+    },
+    "worldbook.json": {
+      "hash": "8a88c634",
+      "bytes": 8574692
+    },
+    "cardfields.json": {
+      "hash": "ae6160e9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}

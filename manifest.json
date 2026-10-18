@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.18-20261018031902",
+  "build": "2026.10.18-20261018071144",
   "cardVersion": "2026.10.18",
-  "builtAt": "2026-10-18T03:19:02.540Z",
+  "builtAt": "2026-10-18T07:11:45.108Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "5",
   "jbMark": 3,
   "updateUpdater": false,
-  "notes": "修复小手机次API保存与启用；移除强制剧情时钟回执，修复跨场景多时间、校准与重复推进；修复连续发送被忽略；钱包增加按聊天和身份保存的恢复记录，避免余额重置；统一人民币记账；修复新聊天身份缓存已写入却误报失败的问题。",
+  "notes": "小手机：新增影库 App（需在应用商店安装，10 部种子影片、五维评分榜单、剧情回执自动入库）；X站直播加内容分级与筛选、加载失败重试、实时数值（观看/热度/关注/弹幕风向/打赏榜）与贵宾大额必点名致谢；催眠 App 新增气息遮蔽，平然改为世界层，解除不再截断到 200 字。世界书：新增兰音Reine、黎歌Neeko、overlord 23 条、鬼灭 19 条、极品家丁 32 条、Fate 灵基库、AV 拍摄与 X站平台条目。",
   "cardFields": {
     "greetings": 111,
     "fp": "7d3c80ab",
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "6fd90d67",
-      "bytes": 4042917
+      "hash": "83a6b9cf",
+      "bytes": 4078490
     },
     "updater.js": {
       "hash": "95683c20",
@@ -44,8 +44,8 @@
       "bytes": 63291
     },
     "worldbook.json": {
-      "hash": "ec43a542",
-      "bytes": 8083808
+      "hash": "8a88c634",
+      "bytes": 8574692
     },
     "cardfields.json": {
       "hash": "ae6160e9",
