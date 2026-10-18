@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.17-20261017155758",
-  "cardVersion": "2026.10.17",
-  "builtAt": "2026-10-17T15:57:58.483Z",
+  "build": "2026.10.18-20261018031902",
+  "cardVersion": "2026.10.18",
+  "builtAt": "2026-10-18T03:19:02.540Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,10 +10,10 @@
   "songMark": "5",
   "jbMark": 3,
   "updateUpdater": false,
-  "notes": "背包、网购与河海钓上线；电车补全具名乘客、同行就座与车厢卫生间；新增飞渡驾校、北岸渔具店、山溪垂钓点；剧情时间改为逐轮确认起止；29 个生成入口统一重试；世界书新增兰音Reine、黎歌Neeko；加强破限整理为 A 至 G 七条。",
+  "notes": "修复小手机次API保存与启用；移除强制剧情时钟回执，修复跨场景多时间、校准与重复推进；修复连续发送被忽略；钱包增加按聊天和身份保存的恢复记录，避免余额重置；统一人民币记账；修复新聊天身份缓存已写入却误报失败的问题。",
   "cardFields": {
     "greetings": 111,
-    "fp": "ec889076",
+    "fp": "7d3c80ab",
     "firstMesLen": 28002
   },
   "regexFields": {
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "f5598b98",
-      "bytes": 4035120
+      "hash": "6fd90d67",
+      "bytes": 4042917
     },
     "updater.js": {
       "hash": "95683c20",
@@ -44,11 +44,11 @@
       "bytes": 63291
     },
     "worldbook.json": {
-      "hash": "2c5a8d19",
-      "bytes": 8083478
+      "hash": "ec43a542",
+      "bytes": 8083808
     },
     "cardfields.json": {
-      "hash": "53187f49",
+      "hash": "ae6160e9",
       "bytes": 864094
     },
     "regexscript.json": {

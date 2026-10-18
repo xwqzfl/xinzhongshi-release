@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.18-20261018031902",
+  "cardVersion": "2026.10.18",
+  "builtAt": "2026-10-18T03:19:02.540Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "14",
+  "songMark": "5",
+  "jbMark": 3,
+  "updateUpdater": false,
+  "notes": "修复小手机次API保存与启用；移除强制剧情时钟回执，修复跨场景多时间、校准与重复推进；修复连续发送被忽略；钱包增加按聊天和身份保存的恢复记录，避免余额重置；统一人民币记账；修复新聊天身份缓存已写入却误报失败的问题。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "7d3c80ab",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "6fd90d67",
+      "bytes": 4042917
+    },
+    "updater.js": {
+      "hash": "95683c20",
+      "bytes": 36610
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "ff7e3cda",
+      "bytes": 63291
+    },
+    "worldbook.json": {
+      "hash": "ec43a542",
+      "bytes": 8083808
+    },
+    "cardfields.json": {
+      "hash": "ae6160e9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
