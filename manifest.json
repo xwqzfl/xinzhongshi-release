@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.18-20261018102541",
+  "build": "2026.10.18-20261018115917",
   "cardVersion": "2026.10.18",
-  "builtAt": "2026-10-18T10:25:41.315Z",
+  "builtAt": "2026-10-18T11:59:17.104Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "5",
   "jbMark": 4,
   "updateUpdater": false,
-  "notes": "新旧聊天识别修复：新聊天正常进入身份登记，确认后建立独立同步书；旧聊天继续恢复原身份与安装记录，保留原同步书；真实读取失败与损坏存档仍保留并可重试。",
+  "notes": "时间、钱包和物品一致性修复：归档保留事实，统一核账和完整存档；修正时间识别、重复收支、停止输出入账及贷款计算；增加旧账核对入口。完整10.18日志同步更新，357项检查通过。",
   "cardFields": {
     "greetings": 111,
     "fp": "7d3c80ab",
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "adec3df2",
-      "bytes": 4112826
+      "hash": "94a17e66",
+      "bytes": 4190896
     },
     "updater.js": {
       "hash": "938e008d",
@@ -44,7 +44,7 @@
       "bytes": 63291
     },
     "worldbook.json": {
-      "hash": "3424bb60",
+      "hash": "2578dc7b",
       "bytes": 8808349
     },
     "cardfields.json": {
