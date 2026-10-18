@@ -1,4 +1,4 @@
-/*XZS_UPDATER:14*/
+/*XZS_UPDATER:15*/
 // 新中市自动更新器 —— 本脚本默认**永不改动**，只做一件事：把卡内脚本与世界书换成云端最新版。
 // 为什么单独放一条脚本：更新器是整套东西里唯一「不能坏」的组件。它只改别的脚本的内容，
 // 默认不改自己，所以任何一次坏发布都锁不死玩家（要给更新器加新能力时，才在发布时带 --updater）。
@@ -31,8 +31,7 @@
   var MARK_RE = /\/\*XZS_UPDATER:(\d+)\*\//;
   // 唱歌脚本同理：它没有 build 标记，用自己的版本标记比对（清单里的 songMark）
   var SONG_MARK_RE = /\/\*XZS_SONG:(\d+)\*\//;
-var JB_NAMES = ['加强破限A', '加强破限B'];   // 两条卡内破限脚本（随更新包分发，玩家可自行启用/停用）
-var JB_MARK_RE = /\/\*XZS_JB:(\d+)\*\//;
+// Managed script names and content are authoritative in the verified bundle, not a fixed name list.
   var CHECK_DELAY = 8000;
 
   // 脚本 iframe 里这些是全局函数；退化时从父页 TavernHelper 拿一份
@@ -58,6 +57,39 @@ function fnv1a(s) {
     var h = 0x811c9dc5;
     for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
     return ('0000000' + h.toString(16)).slice(-8);
+  }
+
+
+  function managedScriptText(text) { return String(text || '').replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim(); }
+  function managedScriptHash(text) { return fnv1a(managedScriptText(text)); }
+  function parseManagedPack(text) {
+    var pack;try { pack = JSON.parse(text); } catch (e) { throw new Error('脚本包格式不正确，已取消写卡'); }
+    if (!pack || !Array.isArray(pack.scripts)) throw new Error('脚本包缺少条目列表，已取消写卡');
+    var names = Object.create(null);
+    pack.scripts.forEach(function (item) {
+      if (!item || typeof item.name !== 'string' || !item.name.trim() || item.name !== item.name.trim() || typeof item.content !== 'string' || !item.content.trim()) throw new Error('脚本包条目不完整，已取消写卡');
+      if (names[item.name] || [APP, UPDATER_NAME, SONG].indexOf(item.name) >= 0) throw new Error('脚本包名称重复或与核心脚本冲突，已取消写卡');
+      names[item.name] = true;
+    });
+    return pack;
+  }
+  function managedScriptsNeedUpdate(scripts, pack) {
+    return !!(pack && pack.scripts.some(function (item) {
+      var found = scripts.filter(function (s) { return String(s.name) === item.name; });
+      return !found.length || found.some(function (s) { return managedScriptHash(s.content) !== managedScriptHash(item.content); });
+    }));
+  }
+  function mergeManagedScripts(scripts, pack) {
+    pack.scripts.forEach(function (item) {
+      var found = scripts.filter(function (s) { return String(s.name) === item.name; });
+      if (found.length) found.forEach(function (hit) {
+        if (managedScriptHash(hit.content) === managedScriptHash(item.content)) return;
+        lsSet(LS_BACKUP + '|jb|' + item.name, hit.content);
+        hit.content = item.content;
+      });
+      else scripts.push({type:'script',enabled:false,name:item.name,id:String(Date.now())+'-'+Math.round(Math.random()*1e9),content:item.content,info:'发布包托管脚本；新增条目默认停用，已有开关保持原状。',button:{enabled:true,buttons:[]},data:{},export_with:{data:true,button:true}});
+    });
+    return scripts;
   }
 
   // 正则脚本指纹（名字 + findRegex + replaceString）—— 跟发布端 rxScripts 的算法必须一致
@@ -234,7 +266,7 @@ function fnv1a(s) {
   function check(manual) {
     var getChar = api('getCharacter'), updChar = api('updateCharacterWith');
     if (!getChar || !updChar) { if (manual) say('error', '酒馆助手接口不可用，无法检查更新'); return Promise.resolve(); }
-    var mf = null, wbSt = { name: '', build: '' }, chRef = null, nm = '';
+    var mf = null, wbSt = { name: '', build: '' }, chRef = null, nm = '', checkedManagedText = '', checkedManagedPack = null;
     // 顺序：当前卡（顺便定出**真实卡名**）→ 清单 → 世界书真实状态。全程扁平，不嵌套。
     return Promise.resolve(getChar('current')).then(function (ch) {
       chRef = ch;
@@ -245,7 +277,14 @@ function fnv1a(s) {
     }).then(function (txt) {
       mf = JSON.parse(txt);
       if (!mf || !mf.build || !mf.payloads) throw new Error('清单格式不对');
-      return wbState(mf);
+      return Promise.all([wbState(mf), mf.payloads['jailbreaks.json'] ? fetchText('jailbreaks.json') : Promise.resolve(null)]).then(function(values) {
+        if(values[1] !== null){
+          checkedManagedText=values[1];
+          if(fnv1a(checkedManagedText)!==mf.payloads['jailbreaks.json'].hash)throw new Error('脚本包校验失败（缓存没过期？过几分钟再试）');
+          checkedManagedPack=parseManagedPack(checkedManagedText);
+        }
+        return values[0];
+      });
     }).then(function (st) {
       wbSt = st || { name: '', build: '' };
       var ch = chRef;
@@ -326,14 +365,9 @@ function fnv1a(s) {
         var songMark = songScr ? (SONG_MARK_RE.exec(String(songScr.content || '')) || [])[1] : '';
         needSong = String(songMark || '') !== String(mf.songMark || '');
       }
-      // 破限脚本：同上，用源码首行的标记号比对
-      var needJb = false;
-      if (mf.payloads['jailbreaks.json']) {
-        var jbScr = null, sss3 = scriptsOf(ch);
-        for (var q3 = 0; q3 < sss3.length; q3++) if (String(sss3[q3].name) === JB_NAMES[0]) jbScr = sss3[q3];
-        var jbMark = jbScr ? (JB_MARK_RE.exec(String(jbScr.content || '')) || [])[1] : '';
-        needJb = String(jbMark || '') !== String(mf.jbMark || '');
-      }
+      // Compare every managed item; a matching legacy mark on one item proves nothing about the others.
+      var remoteOlder = local && buildNum(local)>0 && buildNum(mf.build)<buildNum(local);
+      var needJb = !remoteOlder && managedScriptsNeedUpdate(scriptsOf(ch), checkedManagedPack);
       // 正则脚本（自定义开局 / 回退按钮 / 抗年龄截断）：**实检** —— 拿卡里现有的正则算指纹，
       // 跟清单里记的对不上就补。不依赖 localStorage（玩家导回旧卡、清存储都能自愈）。
       var needRx = false;
@@ -405,12 +439,7 @@ function fnv1a(s) {
           if (String(sk || '') !== String(mf.songMark || '')) throw new Error('唱歌播放器的版本标记与清单不一致');
         });
       });
-      if (needJb) chain = chain.then(function () {
-        return fetchText('jailbreaks.json').then(function (t) {
-          jbText = t;
-          if (fnv1a(t) !== mf.payloads['jailbreaks.json'].hash) throw new Error('破限脚本校验失败（缓存没过期？过几分钟再试）');
-        });
-      });
+      if(needJb)jbText=checkedManagedText; // Already downloaded, validated and parsed before confirmation.
       if (needRx) chain = chain.then(function () {
         return fetchText('regexscript.json').then(function (t) {
           rxText = t;
@@ -444,25 +473,7 @@ function fnv1a(s) {
               ss[i].content = songText;
             }
           }
-          if (needJb && jbText) {
-            var jbPack = null; try { jbPack = JSON.parse(jbText); } catch (e) {}
-            if (jbPack && jbPack.scripts) jbPack.scripts.forEach(function (it) {
-              var hit = null;
-              for (var j = 0; j < ss.length; j++) if (String(ss[j].name) === it.name) hit = ss[j];
-              if (hit) {
-                lsSet(LS_BACKUP + '|jb|' + it.name, hit.content);   // 旧的留档
-                hit.content = it.content;                          // ⚠ 只换内容，**保留玩家设的 enabled**
-              } else {
-                ss.push({
-                  type: 'script', enabled: false, name: it.name,
-                  id: String(Date.now()) + '-' + Math.round(Math.random() * 1e9),
-                  content: it.content,
-                  info: '破限注入（injectPrompts，对酒馆所有生成生效）。与另一条共用开关，后运行的覆盖前一个。',
-                  button: { enabled: true, buttons: [] }, data: {}, export_with: { data: true, button: true },
-                });
-              }
-            });
-          }
+          if(needJb&&checkedManagedPack)mergeManagedScripts(ss,checkedManagedPack);
           if (needRx && rxText) {
             var rxPack = null; try { rxPack = JSON.parse(rxText); } catch (e) { rxPack = null; }
             var rxNew = (rxPack && rxPack.scripts) || [];
@@ -511,7 +522,11 @@ function fnv1a(s) {
           // 版本号单独同步：卡字段没变时也要写（见上面 needVer 的说明）
           if (needVer && mf.cardVersion) c.version = String(mf.cardVersion);
           return c;
-        }); }, 3, 1500).then(function () {
+        }).then(function(){return getChar(nm);}).then(function(written){
+            if(needJb&&managedScriptsNeedUpdate(scriptsOf(written),checkedManagedPack))throw new Error('脚本写回后未通过回读校验，稍后可重试');
+            if(needUpdater){var actual=scriptsOf(written).filter(function(item){return String(item.name)===UPDATER_NAME;})[0];if(!actual||managedScriptHash(actual.content)!==managedScriptHash(updText))throw new Error('更新器写回后未通过回读校验，稍后可重试');}
+            return true;
+          }); }, 3, 1500).then(function () {
           // 记下已应用的卡字段哈希（世界书不用记：版本标记就写在书里，删书即失效）
           if (needCf) lsSet(LS_CF, cfHash);   // 从现在起只记哈希（构建号变了不再重复弹）
           if (notes) lsSet(LS_NOTES, notes);        // 供 app 的修复页显示「本版更新」
@@ -564,6 +579,7 @@ function fnv1a(s) {
   try {
     window.__xzsUpdater = {
       check: check, isOurCard: isOurCard, scriptsOf: scriptsOf, appScriptOf: appScriptOf,
+      managedScriptHash: managedScriptHash, parseManagedPack: parseManagedPack, managedScriptsNeedUpdate: managedScriptsNeedUpdate, mergeManagedScripts: mergeManagedScripts,
       buildOf: buildOf, resolveCardName: resolveCardName, syncWorldbook: syncWorldbook, RAW: RAW,
     };
   } catch (e) {}

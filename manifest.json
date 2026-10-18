@@ -1,16 +1,16 @@
 {
-  "build": "2026.10.18-20261018071144",
+  "build": "2026.10.18-20261018071815",
   "cardVersion": "2026.10.18",
-  "builtAt": "2026-10-18T07:11:45.108Z",
+  "builtAt": "2026-10-18T07:18:15.278Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "worldbookMark": "【系统】世界书版本",
-  "updaterMark": "14",
+  "updaterMark": "15",
   "songMark": "5",
-  "jbMark": 3,
-  "updateUpdater": false,
-  "notes": "小手机：新增影库 App（需在应用商店安装，10 部种子影片、五维评分榜单、剧情回执自动入库）；X站直播加内容分级与筛选、加载失败重试、实时数值（观看/热度/关注/弹幕风向/打赏榜）与贵宾大额必点名致谢；催眠 App 新增气息遮蔽，平然改为世界层，解除不再截断到 200 字。世界书：新增兰音Reine、黎歌Neeko、overlord 23 条、鬼灭 19 条、极品家丁 32 条、Fate 灵基库、AV 拍摄与 X站平台条目。",
+  "jbMark": 4,
+  "updateUpdater": true,
+  "notes": "更新器修复：不再只看「加强破限A」判断整包，改为逐项核对名字与内容；缺失补齐、已有只改内容并保留启停/ID/数据/自建脚本；写入前后校验与回读；更新器 14→15、包标记 4。另含 10.18 全部补充内容。",
   "cardFields": {
     "greetings": 111,
     "fp": "7d3c80ab",
@@ -28,23 +28,23 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "83a6b9cf",
-      "bytes": 4078490
+      "hash": "2088ecf5",
+      "bytes": 4079307
     },
     "updater.js": {
-      "hash": "95683c20",
-      "bytes": 36610
+      "hash": "938e008d",
+      "bytes": 37922
     },
     "songscript.js": {
       "hash": "6edc2c35",
       "bytes": 26066
     },
     "jailbreaks.json": {
-      "hash": "ff7e3cda",
+      "hash": "7cb066c8",
       "bytes": 63291
     },
     "worldbook.json": {
-      "hash": "8a88c634",
+      "hash": "da5c3d75",
       "bytes": 8574692
     },
     "cardfields.json": {
