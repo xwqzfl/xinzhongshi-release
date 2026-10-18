@@ -1,16 +1,16 @@
 {
-  "build": "2026.10.18-20261018213245",
+  "build": "2026.10.18-20261018222516",
   "cardVersion": "2026.10.18",
-  "builtAt": "2026-10-18T13:32:45.239Z",
+  "builtAt": "2026-10-18T14:25:16.416Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "worldbookMark": "【系统】世界书版本",
-  "updaterMark": "15",
+  "updaterMark": "16",
   "songMark": "5",
   "jbMark": 4,
-  "updateUpdater": false,
-  "notes": "新增下发脚本「抗截断A」：在请求层编码输入、在响应层拦截不完整输出，从根上减少截断。由更新器托管，首次安装默认停用，需在酒馆助手脚本库里自行打开。",
+  "updateUpdater": true,
+  "notes": "修复旧聊天概率误判首次启用、确认角色后小手机与酒馆整页卡死；保留原绑定和存档，优化停止生成记录在长聊天中的重复扫描。更新器同步升级16版，保护自动/手动检查更新时的聊天绑定。完整10.18日志已补充，37项浏览器与148项时间回归通过。",
   "cardFields": {
     "greetings": 111,
     "fp": "7d3c80ab",
@@ -27,12 +27,12 @@
   },
   "payloads": {
     "shell.js": {
-      "hash": "3d25a392",
-      "bytes": 4204245
+      "hash": "687b9efd",
+      "bytes": 4210393
     },
     "updater.js": {
-      "hash": "938e008d",
-      "bytes": 37922
+      "hash": "14788aad",
+      "bytes": 38715
     },
     "songscript.js": {
       "hash": "6edc2c35",
@@ -43,7 +43,7 @@
       "bytes": 280291
     },
     "worldbook.json": {
-      "hash": "fdc274a8",
+      "hash": "d6845931",
       "bytes": 8808349
     },
     "cardfields.json": {

@@ -1,4 +1,4 @@
-/*XZS_UPDATER:15*/
+/*XZS_UPDATER:16*/
 // 新中市自动更新器 —— 本脚本默认**永不改动**，只做一件事：把卡内脚本与世界书换成云端最新版。
 // 为什么单独放一条脚本：更新器是整套东西里唯一「不能坏」的组件。它只改别的脚本的内容，
 // 默认不改自己，所以任何一次坏发布都锁不死玩家（要给更新器加新能力时，才在发布时带 --updater）。
@@ -221,7 +221,25 @@ function fnv1a(s) {
       var c = api('getCharWorldbookNames');
       if (c) { v = c('current') || {}; add(v.primary); (v.additional || []).forEach(add); }
     } catch (e) {}
-    try { var q = api('getChatWorldbookName'); if (q) add(q('current')); } catch (e) {}
+    // TavernHelper's getter removes metadata.world_info when its name cache is cold.
+    // Preserve the persisted binding while checking updates; a read must not delete it.
+    var hasSavedBinding = false;
+    try {
+      var host = window;
+      for (var depth = 0; depth < 5; depth++) {
+        if (host.SillyTavern && typeof host.SillyTavern.getContext === 'function') {
+          var context = host.SillyTavern.getContext();
+          var saved = context && context.chatMetadata && context.chatMetadata.world_info;
+          if (typeof saved === 'string' && saved.trim()) { add(saved); hasSavedBinding = true; }
+          break;
+        }
+        if (!host.parent || host.parent === host) break;
+        host = host.parent;
+      }
+    } catch (e) {}
+    if (!hasSavedBinding) {
+      try { var q = api('getChatWorldbookName'); if (q) add(q('current')); } catch (e) {}
+    }
     return out;
   }
   // 世界书的**真实状态**：当前那本叫什么、书里记的版本号是什么。书没了 → name 为空。

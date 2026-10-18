@@ -1,0 +1,58 @@
+{
+  "build": "2026.10.18-20261018222516",
+  "cardVersion": "2026.10.18",
+  "builtAt": "2026-10-18T14:25:16.416Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "16",
+  "songMark": "5",
+  "jbMark": 4,
+  "updateUpdater": true,
+  "notes": "修复旧聊天概率误判首次启用、确认角色后小手机与酒馆整页卡死；保留原绑定和存档，优化停止生成记录在长聊天中的重复扫描。更新器同步升级16版，保护自动/手动检查更新时的聊天绑定。完整10.18日志已补充，37项浏览器与148项时间回归通过。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "7d3c80ab",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "687b9efd",
+      "bytes": 4210393
+    },
+    "updater.js": {
+      "hash": "14788aad",
+      "bytes": 38715
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "ae6171c3",
+      "bytes": 280291
+    },
+    "worldbook.json": {
+      "hash": "d6845931",
+      "bytes": 8808349
+    },
+    "cardfields.json": {
+      "hash": "ae6160e9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
