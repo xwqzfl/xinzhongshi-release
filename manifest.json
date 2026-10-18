@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.18-20261018124347",
+  "build": "2026.10.18-20261018213245",
   "cardVersion": "2026.10.18",
-  "builtAt": "2026-10-18T12:43:47.806Z",
+  "builtAt": "2026-10-18T13:32:45.239Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "5",
   "jbMark": 4,
   "updateUpdater": false,
-  "notes": "酒馆重启恢复修复：恢复旧聊天绑定同步书，独立保存角色与已安装应用；修复角色确认无响应、空同步书登记失败和启动资料延迟误判；恢复旧钱物不重新装配。完整10.18更新日志已补充，31项浏览器回归通过。",
+  "notes": "新增下发脚本「抗截断A」：在请求层编码输入、在响应层拦截不完整输出，从根上减少截断。由更新器托管，首次安装默认停用，需在酒馆助手脚本库里自行打开。",
   "cardFields": {
     "greetings": 111,
     "fp": "7d3c80ab",
@@ -25,11 +25,10 @@
     ],
     "fp": "bc97c721"
   },
-  "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "f1b8cd1e",
-      "bytes": 4203498
+      "hash": "3d25a392",
+      "bytes": 4204245
     },
     "updater.js": {
       "hash": "938e008d",
@@ -40,11 +39,11 @@
       "bytes": 26066
     },
     "jailbreaks.json": {
-      "hash": "7cb066c8",
-      "bytes": 63291
+      "hash": "ae6171c3",
+      "bytes": 280291
     },
     "worldbook.json": {
-      "hash": "b29801a4",
+      "hash": "fdc274a8",
       "bytes": 8808349
     },
     "cardfields.json": {

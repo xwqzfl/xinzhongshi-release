@@ -1,0 +1,58 @@
+{
+  "build": "2026.10.18-20261018213245",
+  "cardVersion": "2026.10.18",
+  "builtAt": "2026-10-18T13:32:45.239Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "15",
+  "songMark": "5",
+  "jbMark": 4,
+  "updateUpdater": false,
+  "notes": "新增下发脚本「抗截断A」：在请求层编码输入、在响应层拦截不完整输出，从根上减少截断。由更新器托管，首次安装默认停用，需在酒馆助手脚本库里自行打开。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "7d3c80ab",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "payloads": {
+    "shell.js": {
+      "hash": "3d25a392",
+      "bytes": 4204245
+    },
+    "updater.js": {
+      "hash": "938e008d",
+      "bytes": 37922
+    },
+    "songscript.js": {
+      "hash": "6edc2c35",
+      "bytes": 26066
+    },
+    "jailbreaks.json": {
+      "hash": "ae6171c3",
+      "bytes": 280291
+    },
+    "worldbook.json": {
+      "hash": "fdc274a8",
+      "bytes": 8808349
+    },
+    "cardfields.json": {
+      "hash": "ae6160e9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
