@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.18-20261018093553",
+  "build": "2026.10.18-20261018102541",
   "cardVersion": "2026.10.18",
-  "builtAt": "2026-10-18T09:35:53.499Z",
+  "builtAt": "2026-10-18T10:25:41.315Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "5",
   "jbMark": 4,
   "updateUpdater": false,
-  "notes": "关联同步修复：新增绿青馆、翠烟楼、梨雪阁、汉罗门药铺地图及导航；补灵基库与群玉阁识别、校内人物和备用身份名册、英雄协会分级总表，纠正日志亲属称谓。",
+  "notes": "新旧聊天识别修复：新聊天正常进入身份登记，确认后建立独立同步书；旧聊天继续恢复原身份与安装记录，保留原同步书；真实读取失败与损坏存档仍保留并可重试。",
   "cardFields": {
     "greetings": 111,
     "fp": "7d3c80ab",
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "9718ca90",
-      "bytes": 4106638
+      "hash": "adec3df2",
+      "bytes": 4112826
     },
     "updater.js": {
       "hash": "938e008d",
@@ -44,7 +44,7 @@
       "bytes": 63291
     },
     "worldbook.json": {
-      "hash": "e0baa210",
+      "hash": "3424bb60",
       "bytes": 8808349
     },
     "cardfields.json": {
