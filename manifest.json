@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.19-20261018233733",
+  "build": "2026.10.19-20261019182427",
   "cardVersion": "2026.10.19",
-  "builtAt": "2026-10-18T15:37:33.855Z",
+  "builtAt": "2026-10-19T10:24:27.888Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "5",
   "jbMark": 4,
   "updateUpdater": false,
-  "notes": "修复“更新到10.19但小手机还是旧界面”：构建号递增校验已补齐，旧版更新器也能完整下载新版手机。保留10.19浅色主题、LINE、日历/论坛改版、应用管理与模型连接。",
+  "notes": "10.19修复：原生发送准备截止保护；时停全场施加与解除；剧情分支独立恢复与生效规则校验备份；夜间/浅色/自动外观与提示适配；应用点击即刻安装。",
   "cardFields": {
     "greetings": 111,
     "fp": "1c6fc114",
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "e52cef64",
-      "bytes": 4346116
+      "hash": "5b4a1702",
+      "bytes": 4526129
     },
     "updater.js": {
       "hash": "14788aad",
@@ -44,7 +44,7 @@
       "bytes": 280291
     },
     "worldbook.json": {
-      "hash": "bcad0fd9",
+      "hash": "51072501",
       "bytes": 8808349
     },
     "cardfields.json": {
