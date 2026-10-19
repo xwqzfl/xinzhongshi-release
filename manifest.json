@@ -1,16 +1,16 @@
 {
-  "build": "2026.10.19-20261019182427",
+  "build": "2026.10.19-20261019234835",
   "cardVersion": "2026.10.19",
-  "builtAt": "2026-10-19T10:24:27.888Z",
+  "builtAt": "2026-10-19T15:48:36.004Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "worldbookMark": "【系统】世界书版本",
   "updaterMark": "16",
-  "songMark": "5",
+  "songMark": "7",
   "jbMark": 4,
   "updateUpdater": false,
-  "notes": "10.19修复：原生发送准备截止保护；时停全场施加与解除；剧情分支独立恢复与生效规则校验备份；夜间/浅色/自动外观与提示适配；应用点击即刻安装。",
+  "notes": "10.19补充：全体范围技能新增选择页单独入口；时停可全场或只放走勾选的人；气息遮蔽改为「认知层面的存在抹除」：任何人以任何方式都无法感知到主角，不是隐身、不是透明人，严禁写「看不见人却感觉到有人/存在感/压迫感」。新增主线剧情系统（默认关闭，手机「剧情」页主动开启才推进）、376 条条件触发事件（审计 v3：保留 245 条原文、改写 131 条、下线 25 条；每条写明发生范围与可触发身份，身份/范围不符不触发，每局一次，自动记录进度）、25 首新彩社歌曲、18 首 KTV 歌单与「星贸」KTV 场景，【点歌】只在 KTV 触发。",
   "cardFields": {
     "greetings": 111,
     "fp": "1c6fc114",
@@ -28,24 +28,24 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "5b4a1702",
-      "bytes": 4526129
+      "hash": "97ca26e1",
+      "bytes": 4594746
     },
     "updater.js": {
       "hash": "14788aad",
       "bytes": 38715
     },
     "songscript.js": {
-      "hash": "6edc2c35",
-      "bytes": 26066
+      "hash": "830439b6",
+      "bytes": 31383
     },
     "jailbreaks.json": {
       "hash": "ae6171c3",
       "bytes": 280291
     },
     "worldbook.json": {
-      "hash": "51072501",
-      "bytes": 8808349
+      "hash": "fb4f4302",
+      "bytes": 10423349
     },
     "cardfields.json": {
       "hash": "7b56ddf9",

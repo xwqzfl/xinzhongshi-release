@@ -1,6 +1,6 @@
-/*XZS_SONG:5*/
+/*XZS_SONG:7*/
 // ===== 新中市 · 唱歌音频直链（内联嵌入正文）=====
-// 监听 AI 消息，解析 【歌曲：歌名】 标记，映射到 R2 音频直链。
+// 监听 AI 消息，解析 【歌曲：歌名】/【点歌：歌名】 标记，映射到 R2 音频直链。
 // 音频播放器内联嵌入正文唱歌处（不 append 到消息末尾）：
 //   - mes.mes            = 干净正文（删标记，AI 上下文不受 <audio> 污染）
 //   - mes.extra.display_text = 正文 + 内联 <audio>（渲染用，DOMPurify 默认允许 audio/controls/src）
@@ -130,6 +130,50 @@
         '刘华强': {
             '刘华强见宋老虎': R2 + '刘华强：刘华强见宋老虎.mp3',
         },
+
+        // ===== 新彩社 / VTuber 单人曲（2026-10-19 新增）=====
+        "白上吹雪": {
+            "Say!ファンファーレ!": R2 + "白上吹雪：Say!ファンファーレ!.mp3",
+            "Hi Fine FOX!!": R2 + "白上吹雪：Hi Fine FOX!!.mp3",
+        },
+        "夏色祭": {
+            "カタオモイ": R2 + "夏色祭：カタオモイ.mp3",
+            "ウーニャカ": R2 + "夏色祭：ウーニャカ.mp3",
+        },
+        "赤井心": {
+            "Infinity": R2 + "赤井心：Infinity.mp3",
+            "More One Night": R2 + "赤井心：More One Night - feat.mp3",
+        },
+        "百鬼绫目": {
+            "愛言葉Ⅲ": R2 + "百鬼绫目：愛言葉Ⅲ.mp3",
+            "梦花火": R2 + "百鬼绫目：梦花火.mp3",
+            "万歳☆満開": R2 + "百鬼绫目：万歳☆満開.mp3",
+        },
+        "凑阿库娅": {
+            "あくあ色ぱれっと": R2 + "凑阿库娅：あくあ色ぱれっと.mp3",
+            "I wanna": R2 + "凑阿库娅：I wanna.mp3",
+            "恋爱战略": R2 + "凑阿库娅：恋爱战略.mp3",
+        },
+        "紫咲诗音": {
+            "original": R2 + "紫咲诗音：original.mp3",
+            "对不起呀 Medicine": R2 + "紫咲诗音：对不起呀 Medicine.mp3",
+            "シオン": R2 + "紫咲诗音：シオン.mp3",
+        },
+        "宝钟玛琳": {
+            "きゃぴ": R2 + "宝钟玛琳：きゃぴ.mp3",
+            "伝説の夜": R2 + "宝钟玛琳：伝説の夜.mp3",
+            "スキスキDieスキ超Ayeシテル": R2 + "宝钟玛琳：スキスキDieスキ超Ayeシテル.mp3",
+        },
+        "润羽露西娅": {
+            "ないない": R2 + "润羽露西娅：ないない.mp3",
+            "花的亡灵": R2 + "润羽露西娅：花的亡灵.mp3",
+            "思ひ恋ふ": R2 + "润羽露西娅：思ひ恋ふ.mp3",
+        },
+        "兔田佩克拉": {
+            "pekorandom brain！": R2 + "兔田佩克拉：pekorandom brain！.mp3",
+            "全人類　兎化計画！": R2 + "兔田佩克拉：全人類　兎化計画！.mp3",
+            "ディスコミュ星人": R2 + "兔田佩克拉：ディスコミュ星人.mp3",
+        },
     };
 
     // ===== 团队歌库：需多人在场（乐队/社团训练、演奏、表演）才触发的歌 =====
@@ -164,6 +208,7 @@
         'B小町：STAR☆T☆RAIN': R2 + 'B小町：STAR☆T☆RAIN.mp3',
         // 侍奉部（社团）：林雪乃/比企谷八幡/由比滨结衣/四条真妃
         'Bitter Bitter Sweet': R2 + '侍奉部：Bitter Bitter Sweet .mp3',
+        "不純矛盾": R2 + "白上吹雪、大神澪、百鬼绫目合唱：不純矛盾.mp3",  // 白上吹雪、大神澪、百鬼绫目合唱
         // LOVE女团/KDA女团（多团体共享，含 knight 女团）
         'POP STARS': R2 + 'LOVE女团，KDA女团：POP STARS.mp3',
         'THE BADDEST': R2 + 'LOVE女团，KDA女团：THE BADDEST.mp3',
@@ -222,6 +267,37 @@
         'Starlight': R2 + '戏剧部情景剧：星摘みの歌.mp3',
     };
 
+    // ===== KTV 歌单：只在 KTV 场景点唱（【点歌：歌名】）=====
+    // 这些歌不并进日常唱歌库 —— 只有人在 KTV 包厢（玲雅商业广场五层「星贸」KTV、
+    // 泉香山居二层欢唱厅等）用点歌机点歌时才触发。场景与性别限制由世界书规则约束：
+    // 标「KTV男声」的只能男性角色点唱；未标注的默认女声，男性角色也可以唱。
+    // 隐藏偏好（不写进规则、不主动解释）：男性角色在 KTV 唱歌、又没特别指定曲目时，
+    // 默认第一首点《友の酒》（个人习惯式的开场）；之后无任何限制。全女包厢、女性点歌都不涉及。
+    var KTV_SONGS = {
+        '女声': {
+            '把回忆拼好给你': R2 + 'KTV：把回忆拼好给你dj.mp3',
+            '此生不换': R2 + 'KTV：此生不换dj.mp3',
+            '赐我': R2 + 'KTV：赐我dj.mp3',
+            '大天蓬': R2 + 'KTV：大天蓬dj.mp3',
+            '关山酒': R2 + 'KTV：关山酒dj.mp3',
+            '迷人的危险': R2 + 'KTV：迷人的危险dj.mp3',
+            '年轮': R2 + 'KTV：年轮dj.mp3',
+            '琵琶曲': R2 + 'KTV：琵琶曲dj.mp3',
+            '人间惊鸿宴': R2 + 'KTV：人间惊鸿宴dj.mp3',
+            '日不落': R2 + 'KTV：日不落dj.mp3',
+            '叹云兮': R2 + 'KTV：叹云兮dj.mp3',
+            '我恨明月不照我': R2 + 'KTV：我恨明月不照我dj.mp3',
+            '心似烟火': R2 + 'KTV：心似烟火dj.mp3',
+            '折风渡夜': R2 + 'KTV：折风渡夜dj.mp3',
+        },
+        '男声': {
+            '半壶纱': R2 + 'KTV男声：半壶纱dj.mp3',
+            '刀剑如梦': R2 + 'KTV男声：刀剑如梦dj.mp3',
+            '难得真兄弟': R2 + 'KTV男声：难得真兄弟dj.mp3',
+            '友の酒': R2 + 'KTV男声：友の酒.mp3',
+        },
+    };
+
     // 合并全部歌名/曲目 → 直链。注意：本游戏是「上帝视角」，无固定 {{char}}/{{user}}，
     // 角色卡名固定为「新中市人间世…」，不能用 name2 判断当前唱歌角色；
     // 歌名/曲目标签全局唯一，故直接合并所有单人歌 + 团队歌 + 独奏曲 + 情景剧，脚本按名查 URL。
@@ -235,6 +311,16 @@
         Object.keys(BAND_SONGS).forEach(function (k) { map[k] = BAND_SONGS[k]; });
         Object.keys(SOLO_SONGS).forEach(function (k) { map[k] = pickUrl(SOLO_SONGS[k]); });
         Object.keys(STAGE_SONGS).forEach(function (k) { map[k] = STAGE_SONGS[k]; });
+        return map;
+    }
+
+    // KTV 歌单单列：不并进日常唱歌库，避免【歌曲：】在非 KTV 场景误触发
+    function buildKtvMap() {
+        var map = {};
+        Object.keys(KTV_SONGS).forEach(function (g) {
+            var group = KTV_SONGS[g] || {};
+            Object.keys(group).forEach(function (k) { map[k] = group[k]; });
+        });
         return map;
     }
 
@@ -331,11 +417,11 @@
     }
 
     // 匹配三种标记，一次扫描完成（避免二次 replace 误处理生成的 <audio>）：
-    //   唱歌：【歌曲：歌名】（全角方括号）；
+    //   唱歌：【歌曲：歌名】（全角方括号）；   KTV点歌：【点歌：歌名】（只在 KTV 场景，见世界书规则）；
     //   演奏：【演奏：曲目】（纯乐器无歌唱，渲染/上下文用「弹奏」而非「唱」）；
     //   演出：【演出：剧目】（情景剧/舞台剧演绎，非合唱非演奏）；
     //   退化兜底（曲名）（全角/半角圆括号）——仅命中歌库才替换，其余保留原样
-    var RE_SONG = /【歌曲：\s*([^】]+?)\s*】|【演奏：\s*([^】]+?)\s*】|【演出：\s*([^】]+?)\s*】|（\s*([^）]+?)\s*）|\(\s*([^)]+?)\s*\)/g;
+    var RE_SONG = /【歌曲：\s*([^】]+?)\s*】|【点歌：\s*([^】]+?)\s*】|【演奏：\s*([^】]+?)\s*】|【演出：\s*([^】]+?)\s*】|（\s*([^）]+?)\s*）|\(\s*([^)]+?)\s*\)/g;
 
     function inject(message_id) {
         var mes = ST.chat[message_id];
@@ -349,11 +435,12 @@
         // 反向还原：本脚本会把 mes.mes 改写成「（唱了《X》）」这种干净正文，而酒馆随后会把干净正文
         // 同步回 swipes —— 于是上面的 swipes 兜底也拿不到标记，翻页后播放器就永久丢了
         // （2026-09-25 用户报：「开局的播放器变成了文字」）。干净正文是可逆的，先从它还原标记。
-        if (!/【歌曲：|【演奏：|【演出：/.test(text)) {
-            text = text.replace(/（(唱了|弹奏了|演绎了)《([^》\r\n]{1,60})》）/g, function (full, verb, name) {
+        if (!/【歌曲：|【点歌：|【演奏：|【演出：/.test(text)) {
+            text = text.replace(/（(唱了|点了|弹奏了|演绎了)《([^》\r\n]{1,60})》）/g, function (full, verb, name) {
                 return verb === '唱了' ? '【歌曲：' + name + '】'
-                    : verb === '弹奏了' ? '【演奏：' + name + '】'
-                        : '【演出：' + name + '】';
+                    : verb === '点了' ? '【点歌：' + name + '】'
+                        : verb === '弹奏了' ? '【演奏：' + name + '】'
+                            : '【演出：' + name + '】';
             });
         }
         // 历史消息修复：翻页时酒馆清掉了 display_text，而 mes 早已被本脚本改成干净正文（标记没了）——
@@ -361,12 +448,12 @@
         // 玩家手动编辑过的消息，酒馆会同步回 swipes，所以这里不会覆盖玩家的改动。
         if (!mes.extra || !mes.extra.display_text) {
             var sw = (mes.swipes && typeof mes.swipe_id === 'number') ? mes.swipes[mes.swipe_id] : null;
-            if (typeof sw === 'string' && /【歌曲：|【演奏：|【演出：/.test(sw) && !/【歌曲：|【演奏：|【演出：/.test(text)) text = sw;
+            if (typeof sw === 'string' && /【歌曲：|【点歌：|【演奏：|【演出：/.test(sw) && !/【歌曲：|【点歌：|【演奏：|【演出：/.test(text)) text = sw;
         }
         // 归一化标记括号：AI 有时把标记写成半角方括号（[歌曲：暗号是B]，2026-10-08 用户截图），
         // 而下面只认全角 —— 结果播放器退化成一串死文字，标记还留在上下文里。先转全角，后续查表/清洗一行都不用改。
         // 只在「方括号 + 三种标记名 + 冒号」时替换，正文里普通的 [14:07] 之类不受影响。
-        text = text.replace(/\[\s*(歌曲|演奏|演出)\s*[：:]\s*([^\]\r\n]{1,60}?)\s*\]/g,
+        text = text.replace(/\[\s*(歌曲|点歌|演奏|演出)\s*[：:]\s*([^\]\r\n]{1,60}?)\s*\]/g,
             function (m, kind, name) { return '【' + kind + '：' + name + '】'; });
         var SONG_MAP = buildSongMap();
         var SOLO_MAP = SOLO_SONGS;
@@ -374,13 +461,19 @@
         var SONG_IDX = buildIndex(SONG_MAP);
         var SOLO_IDX = buildIndex(SOLO_MAP);
         var STAGE_IDX = buildIndex(STAGE_MAP);
+        var KTV_MAP = buildKtvMap();
+        var KTV_IDX = buildIndex(KTV_MAP);
 
         // 渲染：命中唱歌歌名 → 🎵+唱；命中独奏曲目 → 🎼+弹奏；命中情景剧 → 🎭+演绎
-        function render(full, songName, soloName, stageName, parenFull, parenHalf) {
+        function render(full, songName, ktvName, soloName, stageName, parenFull, parenHalf) {
             var h;
             if (songName) {
                 h = lookUp(songName, SONG_IDX);
                 return h ? audioHtml(pickUrl(h.u), h.name, '🎵') : full;
+            }
+            if (ktvName) {
+                h = lookUp(ktvName, KTV_IDX);
+                return h ? audioHtml(pickUrl(h.u), h.name, '🎤') : full;
             }
             if (soloName) {
                 h = lookUp(soloName, SOLO_IDX);
@@ -399,11 +492,15 @@
             return pu ? audioHtml(pu, p, '🎵') : full;
         }
         // 上下文：唱歌标记 → 「（唱了《歌名》）」；演奏标记 → 「（弹奏了《曲目》）」；演出标记 → 「（演绎了《剧目》）」
-        function cleanUp(full, songName, soloName, stageName, parenFull, parenHalf) {
+        function cleanUp(full, songName, ktvName, soloName, stageName, parenFull, parenHalf) {
             var h;
             if (songName) {
                 h = lookUp(songName, SONG_IDX);
                 return h ? '（唱了《' + h.name + '》）' : full;
+            }
+            if (ktvName) {
+                h = lookUp(ktvName, KTV_IDX);
+                return h ? '（点了《' + h.name + '》）' : full;
             }
             if (soloName) {
                 h = lookUp(soloName, SOLO_IDX);
