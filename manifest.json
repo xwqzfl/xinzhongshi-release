@@ -1,16 +1,16 @@
 {
-  "build": "2026.10.19-20261019234835",
-  "cardVersion": "2026.10.19",
-  "builtAt": "2026-10-19T15:48:36.004Z",
+  "build": "2026.10.20-20261020184924",
+  "cardVersion": "2026.10.20",
+  "builtAt": "2026-10-20T10:49:24.497Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "worldbookMark": "【系统】世界书版本",
   "updaterMark": "16",
-  "songMark": "7",
+  "songMark": "8",
   "jbMark": 4,
   "updateUpdater": false,
-  "notes": "10.19补充：全体范围技能新增选择页单独入口；时停可全场或只放走勾选的人；气息遮蔽改为「认知层面的存在抹除」：任何人以任何方式都无法感知到主角，不是隐身、不是透明人，严禁写「看不见人却感觉到有人/存在感/压迫感」。新增主线剧情系统（默认关闭，手机「剧情」页主动开启才推进）、376 条条件触发事件（审计 v3：保留 245 条原文、改写 131 条、下线 25 条；每条写明发生范围与可触发身份，身份/范围不符不触发，每局一次，自动记录进度）、25 首新彩社歌曲、18 首 KTV 歌单与「星贸」KTV 场景，【点歌】只在 KTV 触发。",
+  "notes": "新增购物车统一结算，分类及搜索每页5件；修复数量量词、生活操作凭据误过滤、拆包地点与重复入包；兼容电车地点头；增加LINE已添加/已发送凭据同步；修复音乐标记及编辑、swipe、刷新后的播放器恢复。真实酒馆和手机端验收仍待完成。",
   "cardFields": {
     "greetings": 111,
     "fp": "1c6fc114",
@@ -28,24 +28,24 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "97ca26e1",
-      "bytes": 4594746
+      "hash": "c55870c6",
+      "bytes": 4603334
     },
     "updater.js": {
       "hash": "14788aad",
       "bytes": 38715
     },
     "songscript.js": {
-      "hash": "830439b6",
-      "bytes": 31383
+      "hash": "f55a161d",
+      "bytes": 32595
     },
     "jailbreaks.json": {
       "hash": "ae6171c3",
       "bytes": 280291
     },
     "worldbook.json": {
-      "hash": "fb4f4302",
-      "bytes": 10423349
+      "hash": "5110fb1f",
+      "bytes": 11316903
     },
     "cardfields.json": {
       "hash": "7b56ddf9",

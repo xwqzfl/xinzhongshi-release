@@ -1,4 +1,4 @@
-/*XZS_SONG:7*/
+/*XZS_SONG:8*/
 // ===== 新中市 · 唱歌音频直链（内联嵌入正文）=====
 // 监听 AI 消息，解析 【歌曲：歌名】/【点歌：歌名】 标记，映射到 R2 音频直链。
 // 音频播放器内联嵌入正文唱歌处（不 append 到消息末尾）：
@@ -355,7 +355,7 @@
     // 归一化：去掉空白与书名号/引号。**标点（☆ ・ ： -）保留** —— 它们在歌名里有意义，
     // 「STAR☆T☆RAIN」去掉星号就再也认不出来了。
     function foldName(s) {
-        return String(s || '')
+        return String(s || '').normalize('NFKC')
             .replace(/[\s　]+/g, '')
             .replace(/[《》【】「」『』"'’“”]/g, '')
             .toLowerCase();
@@ -429,13 +429,19 @@
         // ⚠ 防重标记只在「渲染版还在」时才算完成：酒馆在**翻页 / 重新生成**时会调 clearMessageData()
         //    删掉 extra.display_text，却不会动我们自己的标记 —— 若只认标记，翻到带歌曲的那一页
         //    就永远不出播放器了（2026-09-25 用户报：「开局的播放器变成了文字」）。
-        if (mes.extra && mes.extra[DONE] && mes.extra.display_text) return;
+        if (mes.extra && mes.extra[DONE] && mes.extra.display_text && mes.extra.__song_source_1020 === String(mes.mes || '') && mes.extra.__song_swipe_1020 === mes.swipe_id) return;
 
         var text = mes.mes || '';
+        // Normalize marker delimiters only; song-title punctuation stays intact.
+        function normalizeMarkers(value) {
+            return String(value).replace(/[【\[]\s*(歌曲|点歌|演奏|演出)\s*[：:]\s*([^】\]\r\n]{1,120}?)\s*[】\]]/g,
+                function (_, kind, name) { return '【' + kind + '：' + name + '】'; });
+        }
+        text = normalizeMarkers(text);
         // 反向还原：本脚本会把 mes.mes 改写成「（唱了《X》）」这种干净正文，而酒馆随后会把干净正文
         // 同步回 swipes —— 于是上面的 swipes 兜底也拿不到标记，翻页后播放器就永久丢了
         // （2026-09-25 用户报：「开局的播放器变成了文字」）。干净正文是可逆的，先从它还原标记。
-        if (!/【歌曲：|【点歌：|【演奏：|【演出：/.test(text)) {
+        { // Restore each prior audio marker even when a new marker is also present.
             text = text.replace(/（(唱了|点了|弹奏了|演绎了)《([^》\r\n]{1,60})》）/g, function (full, verb, name) {
                 return verb === '唱了' ? '【歌曲：' + name + '】'
                     : verb === '点了' ? '【点歌：' + name + '】'
@@ -446,8 +452,9 @@
         // 历史消息修复：翻页时酒馆清掉了 display_text，而 mes 早已被本脚本改成干净正文（标记没了）——
         // 但 swipes 里留着那一页的原始文本，用它把播放器找回来（玩家不必手动翻回去）。
         // 玩家手动编辑过的消息，酒馆会同步回 swipes，所以这里不会覆盖玩家的改动。
-        if (!mes.extra || !mes.extra.display_text) {
+        if ((!mes.extra || !mes.extra.display_text) && !(mes.extra && mes.extra.__song_source_1020 != null && mes.extra.__song_source_1020 !== String(mes.mes || ''))) {
             var sw = (mes.swipes && typeof mes.swipe_id === 'number') ? mes.swipes[mes.swipe_id] : null;
+            if (typeof sw === 'string') sw = normalizeMarkers(sw);
             if (typeof sw === 'string' && /【歌曲：|【点歌：|【演奏：|【演出：/.test(sw) && !/【歌曲：|【点歌：|【演奏：|【演出：/.test(text)) text = sw;
         }
         // 归一化标记括号：AI 有时把标记写成半角方括号（[歌曲：暗号是B]，2026-10-08 用户截图），
@@ -518,7 +525,13 @@
 
         var display = text.replace(RE_SONG, render);
         // 没匹配到任何已收录歌/曲 → 不改动、也不设 DONE（保持可重试，避免流式早期提前锁定）
-        if (display.indexOf('<audio') === -1) return;
+        if (display.indexOf('<audio') === -1) {
+            if (mes.extra && mes.extra.__song_source_1020 != null && mes.extra.__song_source_1020 !== String(mes.mes || '')) {
+                delete mes.extra.display_text; delete mes.extra[DONE]; delete mes.extra.__song_source_1020; delete mes.extra.__song_swipe_1020;
+                ST.updateMessageBlock(message_id, mes);
+            }
+            return;
+        }
 
         var clean = text.replace(RE_SONG, cleanUp);
 
@@ -526,6 +539,8 @@
         mes.extra[DONE] = true;
         mes.mes = clean;
         mes.extra.display_text = display;
+        mes.extra.__song_source_1020 = clean;
+        mes.extra.__song_swipe_1020 = mes.swipe_id;
 
         ST.updateMessageBlock(message_id, mes);
         if (typeof ST.saveChat === 'function') ST.saveChat();
@@ -550,4 +565,5 @@
     }
     try { eventOn(tavern_events.MESSAGE_SWIPED, function () { setTimeout(function () { scan(3); }, 500); }); } catch (e) {}
     try { eventOn('chat_id_changed', function () { setTimeout(function () { scan(30); }, 1500); }); } catch (e) {}
+setTimeout(function () { scan(30); }, 800);
 })();

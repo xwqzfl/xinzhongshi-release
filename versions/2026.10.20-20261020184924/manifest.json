@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.20-20261020184924",
+  "cardVersion": "2026.10.20",
+  "builtAt": "2026-10-20T10:49:24.497Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "16",
+  "songMark": "8",
+  "jbMark": 4,
+  "updateUpdater": false,
+  "notes": "新增购物车统一结算，分类及搜索每页5件；修复数量量词、生活操作凭据误过滤、拆包地点与重复入包；兼容电车地点头；增加LINE已添加/已发送凭据同步；修复音乐标记及编辑、swipe、刷新后的播放器恢复。真实酒馆和手机端验收仍待完成。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "1c6fc114",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "c55870c6",
+      "bytes": 4603334
+    },
+    "updater.js": {
+      "hash": "14788aad",
+      "bytes": 38715
+    },
+    "songscript.js": {
+      "hash": "f55a161d",
+      "bytes": 32595
+    },
+    "jailbreaks.json": {
+      "hash": "ae6171c3",
+      "bytes": 280291
+    },
+    "worldbook.json": {
+      "hash": "5110fb1f",
+      "bytes": 11316903
+    },
+    "cardfields.json": {
+      "hash": "7b56ddf9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
