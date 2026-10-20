@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.20-20261020192019",
+  "cardVersion": "2026.10.20",
+  "builtAt": "2026-10-20T11:20:20.073Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "16",
+  "songMark": "8",
+  "jbMark": 4,
+  "updateUpdater": false,
+  "notes": "修复电车车厢里旁观者不进正文：同车厢具名乘客每轮必须对玩家的动作有可见反应（视线、低语、侧目、挪动），低隐蔽值也会留下余光痕迹，不再只写玩家与被接触者；2/4 号车厢卫生间成为可进入的位置，可带一名同车厢具名乘客，关门上锁后不做周围目光判定；修复刷新酒馆页面后电车名单与规则不再注入的问题。修复手机刷新后下拉拉不回催眠规则：规则完整存档损坏或属于其他聊天时改为回读「新中市·催眠规则」正文恢复，读失败不再被当成没有规则，下拉报告如实显示规则条数。真实酒馆与手机端验证仍待玩家验收。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "1c6fc114",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "5f65fe4f",
+      "bytes": 4609760
+    },
+    "updater.js": {
+      "hash": "14788aad",
+      "bytes": 38715
+    },
+    "songscript.js": {
+      "hash": "f55a161d",
+      "bytes": 32595
+    },
+    "jailbreaks.json": {
+      "hash": "ae6171c3",
+      "bytes": 280291
+    },
+    "worldbook.json": {
+      "hash": "6dd5049e",
+      "bytes": 11320436
+    },
+    "cardfields.json": {
+      "hash": "7b56ddf9",
+      "bytes": 864094
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
