@@ -1,4 +1,4 @@
-/*XZS_SONG:8*/
+/*XZS_SONG:9*/
 // ===== 新中市 · 唱歌音频直链（内联嵌入正文）=====
 // 监听 AI 消息，解析 【歌曲：歌名】/【点歌：歌名】 标记，映射到 R2 音频直链。
 // 音频播放器内联嵌入正文唱歌处（不 append 到消息末尾）：
@@ -36,145 +36,7 @@
 
     // ===== 单人歌库：仅某角色独唱（触发时从自己的列表里挑）=====
     // 键 = 角色本名（仅脚本内部分组用，实际匹配看歌名是否全局唯一）
-    var CHAR_SONGS = {
-        '林羽桃': {
-            '一只螃蟹八只脚': R2 + '林羽桃：一只螃蟹八只脚.mp3',
-            '咕咕嘎嘎': R2 + '林羽桃：咕咕嘎嘎.mp3',
-            '寂寞的人伤心的歌': R2 + '林羽桃、林羽绿：寂寞的人伤心的歌.mp3',
-        },
-        '林羽绿': {
-            '寂寞的人伤心的歌': R2 + '林羽桃、林羽绿：寂寞的人伤心的歌.mp3',
-            '十夏之花': R2 + '林羽绿：十夏之花.mp3',
-            '单相思': R2 + '林羽绿：单相思.mp3',
-        },
-        '宇崎花': {
-            '你若三冬来': R2 + '宇崎花：你若三冬来.mp3',
-            '哎呦小情郎你莫愁': R2 + '宇崎花：哎呦小情郎你莫愁.mp3',
-            '基米说': R2 + '宇崎花：基米说.mp3',
-            '神曼波': R2 + '宇崎花：神曼波.mp3',
-        },
-        '后藤一里': {
-            '捆绑梦想': R2 + '后藤一里：捆绑梦想.mp3',
-        },
-        '伊地知虹夏': {
-            'UNITE': R2 + '伊地知虹夏：UNITE.mp3',
-        },
-        '山田凉': {
-            '行星': R2 + '山田凉：行星.mp3',
-        },
-        '喜多郁代': {
-            'milky way': R2 + '喜多郁代：milky way.mp3',
-        },
-        '星野爱': {
-            'アイドル': R2 + '星野爱：アイドル.mp3',
-            'HEART\'s♡KISS': R2 + '星野爱：HEART\'s♡KISS.mp3',
-            'STAR☆T☆RAIN': R2 + '星野爱：STAR☆T☆RAIN.mp3',
-        },
-        '有马加奈': {
-            '满月': R2 + '有马加奈：满月.mp3',
-        },
-        '林心美': {
-            '天使之翼': R2 + '林心美：天使之翼.mp3',
-        },
-        '林雪乃': {
-            'ダイヤモンドの純度': R2 + '林雪乃：ダイヤモンドの純度.mp3',
-            '青花瓷': R2 + '林雪乃：青花瓷.mp3',
-            '萌芽之雨': R2 + '林雪乃钢琴弹唱：萌芽之雨.mp3',
-            '雪融': R2 + '林雪乃钢琴弹唱：雪融.mp3',
-        },
-        '林麻衣': {
-            '不可思議のカルテ': R2 + '林麻衣：不可思議のカルテ.mp3',
-        },
-        '橘万里花': {
-            'Promise with you promise with me': R2 + '橘万里花：Promise with you promise with me.mp3',
-        },
-        '初音未来': {
-            '梦与叶樱': R2 + '初音未来：梦与叶樱.mp3',
-            '深海少女': R2 + '初音未来：深海少女.mp3',
-            '胧月': R2 + '初音未来：胧月.mp3',
-        },
-        '由比滨结衣': {
-            'エブリデイワールド': R2 + '由比滨结衣钢琴弹唱：エブリデイワールド.mp3',
-            '由比滨结衣：ダイヤモンドの純度': R2 + '由比滨结衣钢琴弹唱：ダイヤモンドの純度.mp3',
-        },
-        '绫耀': {
-            '知我': R2 + '绫耀、陈平安：知我.mp3',
-        },
-        '陈平安': {
-            '知我': R2 + '绫耀、陈平安：知我.mp3',
-        },
-        '三浦优美子': {
-            'Letting Go': R2 + '三浦优美子：Letting Go.mp3',
-        },
-        '严小希': {
-            '没有人心疼我': R2 + '严小希：没有人心疼我.mp3',
-        },
-        '叶山隼人': {
-            '簇拥烈日的花': R2 + '叶山隼人：簇拥烈日的花.mp3',
-        },
-        '曹茗瑜': {
-            '却扛不住 对你的喜欢': R2 + '曹茗瑜：却扛不住 对你的喜欢.mp3',
-            '回马枪': R2 + '曹茗瑜：回马枪.mp3',
-            '忘川彼岸': R2 + '曹茗瑜：忘川彼岸.mp3',
-            '说了再见': R2 + '曹茗瑜：说了再见.mp3',
-        },
-        '林雨涵': {
-            '我我': R2 + '林雨涵：我我.mp3',
-        },
-        '楚凌龄': {
-            '是否': R2 + '楚凌龄：是否.mp3',
-        },
-        '耿燕': {
-            '520AM': R2 + '耿燕：520AM.mp3',
-        },
-        '刘华强': {
-            '刘华强见宋老虎': R2 + '刘华强：刘华强见宋老虎.mp3',
-        },
-
-        // ===== 新彩社 / VTuber 单人曲（2026-10-19 新增）=====
-        "白上吹雪": {
-            "Say!ファンファーレ!": R2 + "白上吹雪：Say!ファンファーレ!.mp3",
-            "Hi Fine FOX!!": R2 + "白上吹雪：Hi Fine FOX!!.mp3",
-        },
-        "夏色祭": {
-            "カタオモイ": R2 + "夏色祭：カタオモイ.mp3",
-            "ウーニャカ": R2 + "夏色祭：ウーニャカ.mp3",
-        },
-        "赤井心": {
-            "Infinity": R2 + "赤井心：Infinity.mp3",
-            "More One Night": R2 + "赤井心：More One Night - feat.mp3",
-        },
-        "百鬼绫目": {
-            "愛言葉Ⅲ": R2 + "百鬼绫目：愛言葉Ⅲ.mp3",
-            "梦花火": R2 + "百鬼绫目：梦花火.mp3",
-            "万歳☆満開": R2 + "百鬼绫目：万歳☆満開.mp3",
-        },
-        "凑阿库娅": {
-            "あくあ色ぱれっと": R2 + "凑阿库娅：あくあ色ぱれっと.mp3",
-            "I wanna": R2 + "凑阿库娅：I wanna.mp3",
-            "恋爱战略": R2 + "凑阿库娅：恋爱战略.mp3",
-        },
-        "紫咲诗音": {
-            "original": R2 + "紫咲诗音：original.mp3",
-            "对不起呀 Medicine": R2 + "紫咲诗音：对不起呀 Medicine.mp3",
-            "シオン": R2 + "紫咲诗音：シオン.mp3",
-        },
-        "宝钟玛琳": {
-            "きゃぴ": R2 + "宝钟玛琳：きゃぴ.mp3",
-            "伝説の夜": R2 + "宝钟玛琳：伝説の夜.mp3",
-            "スキスキDieスキ超Ayeシテル": R2 + "宝钟玛琳：スキスキDieスキ超Ayeシテル.mp3",
-        },
-        "润羽露西娅": {
-            "ないない": R2 + "润羽露西娅：ないない.mp3",
-            "花的亡灵": R2 + "润羽露西娅：花的亡灵.mp3",
-            "思ひ恋ふ": R2 + "润羽露西娅：思ひ恋ふ.mp3",
-        },
-        "兔田佩克拉": {
-            "pekorandom brain！": R2 + "兔田佩克拉：pekorandom brain！.mp3",
-            "全人類　兎化計画！": R2 + "兔田佩克拉：全人類　兎化計画！.mp3",
-            "ディスコミュ星人": R2 + "兔田佩克拉：ディスコミュ星人.mp3",
-        },
-    };
+    var CHAR_SONGS = {"林羽桃":{"一只螃蟹八只脚":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃：一只螃蟹八只脚.mp3","咕咕嘎嘎":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃：咕咕嘎嘎.mp3","寂寞的人伤心的歌":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃、林羽绿：寂寞的人伤心的歌.mp3"},"林羽绿":{"寂寞的人伤心的歌":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃、林羽绿：寂寞的人伤心的歌.mp3","十夏之花":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽绿：十夏之花.mp3","单相思":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽绿：单相思.mp3"},"宇崎花":{"你若三冬来":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：你若三冬来.mp3","哎呦小情郎你莫愁":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：哎呦小情郎你莫愁.mp3","基米说":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：基米说.mp3","神曼波":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：神曼波.mp3"},"后藤一里":{"捆绑梦想":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/后藤一里：捆绑梦想.mp3"},"伊地知虹夏":{"UNITE":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/伊地知虹夏：UNITE.mp3"},"山田凉":{"行星":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/山田凉：行星.mp3"},"喜多郁代":{"milky way":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/喜多郁代：milky way.mp3"},"星野爱":{"アイドル":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/星野爱：アイドル.mp3","HEART's♡KISS":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/星野爱：HEART's♡KISS.mp3","STAR☆T☆RAIN":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/星野爱：STAR☆T☆RAIN.mp3"},"有马加奈":{"满月":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/有马加奈：满月.mp3"},"林心美":{"天使之翼":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林心美：天使之翼.mp3"},"林雪乃":{"ダイヤモンドの純度":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃：ダイヤモンドの純度.mp3","青花瓷":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃：青花瓷.mp3","萌芽之雨":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃钢琴弹唱：萌芽之雨.mp3","雪融":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃钢琴弹唱：雪融.mp3"},"林麻衣":{"不可思議のカルテ":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林麻衣：不可思議のカルテ.mp3"},"橘万里花":{"Promise with you promise with me":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/橘万里花：Promise with you promise with me.mp3"},"初音未来":{"梦与叶樱":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/初音未来：梦与叶樱.mp3","深海少女":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/初音未来：深海少女.mp3","胧月":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/初音未来：胧月.mp3"},"由比滨结衣":{"エブリデイワールド":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/由比滨结衣钢琴弹唱：エブリデイワールド.mp3","由比滨结衣：ダイヤモンドの純度":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/由比滨结衣钢琴弹唱：ダイヤモンドの純度.mp3"},"绫耀":{"知我":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/绫耀、陈平安：知我.mp3"},"陈平安":{"知我":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/绫耀、陈平安：知我.mp3"},"三浦优美子":{"Letting Go":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/三浦优美子：Letting Go.mp3"},"严小希":{"没有人心疼我":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/严小希：没有人心疼我.mp3"},"叶山隼人":{"簇拥烈日的花":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/叶山隼人：簇拥烈日的花.mp3"},"曹茗瑜":{"却扛不住 对你的喜欢":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：却扛不住 对你的喜欢.mp3","回马枪":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：回马枪.mp3","忘川彼岸":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：忘川彼岸.mp3","说了再见":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：说了再见.mp3"},"林雨涵":{"我我":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雨涵：我我.mp3"},"楚凌龄":{"是否":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/楚凌龄：是否.mp3"},"耿燕":{"520AM":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/耿燕：520AM.mp3"},"刘华强":{"刘华强见宋老虎":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/刘华强：刘华强见宋老虎.mp3"},"白上吹雪":{"Say!ファンファーレ!":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/白上吹雪：Say!ファンファーレ!.mp3","Hi Fine FOX!!":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/白上吹雪：Hi Fine FOX!!.mp3"},"夏色祭":{"カタオモイ":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/夏色祭：カタオモイ.mp3","ウーニャカ":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/夏色祭：ウーニャカ.mp3"},"赤井心":{"Infinity":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/赤井心：Infinity.mp3","More One Night":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/赤井心：More One Night - feat.mp3"},"百鬼绫目":{"愛言葉Ⅲ":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/百鬼绫目：愛言葉Ⅲ.mp3","梦花火":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/百鬼绫目：梦花火.mp3","万歳☆満開":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/百鬼绫目：万歳☆満開.mp3"},"凑阿库娅":{"あくあ色ぱれっと":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/凑阿库娅：あくあ色ぱれっと.mp3","I wanna":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/凑阿库娅：I wanna.mp3","恋爱战略":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/凑阿库娅：恋爱战略.mp3"},"紫咲诗音":{"original":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/紫咲诗音：original.mp3","对不起呀 Medicine":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/紫咲诗音：对不起呀 Medicine.mp3","シオン":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/紫咲诗音：シオン.mp3"},"宝钟玛琳":{"きゃぴ":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宝钟玛琳：きゃぴ.mp3","伝説の夜":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宝钟玛琳：伝説の夜.mp3","スキスキDieスキ超Ayeシテル":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宝钟玛琳：スキスキDieスキ超Ayeシテル.mp3"},"润羽露西娅":{"ないない":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/润羽露西娅：ないない.mp3","花的亡灵":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/润羽露西娅：花的亡灵.mp3","思ひ恋ふ":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/润羽露西娅：思ひ恋ふ.mp3"},"兔田佩克拉":{"pekorandom brain！":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/兔田佩克拉：pekorandom brain！.mp3","全人類　兎化計画！":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/兔田佩克拉：全人類　兎化計画！.mp3","ディスコミュ星人":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/兔田佩克拉：ディスコミュ星人.mp3"},"琴纱月":{"琴纱月：雨爱":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/琴纱月：雨爱.mp3","琴纱月：再见莫妮卡":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/琴纱月：再见莫妮卡.mp3"},"王冢真唯":{"王冢真唯：不谓侠":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：不谓侠.mp3","王冢真唯：心如止水":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：心如止水.mp3","王冢真唯：雨爱":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：雨爱.mp3","王冢真唯：再见莫妮卡":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：再见莫妮卡.mp3","王冢真唯：真英雄":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：真英雄.mp3","王冢真唯伴奏协同：酒醉的蝴蝶":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯伴奏协同：酒醉的蝴蝶.mp3","王冢真唯伴奏协同：水手":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯伴奏协同：水手.mp3","王冢真唯钢琴弹唱：大海":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯钢琴弹唱：大海.mp3","王冢真唯吉他弹唱：处处吻":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯吉他弹唱：处处吻.mp3","王冢真唯吉他弹唱：挪威的森林":"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯吉他弹唱：挪威的森林.mp3"}};
 
     // ===== 团队歌库：需多人在场（乐队/社团训练、演奏、表演）才触发的歌 =====
     // 结束乐队（新中市国立学校音乐部）五人合奏曲目
@@ -331,26 +193,8 @@
     // 别名表并进同一张索引，等价于第三级。
     // ⚠ **只用在【歌曲：】【演奏：】【演出：】三种显式标记上**；圆括号兜底仍走精确匹配 ——
     //    正文里的圆括号太常见，放宽会把「（唱着孤独与蓝色星球的样子）」也认成一首歌。
-    var ALIAS = {
-        'サインはB': '暗号是B',                 // 「暗号是B」的日文原名
-        'STAR☆T☆RAIN -New Arrange Ver.-': 'B小町：STAR☆T☆RAIN',  // 团体重编版；不带后缀时按 星野爱 独唱版
-        '偶像': 'アイドル',
-        '无声之鱼': '声なき魚',
-        '名もなき何もかも': '皆无其名',         // 「皆无其名」的日文原名
-        '空之箱': '空の箱',
-        '视界一隅腐朽之声': '視界の隅 朽ちる音',
-        '钻石的纯度': 'ダイヤモンドの純度',
-        '不可思议的病历': '不可思議のカルテ',
-        '日常世界': 'エブリデイワールド',
-        '摘星之歌': '星摘みの歌',
-        '新月之舞': '三日月の舞',
-        '星之对话': '星のダイアローグ',
-        'B的复仇': 'Bのリベンジ',
-        '爱上你万岁': '愛してるばんざーい!',
-        '那就是我们的奇迹': 'それは僕たちの奇跡',
-        '夢と葉桜': '梦与叶樱',
-        '朧月': '胧月',
-    };
+    var SONG_META_1021 = {"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/song_xiaoxingxing.wav":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声，清唱：失眠.mp3":{"mode":"a-cappella","modeName":"清唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声，清唱：牵丝戏.mp3":{"mode":"a-cappella","modeName":"清唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：打火机.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：游東京.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：莫愁乡.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：DaDaDa.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：夏天的风.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：ぬぬぬぬ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，女声：脑蚀.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，演出，女声主唱：曾经我也想过一了百了.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，演出，女声主唱：青鸟.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，演出，女声主唱：骑在银龙的背上.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，演出，男声主唱：直到世界的尽头.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃：一只螃蟹八只脚.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林羽桃","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃：咕咕嘎嘎.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林羽桃","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽桃、林羽绿：寂寞的人伤心的歌.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林羽绿","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽绿：十夏之花.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林羽绿","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林羽绿：单相思.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林羽绿","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：你若三冬来.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宇崎花","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：哎呦小情郎你莫愁.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宇崎花","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：基米说.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宇崎花","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宇崎花：神曼波.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宇崎花","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/后藤一里：捆绑梦想.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"后藤一里","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/伊地知虹夏：UNITE.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"伊地知虹夏","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/山田凉：行星.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"山田凉","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/喜多郁代：milky way.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"喜多郁代","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/星野爱：アイドル.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"星野爱","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/星野爱：HEART's♡KISS.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"星野爱","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/星野爱：STAR☆T☆RAIN.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"星野爱","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/有马加奈：满月.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"有马加奈","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林心美：天使之翼.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林心美","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃：ダイヤモンドの純度.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林雪乃","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃：青花瓷.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林雪乃","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃钢琴弹唱：萌芽之雨.mp3":{"mode":"piano-vocal","modeName":"钢琴弹唱","performer":"林雪乃","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雪乃钢琴弹唱：雪融.mp3":{"mode":"piano-vocal","modeName":"钢琴弹唱","performer":"林雪乃","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林麻衣：不可思議のカルテ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林麻衣","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/橘万里花：Promise with you promise with me.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"橘万里花","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/初音未来：梦与叶樱.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"初音未来","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/初音未来：深海少女.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"初音未来","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/初音未来：胧月.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"初音未来","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/由比滨结衣钢琴弹唱：エブリデイワールド.mp3":{"mode":"piano-vocal","modeName":"钢琴弹唱","performer":"由比滨结衣","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/由比滨结衣钢琴弹唱：ダイヤモンドの純度.mp3":{"mode":"piano-vocal","modeName":"钢琴弹唱","performer":"由比滨结衣","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/绫耀、陈平安：知我.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"陈平安","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/三浦优美子：Letting Go.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"三浦优美子","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/严小希：没有人心疼我.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"严小希","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/叶山隼人：簇拥烈日的花.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"叶山隼人","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：却扛不住 对你的喜欢.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"曹茗瑜","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：回马枪.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"曹茗瑜","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：忘川彼岸.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"曹茗瑜","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/曹茗瑜：说了再见.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"曹茗瑜","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/林雨涵：我我.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"林雨涵","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/楚凌龄：是否.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"楚凌龄","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/耿燕：520AM.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"耿燕","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/刘华强：刘华强见宋老虎.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"刘华强","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/白上吹雪：Say!ファンファーレ!.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"白上吹雪","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/白上吹雪：Hi Fine FOX!!.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"白上吹雪","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/夏色祭：カタオモイ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"夏色祭","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/夏色祭：ウーニャカ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"夏色祭","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/赤井心：Infinity.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"赤井心","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/赤井心：More One Night - feat.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"赤井心","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/百鬼绫目：愛言葉Ⅲ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"百鬼绫目","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/百鬼绫目：梦花火.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"百鬼绫目","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/百鬼绫目：万歳☆満開.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"百鬼绫目","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/凑阿库娅：あくあ色ぱれっと.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"凑阿库娅","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/凑阿库娅：I wanna.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"凑阿库娅","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/凑阿库娅：恋爱战略.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"凑阿库娅","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/紫咲诗音：original.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"紫咲诗音","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/紫咲诗音：对不起呀 Medicine.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"紫咲诗音","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/紫咲诗音：シオン.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"紫咲诗音","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宝钟玛琳：きゃぴ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宝钟玛琳","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宝钟玛琳：伝説の夜.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宝钟玛琳","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/宝钟玛琳：スキスキDieスキ超Ayeシテル.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"宝钟玛琳","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/润羽露西娅：ないない.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"润羽露西娅","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/润羽露西娅：花的亡灵.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"润羽露西娅","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/润羽露西娅：思ひ恋ふ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"润羽露西娅","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/兔田佩克拉：pekorandom brain！.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"兔田佩克拉","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/兔田佩克拉：全人類　兎化計画！.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"兔田佩克拉","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/兔田佩克拉：ディスコミュ星人.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"兔田佩克拉","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/结束乐队：孤独与蓝色星球.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/结束乐队：平凡亦熠.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/结束乐队：绝对不会忘记.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/结束乐队：若能化作星座.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/结束乐队：那个乐队.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/TOGENASHI TOGEARI：声なき魚.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/TOGENASHI TOGEARI：皆无其名.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/TOGENASHI TOGEARI：空の箱.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/TOGENASHI TOGEARI：視界の隅 朽ちる音.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：U&I.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：咖喱后米饭.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：我的爱是订书机.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：毛笔~圆珠笔~.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：相遇天使.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：米饭是菜.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：纯纯的心.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：给我一双翅膀.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：轻飘飘的时间.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/放学后TEA TIME：Don't say lazy.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/B小町：暗号是B.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/B小町：Bのリベンジ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/B小町：HEART's♡KISS.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/B小町：STAR☆T☆RAIN.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/侍奉部：Bitter Bitter Sweet .mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/LOVE女团，KDA女团：POP STARS.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/LOVE女团，KDA女团：THE BADDEST.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/LOVE女团，KDA女团：VILLAIN.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/SOS团演奏，凉宫春日主唱：God Knows.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/偶像研究部，μ's女团：HEART to HEART！.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/偶像研究部，μ's女团：Music S.T.A.R.T!!.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/偶像研究部，μ's女团：START：DASH!!.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/偶像研究部，μ's女团：それは僕たちの奇跡.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/偶像研究部，μ's女团：愛してるばんざーい!.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/戏剧部：Fly Me to the Star.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/戏剧部：星のダイアローグ.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/教堂、修女会唱诗班圣咏：you have to choose your future.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/白上吹雪、大神澪、百鬼绫目合唱：不純矛盾.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/后藤一里吉他solo.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/公共库，钢琴曲：前前前世.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/高坂丽奈乐器：莉兹与青鸟.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/高坂丽奈小号：自新大陆.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/伞木希美长笛：自新大陆.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/铠冢霙双簧管：利兹与青鸟.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/川岛绿辉与月永求低音提琴合奏：爱的礼赞.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/黄前久美子乐器：吹响！上低音号.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/田中明日香上低音号：吹响！上低音号.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/黄前久美子与高坂丽奈乐器合奏：找到了爱的地方.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/吹奏乐部：一年之诗.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/吹奏乐部：三日月の舞.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/吹奏乐部：利兹与青鸟第一乐章.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/吹奏乐部：利兹与青鸟第三乐章.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/吹奏乐部：利兹与青鸟第四乐章.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/吹奏乐部：普罗旺斯的风.mp3":{"mode":"instrumental","modeName":"器乐","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/戏剧部情景剧：星摘みの歌.mp3":{"mode":"stage","modeName":"舞台剧","performer":"","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：把回忆拼好给你dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：此生不换dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：赐我dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：大天蓬dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：关山酒dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：迷人的危险dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：年轮dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：琵琶曲dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：人间惊鸿宴dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：日不落dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：叹云兮dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：我恨明月不照我dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：心似烟火dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV：折风渡夜dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"女声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV男声：半壶纱dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"男声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV男声：刀剑如梦dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"男声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV男声：难得真兄弟dj.mp3":{"mode":"ktv","modeName":"KTV","performer":"男声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/KTV男声：友の酒.mp3":{"mode":"ktv","modeName":"KTV","performer":"男声","bound":false},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/琴纱月：雨爱.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"琴纱月","bound":true,"aliases":["琴纱月","纱月"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/琴纱月：再见莫妮卡.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"琴纱月","bound":true,"aliases":["琴纱月","纱月"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：不谓侠.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：心如止水.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：雨爱.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：再见莫妮卡.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯：真英雄.mp3":{"mode":"vocal","modeName":"单人演唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯伴奏协同：酒醉的蝴蝶.mp3":{"mode":"cooperative-vocal","modeName":"伴奏协同","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯伴奏协同：水手.mp3":{"mode":"cooperative-vocal","modeName":"伴奏协同","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯钢琴弹唱：大海.mp3":{"mode":"piano-vocal","modeName":"钢琴弹唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯吉他弹唱：处处吻.mp3":{"mode":"guitar-vocal","modeName":"吉他弹唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]},"https://pub-96a085a109d24429a081d583b161aee8.r2.dev/王冢真唯吉他弹唱：挪威的森林.mp3":{"mode":"guitar-vocal","modeName":"吉他弹唱","performer":"王冢真唯","bound":true,"aliases":["王冢真唯","真唯"]}};
+    var ALIAS = {"サインはB":"暗号是B","STAR☆T☆RAIN -New Arrange Ver.-":"B小町：STAR☆T☆RAIN","偶像":"アイドル","无声之鱼":"声なき魚","名もなき何もかも":"皆无其名","空之箱":"空の箱","视界一隅腐朽之声":"視界の隅 朽ちる音","钻石的纯度":"ダイヤモンドの純度","不可思议的病历":"不可思議のカルテ","日常世界":"エブリデイワールド","摘星之歌":"星摘みの歌","新月之舞":"三日月の舞","星之对话":"星のダイアローグ","B的复仇":"Bのリベンジ","爱上你万岁":"愛してるばんざーい!","那就是我们的奇迹":"それは僕たちの奇跡","夢と葉桜":"梦与叶樱","朧月":"胧月","琴纱月：雨爱":"琴纱月：雨爱","纱月：雨爱":"琴纱月：雨爱","琴纱月：再见莫妮卡":"琴纱月：再见莫妮卡","纱月：再见莫妮卡":"琴纱月：再见莫妮卡","王冢真唯：不谓侠":"王冢真唯：不谓侠","真唯：不谓侠":"王冢真唯：不谓侠","王冢真唯：心如止水":"王冢真唯：心如止水","真唯：心如止水":"王冢真唯：心如止水","王冢真唯：雨爱":"王冢真唯：雨爱","真唯：雨爱":"王冢真唯：雨爱","王冢真唯：再见莫妮卡":"王冢真唯：再见莫妮卡","真唯：再见莫妮卡":"王冢真唯：再见莫妮卡","王冢真唯：真英雄":"王冢真唯：真英雄","真唯：真英雄":"王冢真唯：真英雄","王冢真唯：酒醉的蝴蝶":"王冢真唯伴奏协同：酒醉的蝴蝶","真唯：酒醉的蝴蝶":"王冢真唯伴奏协同：酒醉的蝴蝶","王冢真唯：水手":"王冢真唯伴奏协同：水手","真唯：水手":"王冢真唯伴奏协同：水手","王冢真唯：大海":"王冢真唯钢琴弹唱：大海","真唯：大海":"王冢真唯钢琴弹唱：大海","王冢真唯：处处吻":"王冢真唯吉他弹唱：处处吻","真唯：处处吻":"王冢真唯吉他弹唱：处处吻","王冢真唯：挪威的森林":"王冢真唯吉他弹唱：挪威的森林","真唯：挪威的森林":"王冢真唯吉他弹唱：挪威的森林"};
 
     // 归一化：去掉空白与书名号/引号。**标点（☆ ・ ： -）保留** —— 它们在歌名里有意义，
     // 「STAR☆T☆RAIN」去掉星号就再也认不出来了。
@@ -363,39 +207,61 @@
 
     // 建索引：每个键贡献「原键」和「去掉『歌手：』前缀的核心名」两种写法
     function buildIndex(map) {
-        var idx = [], seen = {};
-        function put(form, canon) {
-            var f = foldName(form);
-            if (!f || seen[f]) return;
-            seen[f] = 1;
-            idx.push({ f: f, u: map[canon], name: canon });
-        }
-        Object.keys(map).forEach(function (k) {
-            put(k, k);
-            var m = String(k).match(/^[^：:]{1,12}[：:]\s*(.+)$/);
-            if (m) put(m[1], k);
-        });
-        Object.keys(ALIAS).forEach(function (a) {
-            if (map[ALIAS[a]]) put(a, ALIAS[a]);
-        });
-        return idx;
+    var idx = [], seen = {};
+    function put(form, canon, rank) {
+        var f = foldName(form), value = map[canon], identity = f + '|' + JSON.stringify(value) + '|' + rank;
+        if (!f || seen[identity]) return;
+        seen[identity] = 1;
+        var url = Array.isArray(value) ? value[0] : value;
+        var meta = SONG_META_1021[url] || {};
+        idx.push({ f: f, u: value, name: canon, rank: rank, mode: meta.mode || '', bound: !!meta.bound, owners: meta.aliases || [] });
     }
+    Object.keys(map).forEach(function (k) {
+        put(k, k, 2);
+        var m = String(k).match(/^[^：:]{1,20}[：:]\s*(.+)$/);
+        if (m) put(m[1], k, 1);
+    });
+    Object.keys(ALIAS).forEach(function (a) { if (map[ALIAS[a]]) put(a, ALIAS[a], 2); });
+    return idx;
+}
 
     function lookUp(raw, index) {
-        var f = foldName(normName(raw));
-        if (!f) return null;
-        var i, e, best = null;
-        for (i = 0; i < index.length; i++) if (index[i].f === f) return index[i];
-        if (f.length < 2) return null;
-        for (i = 0; i < index.length; i++) {
-            e = index[i];
-            if (e.f.length < 2) continue;
-            if (f.indexOf(e.f) >= 0 || e.f.indexOf(f) >= 0) {
-                if (!best || e.f.length > best.f.length) best = e;
-            }
+    var value = normName(raw), f = foldName(value);
+    if (!f) return null;
+    var explicit = String(value).match(/(钢琴弹唱|吉他弹唱|伴奏协同|清唱)(?=[:：·\s]|$)/);
+    var wanted = explicit ? ({ '钢琴弹唱':'piano-vocal', '吉他弹唱':'guitar-vocal', '伴奏协同':'cooperative-vocal', '清唱':'a-cappella' })[explicit[1]] : '';
+    var head = value.indexOf('：') >= 0 ? value.slice(0,value.indexOf('：')) : value.indexOf(':') >= 0 ? value.slice(0,value.indexOf(':')) : '';
+    function unique(candidates) {
+        if (!candidates.length) return null;
+        var values = {}, chosen = null;
+        for (var j = 0; j < candidates.length; j++) {
+            var entry = candidates[j];
+            if (wanted && entry.mode !== wanted) continue;
+            if (entry.bound && head && !/^(清唱|伴奏协同|吉他弹唱|钢琴弹唱)$/.test(head) && !entry.owners.some(function(owner){return head.indexOf(owner)>=0;})) continue;
+            var key = JSON.stringify(entry.u);
+            values[key] = true;
+            if (!chosen) chosen = entry;
         }
-        return best;
+        // Different voices/versions sharing a bare title require a qualified trigger.
+        return Object.keys(values).length === 1 ? chosen : null;
     }
+    var exact = [], maxRank = 0, i;
+    for (i = 0; i < index.length; i++) if (index[i].f === f) {
+        var rank = index[i].rank || 1;
+        if (rank > maxRank) { exact = []; maxRank = rank; }
+        if (rank === maxRank) exact.push(index[i]);
+    }
+    if (exact.length) return unique(exact);
+    if (f.length < 2) return null;
+    var found = [], longest = 0;
+    for (i = 0; i < index.length; i++) {
+        var e = index[i];
+        if (e.f.length < 2 || !(f.indexOf(e.f) >= 0 || e.f.indexOf(f) >= 0)) continue;
+        if (e.f.length > longest) { found = []; longest = e.f.length; }
+        if (e.f.length === longest) found.push(e);
+    }
+    return unique(found);
+}
 
     var DONE = '__song_audio_done';
 
@@ -465,7 +331,9 @@
         var SONG_MAP = buildSongMap();
         var SOLO_MAP = SOLO_SONGS;
         var STAGE_MAP = STAGE_SONGS;
-        var SONG_IDX = buildIndex(SONG_MAP);
+        var VOCAL_MAP = {};
+        Object.keys(SONG_MAP).forEach(function(name){if(!Object.prototype.hasOwnProperty.call(SOLO_MAP,name)&&!Object.prototype.hasOwnProperty.call(STAGE_MAP,name))VOCAL_MAP[name]=SONG_MAP[name];});
+        var SONG_IDX = buildIndex(VOCAL_MAP);
         var SOLO_IDX = buildIndex(SOLO_MAP);
         var STAGE_IDX = buildIndex(STAGE_MAP);
         var KTV_MAP = buildKtvMap();
