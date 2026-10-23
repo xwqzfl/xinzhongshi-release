@@ -1,607 +1,265 @@
-/*XZS_UPDATER:16*/
-// 新中市自动更新器 —— 本脚本默认**永不改动**，只做一件事：把卡内脚本与世界书换成云端最新版。
-// 为什么单独放一条脚本：更新器是整套东西里唯一「不能坏」的组件。它只改别的脚本的内容，
-// 默认不改自己，所以任何一次坏发布都锁不死玩家（要给更新器加新能力时，才在发布时带 --updater）。
-// 玩家端：进卡自动检查 → 弹确认 → 应用 → 重载页面；也可以点脚本按钮「检查更新」手动触发。
+/*XZS_UPDATER:17*/
+/* Shared canonical forms: browser updater and offline builder must agree. */
+function xzsModel17() {
+  const norm = s => String(s == null ? '' : s).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
+  function fnv(s) { let h=2166136261; for(let i=0;i<s.length;i++) h=Math.imul(h^s.charCodeAt(i),16777619)>>>0; return h.toString(16).padStart(8,'0'); }
+  const clone = v => decode(encode(v));
+  const encode = v => JSON.stringify(v, (k,x)=>Object.prototype.toString.call(x)==='[object RegExp]'?{$xzsRegex:x.source,flags:x.flags}:x);
+  const decode = s => JSON.parse(s,(k,x)=>x&&typeof x.$xzsRegex==='string'?new RegExp(x.$xzsRegex,x.flags):x);
+  function stable(v) { if(Array.isArray(v))return '['+v.map(stable).join(',')+']'; if(v&&typeof v==='object')return '{'+Object.keys(v).sort().filter(k=>v[k]!==undefined).map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}'; return JSON.stringify(v); }
+  const hash = x => fnv(stable(x));
+  const scriptHash = s => fnv(norm(s));
+  // Local SHA-256 fallback for ordinary HTTP LAN access, where SubtleCrypto is unavailable.
+  function sha256Bytes(bytes) {
+    const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    const h=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+    const padded=new Uint8Array(Math.ceil((bytes.length+9)/64)*64);padded.set(bytes);padded[bytes.length]=128;
+    const v=new DataView(padded.buffer),bits=bytes.length*8;v.setUint32(padded.length-8,Math.floor(bits/4294967296));v.setUint32(padded.length-4,bits>>>0);
+    const w=new Uint32Array(64),ror=(n,b)=>(n>>>b)|(n<<(32-b));
+    for(let offset=0;offset<padded.length;offset+=64){
+      for(let i=0;i<16;i++)w[i]=v.getUint32(offset+i*4);
+      for(let i=16;i<64;i++){const x=w[i-15],y=w[i-2];w[i]=(w[i-16]+(ror(x,7)^ror(x,18)^(x>>>3))+w[i-7]+(ror(y,17)^ror(y,19)^(y>>>10)))>>>0;}
+      let [a,b,c,d,e,f,g,z]=h;
+      for(let i=0;i<64;i++){const t1=(z+(ror(e,6)^ror(e,11)^ror(e,25))+((e&f)^(~e&g))+K[i]+w[i])>>>0,t2=((ror(a,2)^ror(a,13)^ror(a,22))+((a&b)^(a&c)^(b&c)))>>>0;z=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;}
+      [a,b,c,d,e,f,g,z].forEach((x,i)=>h[i]=(h[i]+x)>>>0);
+    }
+    return Array.from(h,x=>x.toString(16).padStart(8,'0')).join('');
+  }
+  const build = s => (/\/\*XZS_BUILD:([\w.-]+)\*\//.exec(s||'')||[])[1]||'';
+  const number = s => Number((/-(\d{14})$/.exec(s||'')||[])[1]||0);
+  const mark = s => Number((/\/\*XZS_UPDATER:(\d+)\*\//.exec(s||'')||[])[1]||0);
+  const ext = c => c.extensions || (c.data&&c.data.extensions) || {};
+  const scripts = c => (ext(c).tavern_helper||{}).scripts || [];
+  const rxName = r => r.script_name == null ? r.scriptName : r.script_name;
+  function rx(r) {
+    // Player enablement and ID are deliberately not owned by the publisher.
+    const source={};for(const k of ['user_input','ai_output','slash_command','world_info','reasoning'])source[k]=!!r.source?.[k];
+    return {script_name:rxName(r),find_regex:r.find_regex||'',replace_string:r.replace_string||'',trim_strings:r.trim_strings||[],source,destination:{display:!!r.destination?.display,prompt:!!r.destination?.prompt},run_on_edit:!!r.run_on_edit,min_depth:r.min_depth??null,max_depth:r.max_depth??null};
+  }
+  const fields = c => ({version:c.version||'',first_messages:(c.first_messages||[]).map(s=>String(s).replace(/\r\n?/g,'\n')),creator:c.creator||'',creator_notes:c.creator_notes||'',description:c.description||''});
+  const implicit={addMemo:true,matchPersonaDescription:false,matchCharacterDescription:false,matchCharacterPersonality:false,matchCharacterDepthPrompt:false,matchScenario:false,matchCreatorNotes:false,group:'',groupOverride:false,groupWeight:100,caseSensitive:null,matchWholeWords:null,useGroupScoring:null,automationId:'',ignoreBudget:false,outletName:'',triggers:[],characterFilter:{isExclude:false,names:[],tags:[]}};
+  function worldEntry(e) {
+    let v;
+    if(e.strategy) v=clone(e);
+    else v={uid:e.uid,name:e.comment||'',enabled:!e.disable,
+      strategy:{type:e.constant?'constant':e.vectorized?'vectorized':'selective',keys:e.key||[],keys_secondary:{logic:['and_any','not_all','not_any','and_all'][e.selectiveLogic||0],keys:e.keysecondary||[]},scan_depth:e.scanDepth==null?'same_as_global':e.scanDepth},
+      position:{type: ['before_character_definition','after_character_definition','before_author_note','after_author_note','at_depth','before_example_messages','after_example_messages','outlet'][e.position],role:['system','user','assistant'][e.role||0],depth:e.depth,order:e.order},content:e.content||'',probability:e.useProbability?e.probability:100,
+      recursion:{prevent_incoming:e.excludeRecursion,prevent_outgoing:e.preventRecursion,delay_until:typeof e.delayUntilRecursion==='number'&&e.delayUntilRecursion>0?e.delayUntilRecursion:null},
+      effect:{sticky:e.sticky>0?e.sticky:null,cooldown:e.cooldown>0?e.cooldown:null,delay:e.delay>0?e.delay:null}};
+    v.content=String(v.content||'').replace(/\r\n?/g,'\n');
+    v.strategy.keys=(v.strategy.keys||[]).map(String);v.strategy.keys_secondary.keys=(v.strategy.keys_secondary.keys||[]).map(String);
+    for(const k of Object.keys(implicit))v[k]=e[k]===undefined?clone(implicit[k]):e[k];
+    if(e.extra)v.extra=e.extra;
+    return v;
+  }
+  const world = entries => entries.map(worldEntry).sort((a,b)=>a.uid-b.uid);
+  function want(c,d) {
+    const ss=scripts(c);
+    if(d.kind==='script') {const all=ss.filter(s=>s.name===d.name);return all.length>0&&all.every(s=>scriptHash(s.content)===d.contentHash);}
+    if(d.kind==='pack')return d.items.every(i=>{const all=ss.filter(s=>s.name===i.name);return all.length>0&&all.every(s=>scriptHash(s.content)===i.contentHash)});
+    if(d.kind==='regex')return d.items.every(i=>{const all=(ext(c).regex_scripts||[]).filter(r=>rxName(r)===i.name);return all.length>0&&all.every(r=>hash(rx(r))===i.contentHash)});
+    if(d.kind==='fields')return hash(fields(c))===d.contentHash;
+    return false;
+  }
+  function putScript(c,item,enabled) {
+    const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;
+    e.tavern_helper=e.tavern_helper||{};const ss=e.tavern_helper.scripts=e.tavern_helper.scripts||[];
+    const found=ss.filter(s=>s.name===item.name);
+    if(found.length)found.forEach(s=>s.content=item.content);
+    else ss.push({type:'script',name:item.name,content:item.content,enabled:!!enabled,id:'xzs-'+Date.now()+'-'+Math.random().toString(36).slice(2),info:'新中市组件',data:{},button:{enabled:true,buttons:[]},export_with:{data:true,button:true}});
+  }
+  function apply(c,d,text) {
+    if(d.kind==='script')putScript(c,{name:d.name,content:text},true);
+    if(d.kind==='pack')JSON.parse(text).scripts.forEach(s=>putScript(c,s,false));
+    if(d.kind==='fields'){const f=JSON.parse(text);for(const k of Object.keys(fields(f)))if(f[k]!=null)c[k]=clone(f[k]);}
+    if(d.kind==='regex'){
+      const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;
+      let list=e.regex_scripts||[];for(const r of JSON.parse(text).scripts){const hits=list.filter(s=>rxName(s)===rxName(r));if(hits.length)list=list.map(s=>rxName(s)===rxName(r)?{...clone(r),id:s.id,enabled:s.enabled}:s);else list.push(clone(r));}e.regex_scripts=list;
+    }return c;
+  }
+  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scripts,rxName,rx,fields,worldEntry,world,want,apply};
+}
+
+
+/* Source is bundled with model.cjs by build.cjs. No runtime dependency download. */
 (function () {
-  // ⚠ 2026-10-09：取源不再写死单点。raw.githubusercontent.com 国内经常不通，
-  //   玩家没代理就永远收不到更新（实测直连只有 jsDelivr 系可用）。现在按序回退，
-  //   哪条通了就记住它，后续文件都走它，不必每个文件都把死源重试一遍。
-  var RAW_MIRRORS = [
-    { u: 'https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/', k: '' },
-    { u: 'https://api.github.com/repos/xwqzfl/xinzhongshi-release/contents/', k: 'ghapi' },
-    { u: 'https://fastly.jsdelivr.net/gh/xwqzfl/xinzhongshi-release@main/', k: '' },
-    { u: 'https://cdn.jsdelivr.net/gh/xwqzfl/xinzhongshi-release@main/', k: '' },
-    { u: 'https://ghproxy.net/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/', k: '' },
-    { u: 'https://gh-proxy.com/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/', k: '' }
+  'use strict';
+  const M=xzsModel17();
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本';
+  const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,auto:8000};
+  let host=window;
+  try { while(host.parent&&host.parent!==host&&host.parent.document)host=host.parent; }catch(_){}
+  const timer=host.setTimeout.bind(host),clear=host.clearTimeout.bind(host);
+  const previous=host.__xzsUpdaterRuntime17;
+  if(previous?.busy){window.__xzsUpdater=previous.api;return;}
+  const R={busy:false,cancelled:false,stage:'idle',message:'尚未检查',cache:previous?.cache||new Map(),loaded:0,total:0,controller:null,api:null};
+  host.__xzsUpdaterRuntime17=R;
+  const bases=[
+    ['https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/',''],
+    ['https://api.github.com/repos/xwqzfl/xinzhongshi-release/contents/','api'],
+    ['https://fastly.jsdelivr.net/gh/xwqzfl/xinzhongshi-release@main/',''],
+    ['https://cdn.jsdelivr.net/gh/xwqzfl/xinzhongshi-release@main/',''],
+    ['https://ghproxy.net/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/',''],
+    ['https://gh-proxy.com/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/','']
   ];
-  var RAW_IDX = 0;
-  var RAW = RAW_MIRRORS[0].u;
-  var APP = '新中市通讯 · 验证版 1.0';      // 被更新的目标脚本
-  var SONG = '唱歌 · 音频直链';              // 另一个被更新的卡内脚本（歌曲/演奏/演出标记→内联播放器）
-  var CARD_MATCH = '新中市人间世';           // 只在自家卡上工作
-  var BUILD_RE = /\/\*XZS_BUILD:([\w.\-]+)\*\//;
-  var LS_BACKUP = 'xzs_updater_backup';
-  var LS_CF = 'xzs_cf_hash';        // 已应用的卡字段哈希（卡字段写在卡里，删不掉；这条标记够用）
-  var LS_NOTES = 'xzs_notes';       // 最近一次更新的更新日志（app 的修复页会读它显示「本版更新」）
-  var UPDATER_NAME = '新中市更新器';   // 我自己这条脚本的名字（自更新时用）
-  var WB_MARK = '【系统】世界书版本';   // 发布时烤进世界书的**禁用条目**，玩家端读它做完整性检查
-  // 自更新的版本标记：卡里的脚本会被酒馆重新序列化（换行等），所以**不能拿内容哈希比**，
-  // 用源码首行的这个标记比才稳。改更新器时把它 +1，并在发布时带 --updater。
-  var MARK_RE = /\/\*XZS_UPDATER:(\d+)\*\//;
-  // 唱歌脚本同理：它没有 build 标记，用自己的版本标记比对（清单里的 songMark）
-  var SONG_MARK_RE = /\/\*XZS_SONG:(\d+)\*\//;
-// Managed script names and content are authoritative in the verified bundle, not a fixed name list.
-  var CHECK_DELAY = 8000;
-
-  // 脚本 iframe 里这些是全局函数；退化时从父页 TavernHelper 拿一份
-  function api(name) {
-    try { if (typeof window[name] === 'function') return window[name].bind(window); } catch (e) {}
-    try { var T = window.parent.TavernHelper; if (T && typeof T[name] === 'function') return T[name].bind(T); } catch (e) {}
-    return null;
-  }
-  function say(kind, msg) {
-    try { console.log('[新中市更新] ' + kind + ' | ' + msg); } catch (e) {}
-    try { var t = window.toastr; if (t && typeof t[kind] === 'function') t[kind](msg, '新中市更新', { timeOut: kind === 'error' ? 15000 : 6000 }); } catch (e) {}
-  }
-  function cfFp(fm) {
-    return fnv1a(fm.map(function (x) { return String(x).replace(/\r\n?/g, '\n'); }).join('\u0001'));
-  }
-
-  function fnv1a(s) {
-    var h = 0x811c9dc5;
-    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
-    return ('0000000' + h.toString(16)).slice(-8);
-  }
-function fnv1a(s) {
-    var h = 0x811c9dc5;
-    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
-    return ('0000000' + h.toString(16)).slice(-8);
-  }
-
-
-  function managedScriptText(text) { return String(text || '').replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim(); }
-  function managedScriptHash(text) { return fnv1a(managedScriptText(text)); }
-  function parseManagedPack(text) {
-    var pack;try { pack = JSON.parse(text); } catch (e) { throw new Error('脚本包格式不正确，已取消写卡'); }
-    if (!pack || !Array.isArray(pack.scripts)) throw new Error('脚本包缺少条目列表，已取消写卡');
-    var names = Object.create(null);
-    pack.scripts.forEach(function (item) {
-      if (!item || typeof item.name !== 'string' || !item.name.trim() || item.name !== item.name.trim() || typeof item.content !== 'string' || !item.content.trim()) throw new Error('脚本包条目不完整，已取消写卡');
-      if (names[item.name] || [APP, UPDATER_NAME, SONG].indexOf(item.name) >= 0) throw new Error('脚本包名称重复或与核心脚本冲突，已取消写卡');
-      names[item.name] = true;
-    });
-    return pack;
-  }
-  function managedScriptsNeedUpdate(scripts, pack) {
-    return !!(pack && pack.scripts.some(function (item) {
-      var found = scripts.filter(function (s) { return String(s.name) === item.name; });
-      return !found.length || found.some(function (s) { return managedScriptHash(s.content) !== managedScriptHash(item.content); });
-    }));
-  }
-  function mergeManagedScripts(scripts, pack) {
-    pack.scripts.forEach(function (item) {
-      var found = scripts.filter(function (s) { return String(s.name) === item.name; });
-      if (found.length) found.forEach(function (hit) {
-        if (managedScriptHash(hit.content) === managedScriptHash(item.content)) return;
-        lsSet(LS_BACKUP + '|jb|' + item.name, hit.content);
-        hit.content = item.content;
-      });
-      else scripts.push({type:'script',enabled:false,name:item.name,id:String(Date.now())+'-'+Math.round(Math.random()*1e9),content:item.content,info:'发布包托管脚本；新增条目默认停用，已有开关保持原状。',button:{enabled:true,buttons:[]},data:{},export_with:{data:true,button:true}});
-    });
-    return scripts;
-  }
-
-  // 正则脚本指纹（名字 + findRegex + replaceString）—— 跟发布端 rxScripts 的算法必须一致
-  // ⚠ 用 **TavernRegex** 的字段名（更新器从 ch.extensions.regex_scripts 读到的是这个格式）
-  function rxFp(list) {
-    var s = (list || []).map(function (r) {
-      return [String(r.script_name || ''), String(r.find_regex || ''), String(r.replace_string || '')].join('\u0001');
-    }).join('\u0002');
-    return fnv1a(s);
-  }
-// 失败重试：fn 返回 Promise；失败后等 ms 再试，共 tries 次。写卡这种大请求靠它扛瞬时抖动。
-  function withRetry(fn, tries, ms) {
-    tries = tries || 3;
-    return fn().catch(function (e) {
-      if (tries <= 1) throw e;
-      return new Promise(function (r) { setTimeout(r, ms || 1500); })
-        .then(function () { return withRetry(fn, tries - 1, (ms || 1500) * 2); });
-    });
-  }
-  function lsGet(k) { try { return window.localStorage.getItem(k) || ''; } catch (e) { return ''; } }
-  function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
-  var TRY_TIMEOUT = 15000;   // 单个源最多等 15 秒；不通的源若是「挂住」而不是「秒失败」，
-                             // 没有这条就会一直等下去（国内 raw 常见这种表现）
-  // contents 接口的地址与普通 raw 不同：要 ?ref=main，并带 Accept 头才返回原文
-  function urlOf(base, path) {
-    return base.k === 'ghapi' ? (base.u + path + '?ref=main') : (base.u + path);
-  }
-  function fetchOne(base, path) {
-    var opt = { cache: 'no-store' };
-    if (base.k === 'ghapi') opt.headers = { 'Accept': 'application/vnd.github.raw' };
-    return new Promise(function (resolve, reject) {
-      var ac = (typeof AbortController === 'function') ? new AbortController() : null;
-      opt.signal = ac ? ac.signal : undefined;
-      var done = false;
-      var timer = setTimeout(function () {
-        if (done) return;
-        done = true;
-        try { if (ac) ac.abort(); } catch (e) {}
-        reject(new Error('超时'));
-      }, TRY_TIMEOUT);
-      fetch(urlOf(base, path), opt).then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
-      }).then(function (t) {
-        if (done) return;
-        done = true; clearTimeout(timer); resolve(t);
-      }).catch(function (e) {
-        if (done) return;
-        done = true; clearTimeout(timer); reject(e);
-      });
-    });
-  }
-  // 传**相对文件名**（如 'manifest.json'），按 RAW_MIRRORS 顺序试；通了就把它设为当前源。
-  function fetchText(path) {
-    var i = RAW_IDX;
-    function next() {
-      if (i >= RAW_MIRRORS.length) {
-        RAW_IDX = 0;
-        return Promise.reject(new Error('所有更新源都取不到 ' + path + '（请检查网络或代理）'));
-      }
-      var base = RAW_MIRRORS[i];
-      return fetchOne(base, path).then(function (t) {
-        RAW_IDX = i; RAW = base.u;
-        return t;
-      }).catch(function () { i++; return next(); });
+  function api(n,required=true){const f=host.TavernHelper?.[n]||window[n];if(typeof f==='function')return f.bind(host.TavernHelper||window);if(required)throw Error('酒馆助手缺少接口：'+n);return null;}
+  function context(){try{return host.SillyTavern?.getContext?.()||{};}catch(_){return {};}}
+  function identity(){const c=context();return JSON.stringify([api('getCurrentCharacterName',false)?.()||c.name2||'',c.getCurrentChatId?.()||c.chatId||c.chat_id||'',c.chatMetadata?.world_info||'']);}
+  function binding(){const ctx=context();let chat=ctx.chatMetadata?.world_info; if(chat===undefined&&!ctx.chatMetadata)chat=api('getChatWorldbookName',false)?.('current');return {global:api('getGlobalWorldbookNames',false)?.()||[],char:api('getCharWorldbookNames',false)?.('current')||{},chat:chat||''};}
+  function guard(s){if(identity()!==s.identity||M.stable(binding())!==s.binding)throw Error('角色、聊天或世界书绑定已改变。已停止继续写入，请回到原聊天检查。');}
+  function mb(n){return (n/1048576).toFixed(2)+' MiB';}
+  function panel(){
+    const doc=host.document;if(!doc?.body)return null;
+    let el=doc.getElementById('xzs-update-status17');
+    if(!el){el=doc.createElement('section');el.id='xzs-update-status17';el.setAttribute('role','status');el.style.cssText='position:fixed;inset:auto 16px 16px auto;margin:0;z-index:2147483600;width:min(400px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box;padding:16px;border:1px solid #66849b;border-radius:12px;background:#152435;color:#f4f7fa;box-shadow:0 8px 28px #0008;font:14px/1.55 system-ui;white-space:normal;';
+      const title=doc.createElement('strong');title.textContent='新中市更新';el.appendChild(title);
+      const msg=doc.createElement('div');msg.className='message';msg.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0';el.appendChild(msg);
+      const prog=doc.createElement('progress');prog.max=100;prog.style.width='100%';el.appendChild(prog);
+      const detail=doc.createElement('div');detail.className='detail';el.appendChild(detail);
+      const actions=doc.createElement('div');actions.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin-top:10px';el.appendChild(actions);
+      for(const [label,action]of [['重试检查','retry'],['取消下载','cancel'],['恢复备份','recover'],['导出备份','export'],['刷新页面','reload'],['收起','close']]){const b=doc.createElement('button');b.textContent=label;b.dataset.action=action;b.style.cssText='padding:5px 9px;border:1px solid #7893a5;border-radius:6px;color:inherit;background:#283e53;cursor:pointer';actions.appendChild(b);}
+      if(typeof el.showPopover==='function')el.setAttribute('popover','manual');doc.body.appendChild(el);
     }
-    return next();
+    el.hidden=false;if(typeof el.showPopover==='function'&&!el.matches(':popover-open')){try{el.showPopover();}catch(_){}}
+    el.querySelector('.message').textContent=R.message;
+    const p=el.querySelector('progress');if(R.stage==='download'&&R.total>0)p.value=Math.min(100,R.loaded/R.total*100);else if(R.stage==='done')p.value=100;else p.removeAttribute('value');
+    el.querySelector('.detail').textContent=R.stage==='download'?mb(R.loaded)+' / '+mb(R.total)+' · '+Math.min(100,Math.floor(R.loaded/Math.max(1,R.total)*100))+'%（下载）':(R.busy?'处理中，完成前请保持此页面打开。':'');
+    el.querySelectorAll('button').forEach(b=>{
+      const a=b.dataset.action;b.disabled=(R.busy&&a!=='cancel'&&a!=='close')||(a==='cancel'&&R.stage!=='download'&&R.stage!=='check');
+      b.onclick=()=>{if(a==='retry')check(true);if(a==='cancel'){R.cancelled=true;R.controller?.abort();}if(a==='recover')recover();if(a==='export')exportBackup();if(a==='reload')host.location.reload();if(a==='close')el.hidden=true;};
+    });return el;
   }
-  // ⚠ getCharacter 返回的是**扁平化**的 Character：extensions 在顶层（不在 data 下），
-  //   而且**没有 name 字段** —— 卡名藏在 avatar（'<卡名>.png'）里。这两点都踩过。
-  function scriptsOf(ch) {
-    try { return (ch.extensions.tavern_helper.scripts) || []; } catch (e) {}
-    try { return (ch.data.extensions.tavern_helper.scripts) || []; } catch (e) {}   // 兼容旧形状
-    return [];
+  function status(stage,msg){R.stage=stage;R.message=msg;panel();try{host.console.log('[新中市更新17]',stage,msg);}catch(_){} }
+  function db(){return new Promise((resolve,reject)=>{if(!host.indexedDB)return reject(Error('浏览器不支持可靠备份存储，已取消写入'));const q=host.indexedDB.open('xzs-updater-safe-v17',1);q.onupgradeneeded=()=>q.result.createObjectStore('records');q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error);q.onblocked=()=>reject(Error('备份数据库被占用'));});}
+  async function storage(key,value){const d=await db();return new Promise((resolve,reject)=>{const t=d.transaction('records',value===undefined?'readonly':'readwrite'),s=t.objectStore('records');const q=value===undefined?s.get(key):s.put(M.encode(value),key);let out;q.onsuccess=()=>out=q.result;t.oncomplete=()=>{d.close();resolve(value===undefined?(out?M.decode(out):null):value)};t.onerror=t.onabort=()=>{d.close();reject(t.error||Error('备份存储失败'))};});}
+  function stop(){if(R.cancelled)throw Error('下载已取消，尚未提交本次更新');}
+  async function sha(text){const bytes=new TextEncoder().encode(text);if(!host.crypto?.subtle)return M.sha256Bytes(bytes);const h=await host.crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(h),x=>x.toString(16).padStart(2,'0')).join('');}
+  async function fetchOne(base,path,d){
+    stop();const ac=new AbortController();R.controller=ac;
+    let idle,limit,connect,reason='',received=0;const before=R.loaded;
+    const abort=why=>{reason=why;ac.abort();};
+    connect=timer(()=>abort('连接超时'),CONFIG.connect);limit=timer(()=>abort('下载超过最长等待时间'),CONFIG.total);
+    function tick(){clear(idle);idle=timer(()=>abort('下载长时间无进展'),CONFIG.idle);}
+    try{
+      const url=base[0]+path+(base[1]==='api'?'?ref=main':'');
+      const response=await host.fetch(url,{cache:'no-store',signal:ac.signal,headers:base[1]==='api'?{Accept:'application/vnd.github.raw'}:{}});
+      clear(connect);if(!response.ok)throw Error('HTTP '+response.status);tick();
+      let text;
+      if(response.body?.getReader){const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true});const chunks=[];while(true){const chunk=await reader.read();if(chunk.done)break;stop();received+=chunk.value.byteLength;if(received>(d?.bytes||2097152))throw Error('下载内容超过清单大小限制');chunks.push(decoder.decode(chunk.value,{stream:true}));tick();if(d){R.loaded=before+received;panel();}}chunks.push(decoder.decode());text=chunks.join('');}
+      else {text=await response.text();received=new TextEncoder().encode(text).length;if(received>(d?.bytes||2097152))throw Error('下载内容超过大小限制');}
+      stop();if(d){if(received!==d.bytes)throw Error('文件长度不匹配');if(await sha(text)!==d.sha256)throw Error('文件SHA-256校验失败');R.loaded=before+received;panel();}return text;
+    }catch(e){R.loaded=before;stop();throw Error(reason||e.message);}finally{clear(connect);clear(idle);clear(limit);R.controller=null;}
   }
-  function appScriptOf(ch) {
-    var ss = scriptsOf(ch);
-    for (var i = 0; i < ss.length; i++) if (ss[i].name === APP) return ss[i];
-    return null;
+  async function download(path,d){
+    if(d&&R.cache.has(d.sha256)){R.loaded+=d.bytes;panel();return R.cache.get(d.sha256);}
+    let last;
+    for(let i=0;i<bases.length;i++){stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));try{const t=await fetchOne(bases[i],path,d);if(d)R.cache.set(d.sha256,t);return t;}catch(e){last=e.message;stop();}}
+    throw Error('所有更新源失败：'+last);
   }
-  // 取**真实卡名**，用于 updateCharacterWith / replaceCharacter。
-  // ⚠ 必须验证候选名**真的存在**：fromCharacterToPayload 用 `名字 + '.png'` 当 avatar_url 写回文件，
-  //   名字错了会把卡写到别的文件、或直接抛「角色卡 'X' 不存在」。
-  //   （2026-09-15 踩过：优先用的 ctx.characters[characterId].avatar 回了一个不存在的旧卡名，
-  //    更新在最后一步失败。）所以这里**逐个候选拿 getCharacter 验一遍**，能取到才算数。
-  function resolveCardName(ch) {
-    var cands = [];
-    function push(x) { x = String(x || '').replace(/\.png$/, ''); if (x && cands.indexOf(x) < 0) cands.push(x); }
-    try { var g = api('getCurrentCharacterName'); if (g) push(g()); } catch (e) {}
-    try { if (ch && ch.avatar) push(ch.avatar); } catch (e) {}
-    try {
-      var ctx = (window.SillyTavern && window.SillyTavern.getContext) ? window.SillyTavern.getContext() : null;
-      if (ctx && ctx.name2) push(ctx.name2);
-    } catch (e) {}
-    if (!cands.length) return Promise.resolve('');
-    var gc = api('getCharacter');
-    if (!gc) return Promise.resolve(cands[0]);
-    var i = 0;
-    function next() {
-      if (i >= cands.length) return Promise.resolve('');
-      var nm = cands[i++];
-      return Promise.resolve(gc(nm)).then(function () { return nm; }, function () { return next(); });
+  function manifest(text){
+    const m=JSON.parse(text);if(m.schema!==2||!M.number(m.release)||!m.worldbookName||!m.worldbookNamePrefix||!m.components)throw Error('不支持的更新清单，已停止');
+    const names=new Set(),files=Object.values(m.components);if(!files.length)throw Error('清单没有组件');
+    for(const d of files){if(!['script','world','pack','regex','fields'].includes(d.kind)||!/^assets\/[a-f0-9]{64}\/[\w.-]+$/.test(d.path)||!Number.isSafeInteger(d.bytes)||d.bytes<=0||d.bytes>50000000||!/^[a-f0-9]{64}$/.test(d.sha256)||!d.label||!d.contentHash)throw Error('清单组件格式错误');
+      if(d.path.split('/')[1]!==d.sha256)throw Error('清单文件地址与校验值不一致');
+      if(d.kind==='script'){if(!d.name||names.has(d.name))throw Error('脚本名称冲突');names.add(d.name);}
+      if(d.kind==='pack'||d.kind==='regex'){if(!Array.isArray(d.items)||!d.items.length)throw Error('清单条目缺失');const own=new Set();for(const i of d.items){if(!i.name||!i.contentHash||own.has(i.name))throw Error('重复或无效条目');own.add(i.name);if(d.kind==='pack'){if(names.has(i.name))throw Error('脚本名称冲突');names.add(i.name);}}}
     }
-    return Promise.resolve(next());
+    // Validate pack/core conflicts independently of object order.
+    const all=files.flatMap(d=>d.kind==='script'?[d.name]:d.kind==='pack'?d.items.map(i=>i.name):[]);if(new Set(all).size!==all.length)throw Error('脚本名称冲突');
+    return m;
   }
-  function buildOf(text) { var m = BUILD_RE.exec(text || ''); return m ? m[1] : ''; }
-  // 构建号末段是 14 位时间戳（YYYYMMDDHHmmss）。版本比对**只认它** —— 别拿整个构建号做字符串比较。
-  function buildNum(b) { var m = /(\d{14})\s*$/.exec(String(b || '')); return m ? Number(m[1]) : 0; }
-  function isOurCard(ch) {
-    var s = '';
-    try { s = String(ch.avatar || ''); } catch (e) {}
-    if (!s) { try { s = String(ch.name || ''); } catch (e) {} }
-    return s.indexOf(CARD_MATCH) >= 0;
+  const matches=(hash,d)=>hash===d.contentHash||(d.compatibleHashes||[]).includes(hash);
+  function installed(c,d){if(d.kind==='script'){const hits=M.scripts(c).filter(x=>x.name===d.name);return hits.length>0&&hits.every(x=>matches(M.scriptHash(x.content),d));}return M.want(c,d);}
+  async function readWorld(name){try{return await api('getWorldbook')(name);}catch(e){const names=api('getWorldbookNames',false)?.();if(names&&!names.includes(name))return null;throw e;}}
+  function chooseBook(m,b){const names=[b.char.primary,...(b.char.additional||[]),b.chat,...b.global].filter(Boolean);if(names.includes(m.worldbookName))return m.worldbookName;return names.find(n=>n.startsWith(m.worldbookNamePrefix))||m.worldbookName;}
+  async function waitWrite(label,fn){status('write',label);const t=timer(()=>status('uncertain',label+'\n保存耗时较长，结果尚未确认。请勿重复提交；可以保持页面等待，或重开后检查备份记录。'),CONFIG.writeNotice);try{return await fn();}finally{clear(t);}}
+  async function writeChecked(label,write,verify,s){
+    let last;for(let i=0;i<3;i++){
+      guard(s);let thrown=null;try{const result=await waitWrite(label+'（第'+(i+1)+'次）',write);if(result===false)thrown=Error(label+'返回失败');}catch(e){thrown=e;}
+      guard(s);status('verify','正在回读确认：'+label);try{if(await verify())return;}catch(e){last=e;}
+      last=thrown||last||Error(label+'回读不一致');if(i<2)await new Promise(r=>timer(r,1500*(i+1)));
+    }throw last;
   }
-
-  // 找到玩家当前那本新中市世界书（先精确匹配清单声明的名字、再按前缀匹配）；找不到返回 ''
-  function findWbName(names, mf) {
-    var i;
-    for (i = 0; i < names.length; i++) if (String(names[i]) === mf.worldbookName) return String(names[i]);
-    for (i = 0; i < names.length; i++) if (String(names[i]).indexOf(mf.worldbookNamePrefix) === 0) return String(names[i]);
-    return '';
+  function validatePayload(d,t){
+    if(d.kind==='script'){if(M.scriptHash(t)!==d.contentHash)throw Error('脚本内容指纹不一致');new Function(t);if(d.name===NAME&&M.mark(t)!==d.mark)throw Error('更新器标记不一致');}
+    if(d.kind==='world'){const w=JSON.parse(t);if(!w.entries||M.hash(M.world(Object.values(w.entries)))!==d.contentHash)throw Error('世界书内容不一致');const ids=Object.values(w.entries).map(e=>e.uid);if(new Set(ids).size!==ids.length)throw Error('世界书条目UID重复');}
+    if(d.kind==='fields'&&M.hash(M.fields(JSON.parse(t)))!==d.contentHash)throw Error('卡字段内容不一致');
+    if(d.kind==='pack'||d.kind==='regex'){const p=JSON.parse(t);if(!Array.isArray(p.scripts)||p.scripts.length!==d.items.length)throw Error('脚本包条目不一致');const names=new Set();for(let i=0;i<p.scripts.length;i++){const v=p.scripts[i],n=d.kind==='pack'?v.name:M.rxName(v);const expected=d.items.find(x=>x.name===n);if(names.has(n)||!expected||(d.kind==='pack'?M.scriptHash(v.content):M.hash(M.rx(v)))!==expected.contentHash)throw Error('脚本包内容不一致');names.add(n);if(d.kind==='pack')new Function(v.content);}}
   }
-  // 所有可能挂载世界书的地方都问一遍：全局激活 + 角色卡绑定 + 聊天绑定
-  function allWbNames() {
-    var out = [], i, v;
-    function add(x) { if (x && out.indexOf(String(x)) < 0) out.push(String(x)); }
-    try { var g = api('getGlobalWorldbookNames'); if (g) (g() || []).forEach(add); } catch (e) {}
-    try {
-      var c = api('getCharWorldbookNames');
-      if (c) { v = c('current') || {}; add(v.primary); (v.additional || []).forEach(add); }
-    } catch (e) {}
-    // TavernHelper's getter removes metadata.world_info when its name cache is cold.
-    // Preserve the persisted binding while checking updates; a read must not delete it.
-    var hasSavedBinding = false;
-    try {
-      var host = window;
-      for (var depth = 0; depth < 5; depth++) {
-        if (host.SillyTavern && typeof host.SillyTavern.getContext === 'function') {
-          var context = host.SillyTavern.getContext();
-          var saved = context && context.chatMetadata && context.chatMetadata.world_info;
-          if (typeof saved === 'string' && saved.trim()) { add(saved); hasSavedBinding = true; }
-          break;
-        }
-        if (!host.parent || host.parent === host) break;
-        host = host.parent;
-      }
-    } catch (e) {}
-    if (!hasSavedBinding) {
-      try { var q = api('getChatWorldbookName'); if (q) add(q('current')); } catch (e) {}
+  async function execute(manual){
+    status('check','正在读取角色卡');const c=await api('getCharacter')('current');
+    if(!String(c.avatar||'').includes('新中市人间世'))throw Error('当前不是新中市角色卡');
+    const name=String(c.avatar).replace(/\.png$/,'');const s={identity:identity(),binding:M.stable(binding()),name};
+    const m=manifest(await download('manifest.v2.json'));guard(s);
+    const b=binding(),book=chooseBook(m,b),world=await readWorld(book);guard(s);
+    const localRelease=await storage('installed:'+name);const wbMark=(world||[]).find(e=>(e.name||e.comment)===WB_MARK)?.content||'';
+    const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
+    if(M.number(m.release)<highest)throw Error('更新源仍是旧版本，已阻止全部组件降级。稍后重试。');
+    let plan=Object.entries(m.components).filter(([key,d])=>d.kind==='world'?!world||!matches(M.hash(M.world(world)),d):!installed(c,d));
+    // Never install a numerically older updater even if a stale manifest has a newer release label.
+    for(const [k,d]of plan)if(d.kind==='script'&&d.name===NAME&&M.scripts(c).some(x=>x.name===NAME&&M.mark(x.content)>d.mark))throw Error('清单中的更新器版本较旧，已停止');
+    const old=await storage('journal:'+name);if(old&&old.state!=='complete'&&old.state!=='restored'&&old.release!==m.release)throw Error('存在未完成更新；请先恢复备份或用原版本清单继续，避免覆盖恢复记录');
+    if(!plan.length){if(old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}await storage('installed:'+name,{release:m.release});status('done','所有组件已经核实为最新版本：'+m.release);return;}
+    R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);R.loaded=0;
+    const message='本次更新：\n'+plan.map(([k,d])=>d.label+' · '+mb(d.bytes)).join('\n')+'\n总下载量：'+mb(R.total)+'\n将先保存备份，再逐项写入并验证。\n现在更新吗？';
+    if(!host.confirm(message)){status('cancelled','已取消更新，未写入。');return;}
+    const f=plan.find(([k,d])=>d.kind==='fields');
+    if(f&&!host.confirm('检测到开场白或角色描述与官方版本不同，可能包含你的自定义内容。\n确定：备份后同步官方内容。\n取消：本次保留这些字段，其他组件继续更新。'))plan=plan.filter(([k,d])=>d.kind!=='fields');
+    const files={};R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);
+    for(const [k,d]of plan){guard(s);const t=await download(d.path,d);status('verify','正在校验：'+d.label);validatePayload(d,t);files[k]=t;}
+    stop();guard(s);
+    if(!plan.length){status('cancelled','已保留自定义字段，未写入。');return;}
+    // Persist full before-images once. Quota failure aborts before any host mutation.
+    let j=old&&old.state!=='complete'&&old.state!=='restored'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
+    if(j.book!==book)throw Error('恢复记录的世界书目标不一致');
+    for(const [k,d]of plan)if(!j.plan.some(x=>x.key===k))j.plan.push({key:k,descriptor:d});
+    await storage('journal:'+name,j);const saved=await storage('journal:'+name);if(M.encode(saved)!==M.encode(j))throw Error('备份回读失败，已取消写入');
+    const changed=await api('getCharacter')(name);if(M.encode(changed)!==M.encode(c))throw Error('下载期间角色卡已改变，已停止写入，请重新检查');guard(s);
+    if(plan.some(([k,d])=>d.kind==='world')){const now=await readWorld(book);if(M.hash(now?M.world(now):null)!==M.hash(world?M.world(world):null))throw Error('下载期间世界书已改变，已停止写入，请重新检查');guard(s);}
+    // Separate updater-last write allows other components to finish before iframe replacement.
+    const wd=plan.find(([k,d])=>d.kind==='world');
+    if(wd){api('importRawWorldbook');const [k,d]=wd;j.state='world';await storage('journal:'+name,j);
+      await writeChecked('保存世界书',()=>api('importRawWorldbook')(book,files[k]),async()=>{const w=await readWorld(book);return !!w&&matches(M.hash(M.world(w)),d)},s);
+      if(![b.char.primary,...(b.char.additional||[]),b.chat,...b.global].includes(book)){guard(s);j.addedBinding=true;await storage('journal:'+name,j);await waitWrite('绑定世界书',()=>api('rebindGlobalWorldbooks')([...b.global,book]));const now=binding();if(!now.global.includes(book))throw Error('世界书已保存，但绑定未通过回读');s.binding=M.stable(now);}
     }
-    return out;
+    const cardPlan=plan.filter(([k,d])=>d.kind!=='world'&&!(d.kind==='script'&&d.name===NAME));
+    if(cardPlan.length){j.state='card';await storage('journal:'+name,j);await writeChecked('保存角色卡',()=>api('updateCharacterWith')(name,card=>{guard(s);for(const [k,d]of cardPlan)M.apply(card,d,files[k]);return card;}),async()=>{const read=await api('getCharacter')(name);return cardPlan.every(([k,d])=>installed(read,d))},s);}
+    const ud=plan.find(([k,d])=>d.kind==='script'&&d.name===NAME);
+    if(ud){j.state='updater';await storage('journal:'+name,j);const [k,d]=ud;await writeChecked('保存更新器',()=>api('updateCharacterWith')(name,card=>{guard(s);return M.apply(card,d,files[k]);}),async()=>installed(await api('getCharacter')(name),d),s);}
+    j.state='complete';await storage('journal:'+name,j);await storage('installed:'+name,{release:m.release});
+    try{host.localStorage.setItem('xzs_notes',String(m.notes||''));}catch(_){}
+    status('done','更新完成：'+m.release+'\n本次选定组件均已保存并回读验证。\n备份已保留，可刷新页面继续。'+(f&&!plan.some(([k,d])=>d.kind==='fields')?'\n已按你的选择保留自定义字段。':''));
   }
-  // 世界书的**真实状态**：当前那本叫什么、书里记的版本号是什么。书没了 → name 为空。
-  function wbState(mf) {
-    var gw = api('getWorldbook');
-    if (!gw) return Promise.resolve({ name: '', build: '' });
-    var name = findWbName(allWbNames(), mf);
-    if (!name) return Promise.resolve({ name: '', build: '' });
-    return Promise.resolve(gw(name)).then(function (eb) {
-      var b = '';
-      try {
-        for (var i = 0; i < (eb || []).length; i++) {
-          var nm = String(eb[i].name || eb[i].comment || '');
-          if (nm === WB_MARK) { b = String(eb[i].content || ''); break; }
-        }
-      } catch (e) {}
-      return { name: name, build: b };
-    }).catch(function () { return { name: name, build: '' }; });
+  function check(manual=true){if(R.busy){panel();return R.promise;}R.busy=true;R.cancelled=false;
+    const work=async()=>{try{await execute(manual);}catch(e){status(R.cancelled?'cancelled':'error',(R.cancelled?'已取消。':'更新未完成：')+e.message+'\n已保存的备份会保留；可重试检查或恢复备份。');}finally{R.busy=false;panel();}};
+    R.promise=host.navigator?.locks?host.navigator.locks.request('xzs-updater-write17',{ifAvailable:true},lock=>{if(!lock){R.busy=false;status('error','其他页面正在更新，请稍后重试');return;}return work();}):work();return R.promise;
   }
-
-  // 世界书：写进玩家**当前已经激活**的那本（名字带不带版本号都认，按前缀匹配）；
-  // 没有匹配的才用清单里声明的名字，并把它追加进全局激活（保留其它书）。
-  function syncWorldbook(mf, wbText) {
-    // 必须用 importRawWorldbook：它直接吃**原始文件格式**（{entries:{...}}）。
-    // createOrReplaceWorldbook 吃的是另一种条目形状，拿原始文本喂它会写坏书 —— 所以不做降级。
-    var imp = api('importRawWorldbook');
-    if (!imp) return Promise.resolve('跳过世界书（本机酒馆助手不支持 importRawWorldbook）');
-    var names = allWbNames();
-    var target = findWbName(names, mf);
-    var needsBind = false;
-    if (!target) { target = mf.worldbookName; needsBind = true; }
-    return Promise.resolve(imp(target, wbText)).then(function () {
-      if (!needsBind) return '世界书已更新：' + target;
-      try {
-        var rb = api('rebindGlobalWorldbooks');
-        if (!rb) return '世界书已写入 ' + target + '（但没能自动激活，请在世界书界面手动勾选一次）';
-        return Promise.resolve(rb(names.concat([target]))).then(function () { return '世界书已更新并激活：' + target; });
-      } catch (e) { return '世界书已写入 ' + target + '（激活失败，请手动勾选一次）'; }
-    });
+  async function currentJournal(){const c=await api('getCharacter')('current');const name=String(c.avatar||'').replace(/\.png$/,'');const j=await storage('journal:'+name);if(!j)throw Error('当前角色卡没有本地备份');return j;}
+  async function exportBackup(){try{const j=await currentJournal();const blob=new host.Blob([M.encode(j)],{type:'application/json'});const u=host.URL.createObjectURL(blob),a=host.document.createElement('a');a.href=u;a.download='新中市更新备份-'+j.release+'.json';a.click();timer(()=>host.URL.revokeObjectURL(u),1000);}catch(e){status('error','导出失败：'+e.message);}}
+  function recover(){if(R.busy)return R.promise;R.busy=true;
+    R.promise=host.navigator?.locks?host.navigator.locks.request('xzs-updater-write17',{ifAvailable:true},lock=>{if(!lock){R.busy=false;status('error','其他页面正在更新或恢复，请稍后重试');return;}return recoverWork();}):recoverWork();return R.promise;
   }
-
-  function check(manual) {
-    var getChar = api('getCharacter'), updChar = api('updateCharacterWith');
-    if (!getChar || !updChar) { if (manual) say('error', '酒馆助手接口不可用，无法检查更新'); return Promise.resolve(); }
-    var mf = null, wbSt = { name: '', build: '' }, chRef = null, nm = '', checkedManagedText = '', checkedManagedPack = null;
-    // 顺序：当前卡（顺便定出**真实卡名**）→ 清单 → 世界书真实状态。全程扁平，不嵌套。
-    return Promise.resolve(getChar('current')).then(function (ch) {
-      chRef = ch;
-      return resolveCardName(ch);
-    }).then(function (n) {
-      nm = n;
-      return fetchText('manifest.json');
-    }).then(function (txt) {
-      mf = JSON.parse(txt);
-      if (!mf || !mf.build || !mf.payloads) throw new Error('清单格式不对');
-      return Promise.all([wbState(mf), mf.payloads['jailbreaks.json'] ? fetchText('jailbreaks.json') : Promise.resolve(null)]).then(function(values) {
-        if(values[1] !== null){
-          checkedManagedText=values[1];
-          if(fnv1a(checkedManagedText)!==mf.payloads['jailbreaks.json'].hash)throw new Error('脚本包校验失败（缓存没过期？过几分钟再试）');
-          checkedManagedPack=parseManagedPack(checkedManagedText);
-        }
-        return values[0];
-      });
-    }).then(function (st) {
-      wbSt = st || { name: '', build: '' };
-      var ch = chRef;
-      if (!isOurCard(ch)) { if (manual) say('warning', '当前不是新中市的角色卡'); return; }
-      var app = appScriptOf(ch);
-      if (!app) { if (manual) say('error', '这张卡里找不到「' + APP + '」脚本'); return; }
-      var local = buildOf(app.content);
-      // 三样东西**各自独立**判断，任何一样缺了/落后都要补。
-      // ⚠ 用**时间戳**比，别拿整个构建号做字符串比较 ——「2026.10.2-…」在字符串上**小于**「2026.9.30-…」
-      //   （逐字符比到第 6 位 '1' < '9'），月份跨到两位数后线上永远被判成「不比本地新」，
-      //   玩家从此再也收不到脚本更新（2026-10-02 用户报：更新框说 10.2、小手机里还是 9.30，
-      //   钱包/信用贷/FX 三个新应用一个都不见）。版本号那部分是独立判断，所以它照常更新了。
-      var needScript = !(local && buildNum(local) > 0 && buildNum(mf.build) <= buildNum(local));   // 只升不降：raw 有几分钟 CDN 缓存，可能取到旧清单
-      // 世界书：**实检** —— 书不存在（玩家删了 / 新玩家还没有）或书里的版本标记对不上 → 补。
-      // 绝不能用 localStorage 记"我应用过"：玩家把书删了标记还在，就会误判成不用更新（2026-09-15 实测踩到）。
-      var needWb = (!wbSt.name) || (wbSt.build !== mf.build);
-      // 卡字段：**实检** —— 跟清单里记的开场白条数/首楼长度对不上就补（玩家导入旧卡也能发现）
-      // 卡版本号：**独立于卡字段**同步。以前它跟着卡字段一起写，开场白/首楼没变时连它一起跳过
-      //   → 玩家看到「更新到 10.2」、卡里却还写着 9.30，以为更新失败（2026-10-02 用户报）。
-      var myVer = (ch && ch.version != null) ? String(ch.version) : '';
-      var needVer = !!(mf.cardVersion && String(mf.cardVersion) !== myVer);
-      var needCf = false;
-      if (mf.payloads['cardfields.json']) {
-        var fm = null; try { fm = ch.first_messages || null; } catch (e) {}
-        var cfi = mf.cardFields || {};
-        var myGreet = fm ? (fm.length - 1) : -1;
-        var myFirst = (fm && fm[0]) ? String(fm[0]).length : -1;
-        // ⚠ 这里**绝不能**依赖 localStorage 标记：标记一旦写不进去（隐私模式 / 存储被清 / 沙箱），
-        //   条件就永远为真 → 玩家无限弹「需要更新」（2026-09-16 实测踩到：改了卡内版本号后，
-        //   首楼内容变了但条数与长度没变，前两个条件检测不到，全靠标记 → 全员循环）。
-        //   改为比对「卡里真实内容的指纹」：归一换行后对 首楼+全部开场白 求 fnv1a，纯函数、可自愈。
-        // ⚠ 2026-10-11 修（用户报"同版本号还提示更新卡字段"）：
-        //   以前标记 = build|哈希，于是**只要构建号变了就重新弹一次** ——
-        //   哪怕卡字段一个字没改（两次推送的卡字段哈希都是 11575e59，只换了外壳）。
-        //   现在标记只认**卡字段哈希**：哈希没变 = 卡字段本来就是对的，不必再弹。
-        //   哈希变了（真的改了首楼/开场白）照样会弹 ✓
-        var cfHash = String(mf.payloads['cardfields.json'].hash || '');
-        var cfKey = String(mf.build || '') + '|' + cfHash;
-        // ⚠ 2026-10-09 实测修：**整条都要 !!fm 守卫**。原来只有第三条有，前两条没有 ——
-          //   读不到 first_messages 时 myGreet/myFirst 被置成 -1，于是必然 != 清单值，
-          //   卡片还没 hydrate 的那一刻就被判成「卡字段不一样」，玩家看到「检测到卡字段更新」
-          //   而版本号明明一致（用户报：新建聊天时概率弹出）。
-          //   读不到就当作**未知**，不当作**不同**：这次跳过，下次读到再判，不会漏更新。
-          var cfDiff = !!fm && ((cfi.greetings !== undefined && myGreet !== cfi.greetings) ||
-                                (cfi.firstMesLen !== undefined && myFirst !== cfi.firstMesLen) ||
-                                (cfi.fp !== undefined && cfFp(fm) !== cfi.fp));
-        // 这一版的卡字段**已经成功写入过**就不再提示：只在写成功后记，写失败不记 → 仍会重试，
-        // 不会退化成死循环（2026-09-16 那次教训是「标记写不进去 → 条件永远为真」，
-        // 这里是反方向：标记只用来**抑制**提示，写不进去最多是继续提示，不会卡死）。
-        // 用途：兜住「同一个 build 反复提示卡字段」的一切未知成因
-        //（用户报：回到上一版本的聊天记录继续玩，又弹「本次更新：卡字段（开场白等）」）。
-        // 兼容旧标记（老的存的是 build|哈希）：精确比对一次；新标记只存哈希
-        var cfApplied = (lsGet(LS_CF) === cfKey) || (lsGet(LS_CF) === cfHash);
-        needCf = cfDiff && !cfApplied;
-        if (cfDiff) {
-          try {
-            console.log('[更新器] 卡字段核对', { build: mf.build, myGreet: myGreet, wantGreet: cfi.greetings,
-              myFirst: myFirst, wantFirst: cfi.firstMesLen, myFp: fm ? cfFp(fm) : '', wantFp: cfi.fp,
-              appliedBefore: cfApplied });
-          } catch (e) {}
-        }
-      }
-      // 更新器自己：**默认永远不动**（清单里 updateUpdater 不开就绝不碰它 —— 它是唯一不能坏的组件）。
-      // 我需要修更新器时，在发布时打开这个开关，它就会连自己一起换；靠源码首行的标记号比对。
-      var needUpdater = false;
-      if (mf.updateUpdater && mf.payloads['updater.js']) {
-        var mine = null, sss = scriptsOf(ch);
-        for (var q = 0; q < sss.length; q++) if (String(sss[q].name) === UPDATER_NAME) mine = sss[q];
-        var myMark = mine ? (MARK_RE.exec(String(mine.content || '')) || [])[1] : '';
-        needUpdater = String(myMark || '') !== String(mf.updaterMark || '');
-      }
-      // 唱歌脚本（歌曲/演奏/演出标记 → 内联播放器）：与更新器同样用**源码首行的标记号**比对，
-      // 不能拿内容哈希比（卡里的脚本会被酒馆重新序列化）。清单里没这个包时跳过。
-      var needSong = false;
-      if (mf.payloads['songscript.js']) {
-        var songScr = null, sss2 = scriptsOf(ch);
-        for (var q2 = 0; q2 < sss2.length; q2++) if (String(sss2[q2].name) === SONG) songScr = sss2[q2];
-        var songMark = songScr ? (SONG_MARK_RE.exec(String(songScr.content || '')) || [])[1] : '';
-        needSong = String(songMark || '') !== String(mf.songMark || '');
-      }
-      // Compare every managed item; a matching legacy mark on one item proves nothing about the others.
-      var remoteOlder = local && buildNum(local)>0 && buildNum(mf.build)<buildNum(local);
-      var needJb = !remoteOlder && managedScriptsNeedUpdate(scriptsOf(ch), checkedManagedPack);
-      // 正则脚本（自定义开局 / 回退按钮 / 抗年龄截断）：**实检** —— 拿卡里现有的正则算指纹，
-      // 跟清单里记的对不上就补。不依赖 localStorage（玩家导回旧卡、清存储都能自愈）。
-      var needRx = false;
-      if (mf.payloads['regexscript.json'] && mf.regexFields) {
-        var curRx = [];
-        try {
-          curRx = (ch && ch.extensions && ch.extensions.regex_scripts) ||
-                  (ch && ch.data && ch.data.extensions && ch.data.extensions.regex_scripts) || [];
-        } catch (e) { curRx = []; }
-        if (!Array.isArray(curRx)) curRx = [];
-        needRx = (rxFp(curRx) !== String(mf.regexFields.fp || ''));
-        if (needRx) { try { console.log('[更新器] 正则核对', { mine: rxFp(curRx), want: mf.regexFields.fp, names: mf.regexFields.names }); } catch (e) {} }
-      }
-      if (!needScript && !needWb && !needCf && !needVer && !needUpdater && !needSong && !needJb && !needRx) { if (manual) say('info', '已是最新版本（' + local + '）'); return; }
-      var todo = [];
-      if (needScript) todo.push('卡内脚本');
-      if (needSong) todo.push('唱歌播放器');
-      if (needJb) todo.push('破限脚本');
-      if (needRx) todo.push('开局表单（正则）');
-      if (needWb) todo.push('世界书');
-      if (needCf) todo.push('卡字段（开场白等）');
-      if (needVer) todo.push('卡版本号');
-      if (needUpdater) todo.push('更新器本身');
-      var notes = String(mf.notes || '').trim();
-      var ok = window.confirm(
-        '检测到需要更新！\n\n当前版本：' + (local || '（未标记）') + '\n最新版本：' + mf.build +
-        '\n\n本次会更新：' + todo.join(' + ') +
-        '\n\n本次更新内容请在手机 App「版本回顾」里查看。' +
-        '\n更新后自动重载页面。\n现在更新吗？'
-      );
-      if (!ok) { say('info', '已取消更新'); return; }
-
-      say('info', '正在下载：' + todo.join('、') + '…');
-      var shellText = '', wbText = '', cfText = '', updText = '', songText = '', jbText = '', rxText = '';
-      var chain = Promise.resolve();
-      if (needScript) chain = chain.then(function () {
-        return fetchText('shell.js').then(function (t) {
-          shellText = t;
-          if (fnv1a(t) !== mf.payloads['shell.js'].hash) throw new Error('脚本校验失败（可能是刚发布、缓存还没刷新，过几分钟再试）');
-          if (buildOf(t) !== mf.build) throw new Error('脚本里的版本标记与清单不一致');
-        });
-      });
-      if (needWb) chain = chain.then(function () {
-        return fetchText('worldbook.json').then(function (t) {
-          wbText = t;
-          if (fnv1a(t) !== mf.payloads['worldbook.json'].hash) throw new Error('世界书校验失败（缓存没过期？过几分钟再试）');
-          if (!JSON.parse(t).entries) throw new Error('世界书里没有 entries');
-        });
-      });
-      if (needCf) chain = chain.then(function () {
-        return fetchText('cardfields.json').then(function (t) {
-          cfText = t;
-          if (fnv1a(t) !== mf.payloads['cardfields.json'].hash) throw new Error('卡字段校验失败（缓存没过期？过几分钟再试）');
-        });
-      });
-      if (needUpdater) chain = chain.then(function () {
-        return fetchText('updater.js').then(function (t) {
-          updText = t;
-          if (fnv1a(t) !== mf.payloads['updater.js'].hash) throw new Error('更新器校验失败（缓存没过期？过几分钟再试）');
-          var mk = (MARK_RE.exec(t) || [])[1];
-          if (String(mk || '') !== String(mf.updaterMark || '')) throw new Error('更新器的版本标记与清单不一致');
-        });
-      });
-      if (needSong) chain = chain.then(function () {
-        return fetchText('songscript.js').then(function (t) {
-          songText = t;
-          if (fnv1a(t) !== mf.payloads['songscript.js'].hash) throw new Error('唱歌播放器校验失败（缓存没过期？过几分钟再试）');
-          var sk = (SONG_MARK_RE.exec(t) || [])[1];
-          if (String(sk || '') !== String(mf.songMark || '')) throw new Error('唱歌播放器的版本标记与清单不一致');
-        });
-      });
-      if(needJb)jbText=checkedManagedText; // Already downloaded, validated and parsed before confirmation.
-      if (needRx) chain = chain.then(function () {
-        return fetchText('regexscript.json').then(function (t) {
-          rxText = t;
-          if (fnv1a(t) !== mf.payloads['regexscript.json'].hash) throw new Error('正则脚本校验失败（缓存没过期？过几分钟再试）');
-        });
-      });
-      return chain.then(function () {
-        if (needScript) lsSet(LS_BACKUP + '|' + mf.build, app.content);   // 旧脚本内容留档，出问题可回滚
-        return wbText ? syncWorldbook(mf, wbText) : '世界书无需更新';
-      }).then(function (wbMsg) {
-        if (!needScript && !needCf && !needVer && !needUpdater && !needSong && !needJb && !needRx) return wbMsg;   // 只更新世界书时不用写卡
-        if (!nm) throw new Error('读不到真实卡名，放弃写入（避免写坏卡）');
-        var cf = null;
-        if (cfText) { try { cf = JSON.parse(cfText); } catch (e) { cf = null; } }
-        // 卡内脚本 + 卡字段 +（偶尔）更新器自己 —— **一次写完**，分两次写会有竞态
-        // ⚠ 2026-10-09：写卡本身容易瞬时失败（要写 8.8MB 的卡）。以前失败即抛，玩家得反复点
-          //   「检查更新」——而每次点击都要把约 10MB 的包重下一遍，所以才「要多点几遍」。
-          //   这里对写卡单独重试 3 次（1.5s / 3s 退避），绝大多数瞬时失败一次就过去了。
-          return withRetry(function () { return updChar(nm, function (c) {
-          var ss = scriptsOf(c), i;
-          if (needScript) { for (i = 0; i < ss.length; i++) if (ss[i].name === APP) ss[i].content = shellText; }
-          if (needUpdater) {
-            for (i = 0; i < ss.length; i++) if (String(ss[i].name) === UPDATER_NAME) {
-              lsSet(LS_BACKUP + '|updater|' + mf.build, ss[i].content);   // 旧更新器留档，出问题能在控制台回滚
-              ss[i].content = updText;
-            }
-          }
-          if (needSong) {
-            for (i = 0; i < ss.length; i++) if (String(ss[i].name) === SONG) {
-              lsSet(LS_BACKUP + '|song|' + mf.build, ss[i].content);   // 旧唱歌脚本留档，出问题能在控制台回滚
-              ss[i].content = songText;
-            }
-          }
-          if(needJb&&checkedManagedPack)mergeManagedScripts(ss,checkedManagedPack);
-          if (needRx && rxText) {
-            var rxPack = null; try { rxPack = JSON.parse(rxText); } catch (e) { rxPack = null; }
-            var rxNew = (rxPack && rxPack.scripts) || [];
-            if (rxNew.length) {
-              var ext = c.extensions || (c.extensions = {});
-              var curList = Array.isArray(ext.regex_scripts) ? ext.regex_scripts.slice() : [];
-              // ⚠⚠ 2026-10-12 致命 bug 修复（推前复查抓到，未上过线）：
-              //   产物是 **TavernRegex** 格式（字段叫 script_name），而这里原来读的是 ST 格式的
-              //   `scriptName` → 每条的 nm 都是空串 → byName 只剩一个键 '' → **整张卡的正则
-              //   全被替换成同一条**（玩家自己加的正则也会被洗掉）。沙箱实测复现：
-              //   输入 5 条 → 输出 5 条「抗年龄截断」。
-              //   现在两种字段名都兼容，任何一边换格式都不会再洗卡。
-              function rxName(x) {
-                if (!x) return '';
-                if (x.script_name != null) return String(x.script_name);
-                if (x.scriptName != null) return String(x.scriptName);
-                return '';
-              }
-              var byName = {};
-              rxNew.forEach(function (s) { var nm = rxName(s); if (nm) byName[nm] = s; });
-              // 我们发的条目 → 整条换成新的；**玩家自己加的正则原样保留**
-              var out = curList.map(function (s) {
-                var nm = rxName(s);
-                return (nm && byName[nm]) ? byName[nm] : s;
-              });
-              rxNew.forEach(function (s) {
-                var nm = rxName(s);
-                if (!nm) return;
-                var has = false;
-                for (var q4 = 0; q4 < out.length; q4++) if (rxName(out[q4]) === nm) has = true;
-                if (!has) out.push(s);
-              });
-              lsSet(LS_BACKUP + '|rx|' + mf.build, JSON.stringify(curList));   // 旧的留档，出问题能回滚
-              ext.regex_scripts = out;
-            }
-          }
-          if (cf) {
-            // first_messages = [首楼, ...开场白]，扩展会按同样顺序拆回 first_mes / alternate_greetings，
-            // 所以玩家那套「按序号指开场白」不会错位。
-            if (cf.first_messages && cf.first_messages.length) c.first_messages = cf.first_messages;
-            if (cf.version != null) c.version = cf.version;
-            if (cf.creator != null) c.creator = cf.creator;
-            if (cf.creator_notes != null) c.creator_notes = cf.creator_notes;
-            if (cf.description != null) c.description = cf.description;
-          }
-          // 版本号单独同步：卡字段没变时也要写（见上面 needVer 的说明）
-          if (needVer && mf.cardVersion) c.version = String(mf.cardVersion);
-          return c;
-        }).then(function(){return getChar(nm);}).then(function(written){
-            if(needJb&&managedScriptsNeedUpdate(scriptsOf(written),checkedManagedPack))throw new Error('脚本写回后未通过回读校验，稍后可重试');
-            if(needUpdater){var actual=scriptsOf(written).filter(function(item){return String(item.name)===UPDATER_NAME;})[0];if(!actual||managedScriptHash(actual.content)!==managedScriptHash(updText))throw new Error('更新器写回后未通过回读校验，稍后可重试');}
-            return true;
-          }); }, 3, 1500).then(function () {
-          // 记下已应用的卡字段哈希（世界书不用记：版本标记就写在书里，删书即失效）
-          if (needCf) lsSet(LS_CF, cfHash);   // 从现在起只记哈希（构建号变了不再重复弹）
-          if (notes) lsSet(LS_NOTES, notes);        // 供 app 的修复页显示「本版更新」
-          if (cf && cf.first_messages) wbMsg += '｜卡字段已更新（开场白 ' + Math.max(0, cf.first_messages.length - 1) + ' 条）';
-          if (needSong) wbMsg += '｜唱歌播放器已更新';
-          if (needVer) wbMsg += '｜卡版本号已同步为 ' + mf.cardVersion;
-          if (needJb) wbMsg += '｜破限脚本已更新';
-          if (needRx) wbMsg += '｜开局表单（正则）已更新';
-          if (needUpdater) wbMsg += '｜更新器已更新（重载后生效）';
-          return wbMsg;
-        });
-      }).then(function (wbMsg) {
-        say('success', '更新完成（' + mf.build + '）｜' + wbMsg + '｜即将重载页面');
-        setTimeout(function () { try { window.parent.location.reload(); } catch (e) { location.reload(); } }, 2000);
-      });
-    }).catch(function (e) {
-      var m = (e && e.message) ? String(e.message) : String(e);
-      // 网络波动 / 服务端返回非 2xx 时，扩展抛的是它自己的技术文案（形如「修改角色卡 'X' 失败: (404)」），
-      // 玩家看了会以为卡坏了。换成一句人话，并说明会自动重试。
-      // 之所以能自愈：卡字段/世界书的「已应用」标记只在**写成功之后**才记录，失败那次不会被当成已完成。
-      // ⚠ 2026-10-09 实测修：以前这里把**下载失败**也一并写成「卡没写进去」，玩家以为卡坏了；
-      //   而且文案说「已下载的内容不会丢」——代码里并没有下载缓存，每次都要重下。
-      //   现在按失败发生在**哪一步**分开说。
-      if (/所有更新源都取不到/.test(m)) {
-        m = '连不上任何一个更新源（raw / api.github.com / jsDelivr / 备用镜像都试过了）。请检查网络或代理，稍后再点一次。';
-      } else if (/超时/.test(m)) {
-        m = '更新源响应超时（网络慢或被挡）。稍后再点一次「检查更新」；换条网络会更快。';
-      } else if (/校验失败|缓存没过期|标记与清单不一致|清单格式不对/.test(m)) {
-        m = m + '（多半是镜像缓存还没刷新，过几分钟再试）';
-      } else if (/失败: \(\d+\)/.test(m)) {
-        m = '内容已下载好，但**写回角色卡时被酒馆挡了**（' + m.replace(/\s+/g, ' ').slice(0, 50) + '）。已自动重试 3 次仍未成功 —— 稍等几秒再点一次「检查更新」即可。';
-      } else if (/Failed to fetch|NetworkError|Load failed/i.test(m)) {
-        m = '网络中断。稍后再点一次「检查更新」（每次都会重新下载，请保持网络通畅）。';
-      } else if (/读不到真实卡名/.test(m)) {
-        m = '读不到这张卡的名称，为避免写坏卡已放弃。请在酒馆里重新选中本卡再试。';
-      }
-      say('error', '更新失败：' + m);
-    });
-  }
-
-  // 手动入口：酒馆助手面板里出现一个「检查更新」按钮
-  try {
-    var btn = api('replaceScriptButtons');
-    if (btn) { btn([{ name: '检查更新', visible: true }]); }
-    var onBtn = api('eventOnButton');
-    if (onBtn) { onBtn('检查更新', function () { check(true); }); }
-  } catch (e) {}
-
-  // 排障用的钩子：在酒馆控制台里可以直接 __xzsUpdater.check(true) / __xzsUpdater.isOurCard(getCharacterSync…)
-  try {
-    window.__xzsUpdater = {
-      check: check, isOurCard: isOurCard, scriptsOf: scriptsOf, appScriptOf: appScriptOf,
-      managedScriptHash: managedScriptHash, parseManagedPack: parseManagedPack, managedScriptsNeedUpdate: managedScriptsNeedUpdate, mergeManagedScripts: mergeManagedScripts,
-      buildOf: buildOf, resolveCardName: resolveCardName, syncWorldbook: syncWorldbook, RAW: RAW,
-    };
-  } catch (e) {}
-
-  // 进卡自动检查
-  setTimeout(function () { try { check(false); } catch (e) {} }, CHECK_DELAY);
+  async function recoverWork(){try{
+    const j=await currentJournal();if(!host.confirm('恢复本角色卡最近一次更新前的组件和世界书？聊天消息不会被替换。'))return;
+    const s={identity:identity(),binding:M.stable(binding()),name:j.name};j.state='restoring';await storage('journal:'+j.name,j);
+    if(j.plan.some(x=>x.descriptor.kind==='world')&&j.beforeWorld){await writeChecked('恢复世界书',()=>api('replaceWorldbook')(j.book,M.clone(j.beforeWorld)),async()=>M.hash(M.world(await readWorld(j.book)))===M.hash(M.world(j.beforeWorld)),s);}
+    await writeChecked('恢复角色卡组件',()=>api('updateCharacterWith')(j.name,card=>{
+      guard(s);const e=M.ext(card),old=M.ext(j.beforeCard);e.tavern_helper=e.tavern_helper||{};
+      const owned=new Set(j.plan.flatMap(x=>x.descriptor.kind==='script'?[x.descriptor.name]:x.descriptor.kind==='pack'?x.descriptor.items.map(i=>i.name):[]));
+      e.tavern_helper.scripts=M.scripts(card).filter(x=>!owned.has(x.name)).concat(M.scripts(j.beforeCard).filter(x=>owned.has(x.name)).map(M.clone));
+      const regexNames=new Set(j.plan.filter(x=>x.descriptor.kind==='regex').flatMap(x=>x.descriptor.items.map(i=>i.name)));
+      if(regexNames.size)e.regex_scripts=(e.regex_scripts||[]).filter(x=>!regexNames.has(M.rxName(x))).concat((old.regex_scripts||[]).filter(x=>regexNames.has(M.rxName(x))).map(M.clone));
+      if(j.plan.some(x=>x.descriptor.kind==='fields'))for(const k of Object.keys(M.fields(j.beforeCard)))card[k]=M.clone(j.beforeCard[k]??'');
+      return card;
+    }),async()=>{
+      const card=await api('getCharacter')(j.name);
+      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.hash(M.fields(card))===M.hash(M.fields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=d.kind==='script'?[d.name]:d.items.map(i=>i.name);return M.hash(M.scripts(card).filter(x=>names.includes(x.name)))===M.hash(M.scripts(j.beforeCard).filter(x=>names.includes(x.name)));});
+    },s);
+    // Only undo our added binding; never delete a book or revert unrelated global edits.
+    if(j.addedBinding){guard(s);const now=binding();if(now.global.includes(j.book)){await waitWrite('恢复世界书绑定',()=>api('rebindGlobalWorldbooks')(now.global.filter(n=>n!==j.book)));if(binding().global.includes(j.book))throw Error('恢复世界书绑定未通过回读');s.binding=M.stable(binding());}}
+    j.state='restored';await storage('journal:'+j.name,j);status('done','已恢复更新前的组件。新建的世界书文件保留，未删除聊天或存档。请刷新页面。');
+  }catch(e){status('error','恢复未完成：'+e.message+'。备份仍保留。');}finally{R.busy=false;panel();}}
+  R.api={check,recover,exportBackup,state:R,model:M};window.__xzsUpdater=R.api;
+  try{api('replaceScriptButtons',false)?.([{name:'检查更新',visible:true},{name:'恢复更新备份',visible:true}]);api('eventOnButton',false)?.('检查更新',()=>check(true));api('eventOnButton',false)?.('恢复更新备份',recover);}catch(_){}
+  timer(()=>check(false),CONFIG.auto);
 })();

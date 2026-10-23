@@ -1,0 +1,124 @@
+{
+  "schema": 2,
+  "release": "2026.10.23-20261023210001",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "**更新检查与按需下载**\n\n- 更新器升级至17，按主脚本、世界书、唱歌播放器、托管脚本、开局与描述、官方正则及更新器分别核对内容，只下载需要更新或修复的组件。\n- 完整且已是最新版本时只读取更新清单；仅世界书变化时不再连带下载未变的主脚本和托管脚本包。\n- 修复旧清单导致部分组件降级、自定义正则反复提示更新、缓存使重新导入的旧开局漏修，以及唱歌脚本丢失却提示更新成功的问题。\n- 保留已有脚本的开关、编号与自定义数据；玩家新增的正则不再影响官方条目的更新判断。开局或描述与官方版本不同时，单独确认是否覆盖。\n- 补齐卡版本号与卡字段内容的同步，避免开局文字已更新、角色卡版本仍停留在旧日期。\n\n**进度显示与失败恢复**\n\n- 增加常驻更新面板，显示当前组件、下载来源、已接收大小和下载百分比；校验、保存与回读分别显示阶段。\n- 支持取消下载、重试检查、恢复备份、导出备份和手动刷新。保存结果尚未确认时保留等待状态，避免反复提交。\n- 新版在写入前保存并回读备份，保存后核对实际内容；失败重试不覆盖首次备份，刷新后可在同一浏览器、同一酒馆地址继续检查或恢复。\n- 恢复时保留其他新增脚本、正则和世界书绑定；新建世界书文件不自动删除。\n- 区分连接超时和长时间没有下载进展，持续传输不再受原15秒总超时限制；兼容普通HTTP局域网访问时的文件校验。\n- 保留14、15、16版更新器的兼容迁移通道，并提供独立恢复更新器工具。旧版首次安装新版仍由旧版保存逻辑执行，不能追溯补建那次操作之前的备份。\n\n**版本回顾与开局显示**\n\n- 补齐小手机版本回顾中缺失的10.20、10.21完整日志，保留10.19、10.22及更早记录，并加入本次10.23更新说明。\n- 开局菜单的显示版本同步为2026.10.23。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5340418,
+      "sha256": "3e031a47cdca2815161e00ed26fbdfd7320f1563bc248dc1498b99a96abf8624",
+      "path": "assets/3e031a47cdca2815161e00ed26fbdfd7320f1563bc248dc1498b99a96abf8624/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "c3fa151a",
+      "compatibleHashes": [
+        "c3fa151a"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 31688,
+      "sha256": "8bbf7c4f13a433f678bbdb2812c3588922ffc041f2eab9d0867e5c94dec2f287",
+      "path": "assets/8bbf7c4f13a433f678bbdb2812c3588922ffc041f2eab9d0867e5c94dec2f287/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "9a9435c6",
+      "mark": 17
+    },
+    "song": {
+      "label": "唱歌播放器",
+      "bytes": 66262,
+      "sha256": "d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0",
+      "path": "assets/d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0/songscript.js",
+      "kind": "script",
+      "name": "唱歌 · 音频直链",
+      "contentHash": "9c30e08d"
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 280291,
+      "sha256": "1622c26818beb93df42edaeb97497b3194c2c34227aa658e4c20c7864c510866",
+      "path": "assets/1622c26818beb93df42edaeb97497b3194c2c34227aa658e4c20c7864c510866/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "加强破限A",
+          "contentHash": "073ed9bf"
+        },
+        {
+          "name": "加强破限B",
+          "contentHash": "7d605481"
+        },
+        {
+          "name": "加强破限C",
+          "contentHash": "6907380c"
+        },
+        {
+          "name": "加强破限D",
+          "contentHash": "b71e8305"
+        },
+        {
+          "name": "加强破限E",
+          "contentHash": "04561cb8"
+        },
+        {
+          "name": "加强破限F",
+          "contentHash": "fedd679e"
+        },
+        {
+          "name": "加强破限G",
+          "contentHash": "afe629d2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "2b68c0cb"
+        }
+      ],
+      "contentHash": "4f00885e"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 11190735,
+      "sha256": "3ce2a71b352022612c98512078c601e031699a6847748a37a259a26a65894249",
+      "path": "assets/3ce2a71b352022612c98512078c601e031699a6847748a37a259a26a65894249/worldbook.json",
+      "kind": "world",
+      "contentHash": "e635540a",
+      "compatibleHashes": [
+        "84ac279a",
+        "161b059f"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 864686,
+      "sha256": "3c443e7d8ac385723a563b146c7dff2035a9d90445239ad4356407a1388d2cf0",
+      "path": "assets/3c443e7d8ac385723a563b146c7dff2035a9d90445239ad4356407a1388d2cf0/cardfields.json",
+      "kind": "fields",
+      "contentHash": "420d5529"
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 98204,
+      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
+      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        }
+      ],
+      "contentHash": "ac4c978d"
+    }
+  }
+}
