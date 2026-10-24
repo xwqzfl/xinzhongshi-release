@@ -1,6 +1,6 @@
-/*XZS_UPDATER:17*/
+/*XZS_UPDATER:18*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
-function xzsModel17() {
+function xzsModel18() {
   const norm = s => String(s == null ? '' : s).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
   function fnv(s) { let h=2166136261; for(let i=0;i<s.length;i++) h=Math.imul(h^s.charCodeAt(i),16777619)>>>0; return h.toString(16).padStart(8,'0'); }
   const clone = v => decode(encode(v));
@@ -37,6 +37,17 @@ function xzsModel17() {
     return {script_name:rxName(r),find_regex:r.find_regex||'',replace_string:r.replace_string||'',trim_strings:r.trim_strings||[],source,destination:{display:!!r.destination?.display,prompt:!!r.destination?.prompt},run_on_edit:!!r.run_on_edit,min_depth:r.min_depth??null,max_depth:r.max_depth??null};
   }
   const fields = c => ({version:c.version||'',first_messages:(c.first_messages||[]).map(s=>String(s).replace(/\r\n?/g,'\n')),creator:c.creator||'',creator_notes:c.creator_notes||'',description:c.description||''});
+  // Preserve the v17 wire hash; compare host text through a separate canonical form.
+  // Only line endings and text boundary whitespace are insignificant, never internal text/order.
+  const canonicalFields = c => Object.fromEntries(Object.entries(fields(c)).map(([k,v])=>[k,Array.isArray(v)?v.map(norm):norm(v)]));
+  const fieldHashes = c => Object.fromEntries(Object.entries(canonicalFields(c)).map(([k,v])=>[k,hash(v)]));
+  function fieldDiff(c,expected) {
+    const actual=fieldHashes(c);
+    return Object.keys(actual).filter(k=>actual[k]!==expected[k]);
+  }
+  function fieldsReadable(c) {
+    return !!c&&Array.isArray(c.first_messages)&&c.first_messages.length>0&&c.first_messages.every(s=>typeof s==='string')&&['version','creator','creator_notes','description'].every(k=>typeof c[k]==='string');
+  }
   const implicit={addMemo:true,matchPersonaDescription:false,matchCharacterDescription:false,matchCharacterPersonality:false,matchCharacterDepthPrompt:false,matchScenario:false,matchCreatorNotes:false,group:'',groupOverride:false,groupWeight:100,caseSensitive:null,matchWholeWords:null,useGroupScoring:null,automationId:'',ignoreBudget:false,outletName:'',triggers:[],characterFilter:{isExclude:false,names:[],tags:[]}};
   function worldEntry(e) {
     let v;
@@ -77,14 +88,14 @@ function xzsModel17() {
       let list=e.regex_scripts||[];for(const r of JSON.parse(text).scripts){const hits=list.filter(s=>rxName(s)===rxName(r));if(hits.length)list=list.map(s=>rxName(s)===rxName(r)?{...clone(r),id:s.id,enabled:s.enabled}:s);else list.push(clone(r));}e.regex_scripts=list;
     }return c;
   }
-  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scripts,rxName,rx,fields,worldEntry,world,want,apply};
+  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply};
 }
 
 
 /* Source is bundled with model.cjs by build.cjs. No runtime dependency download. */
 (function () {
   'use strict';
-  const M=xzsModel17();
+  const M=xzsModel18();
   const NAME='新中市更新器', WB_MARK='【系统】世界书版本';
   const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,auto:8000};
   let host=window;
@@ -160,6 +171,7 @@ function xzsModel17() {
     const m=JSON.parse(text);if(m.schema!==2||!M.number(m.release)||!m.worldbookName||!m.worldbookNamePrefix||!m.components)throw Error('不支持的更新清单，已停止');
     const names=new Set(),files=Object.values(m.components);if(!files.length)throw Error('清单没有组件');
     for(const d of files){if(!['script','world','pack','regex','fields'].includes(d.kind)||!/^assets\/[a-f0-9]{64}\/[\w.-]+$/.test(d.path)||!Number.isSafeInteger(d.bytes)||d.bytes<=0||d.bytes>50000000||!/^[a-f0-9]{64}$/.test(d.sha256)||!d.label||!d.contentHash)throw Error('清单组件格式错误');
+      if(d.kind==='fields'&&d.fieldHashes){const keys=Object.keys(fieldLabels);if(Object.keys(d.fieldHashes).length!==keys.length||keys.some(k=>!/^[a-f0-9]{8}$/.test(d.fieldHashes[k])))throw Error('卡字段分项指纹格式错误');}
       if(d.path.split('/')[1]!==d.sha256)throw Error('清单文件地址与校验值不一致');
       if(d.kind==='script'){if(!d.name||names.has(d.name))throw Error('脚本名称冲突');names.add(d.name);}
       if(d.kind==='pack'||d.kind==='regex'){if(!Array.isArray(d.items)||!d.items.length)throw Error('清单条目缺失');const own=new Set();for(const i of d.items){if(!i.name||!i.contentHash||own.has(i.name))throw Error('重复或无效条目');own.add(i.name);if(d.kind==='pack'){if(names.has(i.name))throw Error('脚本名称冲突');names.add(i.name);}}}
@@ -169,7 +181,9 @@ function xzsModel17() {
     return m;
   }
   const matches=(hash,d)=>hash===d.contentHash||(d.compatibleHashes||[]).includes(hash);
-  function installed(c,d){if(d.kind==='script'){const hits=M.scripts(c).filter(x=>x.name===d.name);return hits.length>0&&hits.every(x=>matches(M.scriptHash(x.content),d));}return M.want(c,d);}
+  const fieldLabels={version:'卡片版本号',first_messages:'开场白',creator:'作者',creator_notes:'作者备注',description:'角色描述'};
+  function installed(c,d){if(d.kind==='fields')return M.fieldsReadable(c)&&(d.fieldHashes?M.fieldDiff(c,d.fieldHashes).length===0:M.want(c,d));if(d.kind==='script'){const hits=M.scripts(c).filter(x=>x.name===d.name);return hits.length>0&&hits.every(x=>matches(M.scriptHash(x.content),d));}return M.want(c,d);}
+  const fieldChoice=(c,d)=>({target:d.sha256,actual:M.hash(M.canonicalFields(c))});
   async function readWorld(name){try{return await api('getWorldbook')(name);}catch(e){const names=api('getWorldbookNames',false)?.();if(names&&!names.includes(name))return null;throw e;}}
   function chooseBook(m,b){const names=[b.char.primary,...(b.char.additional||[]),b.chat,...b.global].filter(Boolean);if(names.includes(m.worldbookName))return m.worldbookName;return names.find(n=>n.startsWith(m.worldbookNamePrefix))||m.worldbookName;}
   async function waitWrite(label,fn){status('write',label);const t=timer(()=>status('uncertain',label+'\n保存耗时较长，结果尚未确认。请勿重复提交；可以保持页面等待，或重开后检查备份记录。'),CONFIG.writeNotice);try{return await fn();}finally{clear(t);}}
@@ -184,6 +198,7 @@ function xzsModel17() {
     if(d.kind==='script'){if(M.scriptHash(t)!==d.contentHash)throw Error('脚本内容指纹不一致');new Function(t);if(d.name===NAME&&M.mark(t)!==d.mark)throw Error('更新器标记不一致');}
     if(d.kind==='world'){const w=JSON.parse(t);if(!w.entries||M.hash(M.world(Object.values(w.entries)))!==d.contentHash)throw Error('世界书内容不一致');const ids=Object.values(w.entries).map(e=>e.uid);if(new Set(ids).size!==ids.length)throw Error('世界书条目UID重复');}
     if(d.kind==='fields'&&M.hash(M.fields(JSON.parse(t)))!==d.contentHash)throw Error('卡字段内容不一致');
+    if(d.kind==='fields'&&d.fieldHashes&&M.stable(M.fieldHashes(JSON.parse(t)))!==M.stable(d.fieldHashes))throw Error('卡字段分项指纹不一致');
     if(d.kind==='pack'||d.kind==='regex'){const p=JSON.parse(t);if(!Array.isArray(p.scripts)||p.scripts.length!==d.items.length)throw Error('脚本包条目不一致');const names=new Set();for(let i=0;i<p.scripts.length;i++){const v=p.scripts[i],n=d.kind==='pack'?v.name:M.rxName(v);const expected=d.items.find(x=>x.name===n);if(names.has(n)||!expected||(d.kind==='pack'?M.scriptHash(v.content):M.hash(M.rx(v)))!==expected.contentHash)throw Error('脚本包内容不一致');names.add(n);if(d.kind==='pack')new Function(v.content);}}
   }
   async function execute(manual){
@@ -191,20 +206,27 @@ function xzsModel17() {
     if(!String(c.avatar||'').includes('新中市人间世'))throw Error('当前不是新中市角色卡');
     const name=String(c.avatar).replace(/\.png$/,'');const s={identity:identity(),binding:M.stable(binding()),name};
     const m=manifest(await download('manifest.v2.json'));guard(s);
+    if(Object.values(m.components).some(d=>d.kind==='fields')&&!M.fieldsReadable(c))throw Error('角色卡字段未完整读出，暂不判断开场白与描述需要更新。请等待卡片加载后重试');
     const b=binding(),book=chooseBook(m,b),world=await readWorld(book);guard(s);
     const localRelease=await storage('installed:'+name);const wbMark=(world||[]).find(e=>(e.name||e.comment)===WB_MARK)?.content||'';
     const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
     if(M.number(m.release)<highest)throw Error('更新源仍是旧版本，已阻止全部组件降级。稍后重试。');
     let plan=Object.entries(m.components).filter(([key,d])=>d.kind==='world'?!world||!matches(M.hash(M.world(world)),d):!installed(c,d));
+    // Older manifests lack per-field hashes. Verify their payload before classifying a difference.
+    const fieldEntry=plan.find(([k,d])=>d.kind==='fields');
+    if(fieldEntry&&!fieldEntry[1].fieldHashes){const [k,d]=fieldEntry;R.total=d.bytes;R.loaded=0;const t=await download(d.path,d);validatePayload(d,t);d.fieldHashes=M.fieldHashes(JSON.parse(t));if(installed(c,d))plan=plan.filter(([key])=>key!==k);}
+    const skipped=await storage('fields-choice:'+name);let keptFields=false;
+    R.fieldDifferences=fieldEntry?M.fieldDiff(c,fieldEntry[1].fieldHashes).map(k=>fieldLabels[k]):[];
+    if(!manual)plan=plan.filter(([k,d])=>{if(d.kind==='fields'&&M.stable(skipped)===M.stable(fieldChoice(c,d))){keptFields=true;return false;}return true;});
     // Never install a numerically older updater even if a stale manifest has a newer release label.
     for(const [k,d]of plan)if(d.kind==='script'&&d.name===NAME&&M.scripts(c).some(x=>x.name===NAME&&M.mark(x.content)>d.mark))throw Error('清单中的更新器版本较旧，已停止');
     const old=await storage('journal:'+name);if(old&&old.state!=='complete'&&old.state!=='restored'&&old.release!==m.release)throw Error('存在未完成更新；请先恢复备份或用原版本清单继续，避免覆盖恢复记录');
-    if(!plan.length){if(old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}await storage('installed:'+name,{release:m.release});status('done','所有组件已经核实为最新版本：'+m.release);return;}
+    if(!plan.length){if(!keptFields&&old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}await storage('installed:'+name,{release:m.release});status('done',keptFields?'已按你的选择保留自定义卡片字段，其余组件已核实。可手动检查以重新选择。':'所有组件已经核实为最新版本：'+m.release);return;}
     R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);R.loaded=0;
-    const message='本次更新：\n'+plan.map(([k,d])=>d.label+' · '+mb(d.bytes)).join('\n')+'\n总下载量：'+mb(R.total)+'\n将先保存备份，再逐项写入并验证。\n现在更新吗？';
+    const message='本次更新：\n'+plan.map(([k,d])=>d.label+(d.kind==='fields'?'（差异：'+M.fieldDiff(c,d.fieldHashes).map(k=>fieldLabels[k]).join('、')+'）':'')+' · '+mb(d.bytes)).join('\n')+'\n总下载量：'+mb(R.total)+'\n将先保存备份，再逐项写入并验证。\n现在更新吗？';
     if(!host.confirm(message)){status('cancelled','已取消更新，未写入。');return;}
     const f=plan.find(([k,d])=>d.kind==='fields');
-    if(f&&!host.confirm('检测到开场白或角色描述与官方版本不同，可能包含你的自定义内容。\n确定：备份后同步官方内容。\n取消：本次保留这些字段，其他组件继续更新。'))plan=plan.filter(([k,d])=>d.kind!=='fields');
+    if(f&&!host.confirm('卡片字段与官方版本存在差异：'+M.fieldDiff(c,f[1].fieldHashes).map(k=>fieldLabels[k]).join('、')+'。可能包含你的自定义内容。\n确定：备份后同步官方内容。\n取消：保留这些字段，其他组件继续更新；相同内容不再自动提醒，可手动重新检查。')){await storage('fields-choice:'+name,fieldChoice(c,f[1]));keptFields=true;plan=plan.filter(([k,d])=>d.kind!=='fields');}
     const files={};R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);
     for(const [k,d]of plan){guard(s);const t=await download(d.path,d);status('verify','正在校验：'+d.label);validatePayload(d,t);files[k]=t;}
     stop();guard(s);
@@ -249,11 +271,11 @@ function xzsModel17() {
       e.tavern_helper.scripts=M.scripts(card).filter(x=>!owned.has(x.name)).concat(M.scripts(j.beforeCard).filter(x=>owned.has(x.name)).map(M.clone));
       const regexNames=new Set(j.plan.filter(x=>x.descriptor.kind==='regex').flatMap(x=>x.descriptor.items.map(i=>i.name)));
       if(regexNames.size)e.regex_scripts=(e.regex_scripts||[]).filter(x=>!regexNames.has(M.rxName(x))).concat((old.regex_scripts||[]).filter(x=>regexNames.has(M.rxName(x))).map(M.clone));
-      if(j.plan.some(x=>x.descriptor.kind==='fields'))for(const k of Object.keys(M.fields(j.beforeCard)))card[k]=M.clone(j.beforeCard[k]??'');
+      if(j.plan.some(x=>x.descriptor.kind==='fields'))for(const k of Object.keys(M.fields(j.beforeCard)))card[k]=M.clone(j.beforeCard[k]??(k==='first_messages'?[]:''));
       return card;
     }),async()=>{
       const card=await api('getCharacter')(j.name);
-      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.hash(M.fields(card))===M.hash(M.fields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=d.kind==='script'?[d.name]:d.items.map(i=>i.name);return M.hash(M.scripts(card).filter(x=>names.includes(x.name)))===M.hash(M.scripts(j.beforeCard).filter(x=>names.includes(x.name)));});
+      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.fieldsReadable(card)&&M.hash(M.canonicalFields(card))===M.hash(M.canonicalFields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=d.kind==='script'?[d.name]:d.items.map(i=>i.name);return M.hash(M.scripts(card).filter(x=>names.includes(x.name)))===M.hash(M.scripts(j.beforeCard).filter(x=>names.includes(x.name)));});
     },s);
     // Only undo our added binding; never delete a book or revert unrelated global edits.
     if(j.addedBinding){guard(s);const now=binding();if(now.global.includes(j.book)){await waitWrite('恢复世界书绑定',()=>api('rebindGlobalWorldbooks')(now.global.filter(n=>n!==j.book)));if(binding().global.includes(j.book))throw Error('恢复世界书绑定未通过回读');s.binding=M.stable(binding());}}
