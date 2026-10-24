@@ -1,4 +1,4 @@
-/*XZS_UPDATER:19*/
+/*XZS_UPDATER:20*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
   const norm = s => String(s == null ? '' : s).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
@@ -107,7 +107,7 @@ function xzsModel19() {
 (function () {
   'use strict';
   const M=xzsModel19();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本';
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=20;
   const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,auto:8000};
   let host=window;
   try { while(host.parent&&host.parent!==host&&host.parent.document)host=host.parent; }catch(_){}
@@ -172,10 +172,10 @@ function xzsModel19() {
       stop();if(d){if(received!==d.bytes)throw Error('文件长度不匹配');if(await sha(text)!==d.sha256)throw Error('文件SHA-256校验失败');R.loaded=before+received;panel();}return text;
     }catch(e){R.loaded=before;stop();throw Error(reason||e.message);}finally{clear(connect);clear(idle);clear(limit);R.controller=null;}
   }
-  async function download(path,d){
+  async function download(path,d,validate){
     if(d&&R.cache.has(d.sha256)){R.loaded+=d.bytes;panel();return R.cache.get(d.sha256);}
     let last;
-    for(let i=0;i<bases.length;i++){stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));try{const t=await fetchOne(bases[i],path,d);if(d)R.cache.set(d.sha256,t);return t;}catch(e){last=e.message;stop();}}
+    for(let i=0;i<bases.length;i++){stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));try{const t=await fetchOne(bases[i],path,d);if(validate)await validate(t);stop();if(d)R.cache.set(d.sha256,t);return t;}catch(e){last=e.message;stop();}}
     throw Error('所有更新源失败：'+last);
   }
   function manifest(text){
@@ -216,12 +216,22 @@ function xzsModel19() {
     status('check','正在读取角色卡');const c=await api('getCharacter')('current');
     if(!String(c.avatar||'').includes('新中市人间世'))throw Error('当前不是新中市角色卡');
     const name=String(c.avatar).replace(/\.png$/,'');const s={identity:identity(),binding:M.stable(binding()),name};
-    const m=manifest(await download('manifest.v2.json'));guard(s);
+    const localRelease=await storage('installed:'+name);
+    const b=binding();let book,world;
+    // A successful HTTP response may still contain a stale CDN manifest. Validate
+    // it inside the source loop so a rejected source cannot stop later mirrors.
+    const m=manifest(await download('manifest.v2.json',null,async text=>{
+      const candidate=manifest(text);guard(s);
+      const updater=Object.values(candidate.components).find(d=>d.kind==='script'&&d.name===NAME);
+      const minimumMark=Math.max(UPDATER_MARK,...M.scripts(c).filter(x=>x.name===NAME).map(x=>M.mark(x.content)));
+      if(!updater||!Number.isSafeInteger(updater.mark)||updater.mark<minimumMark)throw Error('此源更新器版本较旧，正在尝试其他更新源');
+      const target=chooseBook(candidate,b),w=await readWorld(target);guard(s);
+      const wbMark=(w||[]).find(e=>(e.name||e.comment)===WB_MARK)?.content||'';
+      const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
+      if(M.number(candidate.release)<highest)throw Error('此源仍是旧构建，已阻止降级并尝试其他更新源');
+      book=target;world=w;
+    }));guard(s);
     if(Object.values(m.components).some(d=>d.kind==='fields')&&!M.fieldsReadable(c))throw Error('角色卡字段未完整读出，暂不判断开场白与描述需要更新。请等待卡片加载后重试');
-    const b=binding(),book=chooseBook(m,b),world=await readWorld(book);guard(s);
-    const localRelease=await storage('installed:'+name);const wbMark=(world||[]).find(e=>(e.name||e.comment)===WB_MARK)?.content||'';
-    const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
-    if(M.number(m.release)<highest)throw Error('更新源仍是旧版本，已阻止全部组件降级。稍后重试。');
     let plan=Object.entries(m.components).filter(([key,d])=>d.kind==='world'?!world||!matches(M.hash(M.world(world)),d):!installed(c,d));
     // Older manifests lack per-field hashes. Verify their payload before classifying a difference.
     const fieldEntry=plan.find(([k,d])=>d.kind==='fields');

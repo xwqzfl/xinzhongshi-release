@@ -1,0 +1,144 @@
+{
+  "schema": 2,
+  "release": "2026.10.24-20261024210823",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "**10.24镜像回退修复（更新器20）**\n\n- 遇到旧版或无效清单时，继续尝试其他更新源；所有源无效时保持零写入。\n- 保留防降级、资源指纹校验与默认关闭设置。\n\n**10.24补充：抗截断-01**\n\n- 用抗截断-01 v1.0.1 替换抗截断A，随角色卡更新下载，默认关闭；需要时在酒馆助手中手动启用。\n- 手机面板与入口联动，修复窄屏越界、触摸区域和流式兼容问题。\n- 更新器升级至20，新增旧脚本替换、迁移及恢复校验。17/18版首次升级后请整页刷新一次，自动完成旧占位清理；已有备份保留。\n- 其他托管脚本、剧情、开场白、世界书及进度机制未改动。\n\n**更新器误报修复**\n\n- 更新器升级至18。统一开场白、角色描述、作者和作者备注等字段的换行与文本边界格式比较，避免文字相同却反复提示“开场白与描述”更新。\n- 配套发布分项字段指纹清单和完整资源；内容一致时只检查清单，不重复下载整包开场白与描述。\n- 更新提示列出具体不同的字段，区分卡片版本号、开场白、作者、作者备注和角色描述；卡片字段未完整读出时暂停判断。\n- 保留真实内容变化、开场白删项和换序的检测，不使用旧缓存掩盖差异。旧清单缺少分项指纹时，校验原文件后再比较。\n- 主动选择保留自改字段后，相同卡片、相同官方内容及相同实际内容不再反复自动提醒；手动检查仍可重新选择。\n- 修复恢复备份时仅换行被宿主转换就被误判为恢复失败的问题，兼容已有17版备份记录。\n\n**版本同步**\n\n- 卡片版本、开局菜单显示和小手机版本回顾同步为2026.10.24，保留此前完整更新记录。\n- 保留旧版更新器迁移通道，18版更新器、清单、按需资源和独立恢复工具一并发布。\n- 本轮没有修改剧情正文、剧情触发、分支或进度机制。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5341754,
+      "sha256": "5945bfbea88125ad716a0bd7cce4fface06a982f773237231d0a98a5b084abe0",
+      "path": "assets/5945bfbea88125ad716a0bd7cce4fface06a982f773237231d0a98a5b084abe0/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "85717b7a",
+      "compatibleHashes": [
+        "d2462876",
+        "bc8b630c",
+        "85717b7a"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 37245,
+      "sha256": "34c33aaadf642e4bf3c98331b062d5b17676f3053427d0486eff3dd1eda66c2d",
+      "path": "assets/34c33aaadf642e4bf3c98331b062d5b17676f3053427d0486eff3dd1eda66c2d/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "72e600a7",
+      "mark": 20
+    },
+    "song": {
+      "label": "唱歌播放器",
+      "bytes": 66262,
+      "sha256": "d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0",
+      "path": "assets/d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0/songscript.js",
+      "kind": "script",
+      "name": "唱歌 · 音频直链",
+      "contentHash": "9c30e08d"
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 111848,
+      "sha256": "1cd54d0ab9cab3dafe7d809633e8e67be2d451b370efb4781922ba00cd593b05",
+      "path": "assets/1cd54d0ab9cab3dafe7d809633e8e67be2d451b370efb4781922ba00cd593b05/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "加强破限A",
+          "contentHash": "073ed9bf"
+        },
+        {
+          "name": "加强破限B",
+          "contentHash": "7d605481"
+        },
+        {
+          "name": "加强破限C",
+          "contentHash": "6907380c"
+        },
+        {
+          "name": "加强破限D",
+          "contentHash": "b71e8305"
+        },
+        {
+          "name": "加强破限E",
+          "contentHash": "04561cb8"
+        },
+        {
+          "name": "加强破限F",
+          "contentHash": "fedd679e"
+        },
+        {
+          "name": "加强破限G",
+          "contentHash": "afe629d2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "54eab7c1",
+          "retired": true
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "9b0fcf34",
+          "replaces": [
+            "抗截断A"
+          ]
+        }
+      ],
+      "contentHash": "1dc2ec72"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 11190735,
+      "sha256": "3ce2a71b352022612c98512078c601e031699a6847748a37a259a26a65894249",
+      "path": "assets/3ce2a71b352022612c98512078c601e031699a6847748a37a259a26a65894249/worldbook.json",
+      "kind": "world",
+      "contentHash": "e635540a",
+      "compatibleHashes": [
+        "47423098",
+        "f41f44f2",
+        "aab67a80",
+        "84ac279a",
+        "161b059f"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 864686,
+      "sha256": "e6621b49eccfb858d94383c492610291d3cc6787002ae9df26eb8b99f332c5f4",
+      "path": "assets/e6621b49eccfb858d94383c492610291d3cc6787002ae9df26eb8b99f332c5f4/cardfields.json",
+      "kind": "fields",
+      "contentHash": "477cfbe9",
+      "fieldHashes": {
+        "version": "ab1b77e4",
+        "first_messages": "b4616d54",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 98204,
+      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
+      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        }
+      ],
+      "contentHash": "ac4c978d"
+    }
+  }
+}
