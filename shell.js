@@ -1,4 +1,4 @@
-/*XZS_BUILD:2026.10.24-20261024193643*/
+/*XZS_BUILD:2026.10.24-20261024205016*/
 // 新中市通讯 · 悬浮球（酒馆助手全局脚本，验证版 1.0）
 // 运行宿主 = TH-script iframe，本脚本的 document 是宿主的，主页面 = window.parent
 (function () {

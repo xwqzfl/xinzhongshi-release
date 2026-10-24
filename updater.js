@@ -1,6 +1,6 @@
-/*XZS_UPDATER:18*/
+/*XZS_UPDATER:19*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
-function xzsModel18() {
+function xzsModel19() {
   const norm = s => String(s == null ? '' : s).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
   function fnv(s) { let h=2166136261; for(let i=0;i<s.length;i++) h=Math.imul(h^s.charCodeAt(i),16777619)>>>0; return h.toString(16).padStart(8,'0'); }
   const clone = v => decode(encode(v));
@@ -67,7 +67,7 @@ function xzsModel18() {
   function want(c,d) {
     const ss=scripts(c);
     if(d.kind==='script') {const all=ss.filter(s=>s.name===d.name);return all.length>0&&all.every(s=>scriptHash(s.content)===d.contentHash);}
-    if(d.kind==='pack')return d.items.every(i=>{const all=ss.filter(s=>s.name===i.name);return all.length>0&&all.every(s=>scriptHash(s.content)===i.contentHash)});
+    if(d.kind==='pack')return d.items.every(i=>{const all=ss.filter(s=>s.name===i.name);if(i.retired)return all.length===0;return all.length>0&&all.every(s=>scriptHash(s.content)===i.contentHash)&&!(i.replaces||[]).some(n=>ss.some(s=>s.name===n))});
     if(d.kind==='regex')return d.items.every(i=>{const all=(ext(c).regex_scripts||[]).filter(r=>rxName(r)===i.name);return all.length>0&&all.every(r=>hash(rx(r))===i.contentHash)});
     if(d.kind==='fields')return hash(fields(c))===d.contentHash;
     return false;
@@ -76,26 +76,37 @@ function xzsModel18() {
     const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;
     e.tavern_helper=e.tavern_helper||{};const ss=e.tavern_helper.scripts=e.tavern_helper.scripts||[];
     const found=ss.filter(s=>s.name===item.name);
-    if(found.length)found.forEach(s=>s.content=item.content);
-    else ss.push({type:'script',name:item.name,content:item.content,enabled:!!enabled,id:'xzs-'+Date.now()+'-'+Math.random().toString(36).slice(2),info:'新中市组件',data:{},button:{enabled:true,buttons:[]},export_with:{data:true,button:true}});
+    if(found.length)found.forEach(s=>{s.content=item.content;if(item.button)s.button=clone(item.button);if(item.info)s.info=item.info;if(item.export_with)s.export_with=clone(item.export_with);});
+    else ss.push({type:'script',name:item.name,content:item.content,enabled:!!enabled,id:item.id&&!ss.some(s=>s.id===item.id)?item.id:'xzs-'+Date.now()+'-'+Math.random().toString(36).slice(2),info:item.info||'新中市组件',data:clone(item.data||{}),button:clone(item.button||{enabled:true,buttons:[]}),export_with:clone(item.export_with||{data:true,button:true})});
   }
+  const ownedNames=d=>d.kind==='script'?[d.name]:d.kind==='pack'?d.items.flatMap(i=>[i.name,...(i.replaces||[])]):[];
   function apply(c,d,text) {
     if(d.kind==='script')putScript(c,{name:d.name,content:text},true);
-    if(d.kind==='pack')JSON.parse(text).scripts.forEach(s=>putScript(c,s,false));
+    if(d.kind==='pack'){
+      const items=JSON.parse(text).scripts, before=scripts(c).slice(), retired=new Set(items.filter(i=>i.retired).map(i=>i.name));
+      for(const item of items)for(const n of item.replaces||[])retired.add(n);
+      const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;e.tavern_helper=e.tavern_helper||{};
+      e.tavern_helper.scripts=before.filter(s=>!retired.has(s.name));
+      for(const item of items.filter(i=>!i.retired)){
+        const replacing=(item.replaces||[]).some(n=>before.some(s=>s.name===n));
+        putScript(c,item,false);
+        if(replacing)scripts(c).filter(s=>s.name===item.name).forEach(s=>s.enabled=false);
+      }
+    }
     if(d.kind==='fields'){const f=JSON.parse(text);for(const k of Object.keys(fields(f)))if(f[k]!=null)c[k]=clone(f[k]);}
     if(d.kind==='regex'){
       const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;
       let list=e.regex_scripts||[];for(const r of JSON.parse(text).scripts){const hits=list.filter(s=>rxName(s)===rxName(r));if(hits.length)list=list.map(s=>rxName(s)===rxName(r)?{...clone(r),id:s.id,enabled:s.enabled}:s);else list.push(clone(r));}e.regex_scripts=list;
     }return c;
   }
-  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply};
+  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames};
 }
 
 
 /* Source is bundled with model.cjs by build.cjs. No runtime dependency download. */
 (function () {
   'use strict';
-  const M=xzsModel18();
+  const M=xzsModel19();
   const NAME='新中市更新器', WB_MARK='【系统】世界书版本';
   const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,auto:8000};
   let host=window;
@@ -199,7 +210,7 @@ function xzsModel18() {
     if(d.kind==='world'){const w=JSON.parse(t);if(!w.entries||M.hash(M.world(Object.values(w.entries)))!==d.contentHash)throw Error('世界书内容不一致');const ids=Object.values(w.entries).map(e=>e.uid);if(new Set(ids).size!==ids.length)throw Error('世界书条目UID重复');}
     if(d.kind==='fields'&&M.hash(M.fields(JSON.parse(t)))!==d.contentHash)throw Error('卡字段内容不一致');
     if(d.kind==='fields'&&d.fieldHashes&&M.stable(M.fieldHashes(JSON.parse(t)))!==M.stable(d.fieldHashes))throw Error('卡字段分项指纹不一致');
-    if(d.kind==='pack'||d.kind==='regex'){const p=JSON.parse(t);if(!Array.isArray(p.scripts)||p.scripts.length!==d.items.length)throw Error('脚本包条目不一致');const names=new Set();for(let i=0;i<p.scripts.length;i++){const v=p.scripts[i],n=d.kind==='pack'?v.name:M.rxName(v);const expected=d.items.find(x=>x.name===n);if(names.has(n)||!expected||(d.kind==='pack'?M.scriptHash(v.content):M.hash(M.rx(v)))!==expected.contentHash)throw Error('脚本包内容不一致');names.add(n);if(d.kind==='pack')new Function(v.content);}}
+    if(d.kind==='pack'||d.kind==='regex'){const p=JSON.parse(t);if(!Array.isArray(p.scripts)||p.scripts.length!==d.items.length)throw Error('脚本包条目不一致');const names=new Set();for(let i=0;i<p.scripts.length;i++){const v=p.scripts[i],n=d.kind==='pack'?v.name:M.rxName(v);const expected=d.items.find(x=>x.name===n);if(names.has(n)||!expected||(d.kind==='pack'?M.scriptHash(v.content):M.hash(M.rx(v)))!==expected.contentHash)throw Error('脚本包内容不一致');if(d.kind==='pack'&&(!!v.retired!==!!expected.retired||M.stable(v.replaces||[])!==M.stable(expected.replaces||[])))throw Error('脚本迁移规则不一致');names.add(n);if(d.kind==='pack')new Function(v.content);}}
   }
   async function execute(manual){
     status('check','正在读取角色卡');const c=await api('getCharacter')('current');
@@ -221,10 +232,15 @@ function xzsModel18() {
     // Never install a numerically older updater even if a stale manifest has a newer release label.
     for(const [k,d]of plan)if(d.kind==='script'&&d.name===NAME&&M.scripts(c).some(x=>x.name===NAME&&M.mark(x.content)>d.mark))throw Error('清单中的更新器版本较旧，已停止');
     const old=await storage('journal:'+name);if(old&&old.state!=='complete'&&old.state!=='restored'&&old.release!==m.release)throw Error('存在未完成更新；请先恢复备份或用原版本清单继续，避免覆盖恢复记录');
+    // v17/18 can download the replacement but cannot remove retired entries. Finish only
+    // that already-approved, byte-identical migration, retaining its original before-image.
+    const resumeMigration=old?.state==='complete'&&old.release===m.release&&plan.length===1&&plan[0][1].kind==='pack'&&
+      old.plan?.some(x=>x.descriptor.sha256===plan[0][1].sha256)&&plan[0][1].items.some(i=>i.retired&&M.scripts(c).some(s=>s.name===i.name))&&
+      plan[0][1].items.every(i=>{const hits=M.scripts(c).filter(s=>s.name===i.name);return (i.retired||hits.length>0)&&hits.every(s=>M.scriptHash(s.content)===i.contentHash)});
     if(!plan.length){if(!keptFields&&old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}await storage('installed:'+name,{release:m.release});status('done',keptFields?'已按你的选择保留自定义卡片字段，其余组件已核实。可手动检查以重新选择。':'所有组件已经核实为最新版本：'+m.release);return;}
     R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);R.loaded=0;
     const message='本次更新：\n'+plan.map(([k,d])=>d.label+(d.kind==='fields'?'（差异：'+M.fieldDiff(c,d.fieldHashes).map(k=>fieldLabels[k]).join('、')+'）':'')+' · '+mb(d.bytes)).join('\n')+'\n总下载量：'+mb(R.total)+'\n将先保存备份，再逐项写入并验证。\n现在更新吗？';
-    if(!host.confirm(message)){status('cancelled','已取消更新，未写入。');return;}
+    if(!resumeMigration&&!host.confirm(message)){status('cancelled','已取消更新，未写入。');return;}
     const f=plan.find(([k,d])=>d.kind==='fields');
     if(f&&!host.confirm('卡片字段与官方版本存在差异：'+M.fieldDiff(c,f[1].fieldHashes).map(k=>fieldLabels[k]).join('、')+'。可能包含你的自定义内容。\n确定：备份后同步官方内容。\n取消：保留这些字段，其他组件继续更新；相同内容不再自动提醒，可手动重新检查。')){await storage('fields-choice:'+name,fieldChoice(c,f[1]));keptFields=true;plan=plan.filter(([k,d])=>d.kind!=='fields');}
     const files={};R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);
@@ -232,7 +248,7 @@ function xzsModel18() {
     stop();guard(s);
     if(!plan.length){status('cancelled','已保留自定义字段，未写入。');return;}
     // Persist full before-images once. Quota failure aborts before any host mutation.
-    let j=old&&old.state!=='complete'&&old.state!=='restored'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
+    let j=resumeMigration||old&&old.state!=='complete'&&old.state!=='restored'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
     if(j.book!==book)throw Error('恢复记录的世界书目标不一致');
     for(const [k,d]of plan)if(!j.plan.some(x=>x.key===k))j.plan.push({key:k,descriptor:d});
     await storage('journal:'+name,j);const saved=await storage('journal:'+name);if(M.encode(saved)!==M.encode(j))throw Error('备份回读失败，已取消写入');
@@ -267,7 +283,7 @@ function xzsModel18() {
     if(j.plan.some(x=>x.descriptor.kind==='world')&&j.beforeWorld){await writeChecked('恢复世界书',()=>api('replaceWorldbook')(j.book,M.clone(j.beforeWorld)),async()=>M.hash(M.world(await readWorld(j.book)))===M.hash(M.world(j.beforeWorld)),s);}
     await writeChecked('恢复角色卡组件',()=>api('updateCharacterWith')(j.name,card=>{
       guard(s);const e=M.ext(card),old=M.ext(j.beforeCard);e.tavern_helper=e.tavern_helper||{};
-      const owned=new Set(j.plan.flatMap(x=>x.descriptor.kind==='script'?[x.descriptor.name]:x.descriptor.kind==='pack'?x.descriptor.items.map(i=>i.name):[]));
+      const owned=new Set(j.plan.flatMap(x=>M.ownedNames(x.descriptor)));
       e.tavern_helper.scripts=M.scripts(card).filter(x=>!owned.has(x.name)).concat(M.scripts(j.beforeCard).filter(x=>owned.has(x.name)).map(M.clone));
       const regexNames=new Set(j.plan.filter(x=>x.descriptor.kind==='regex').flatMap(x=>x.descriptor.items.map(i=>i.name)));
       if(regexNames.size)e.regex_scripts=(e.regex_scripts||[]).filter(x=>!regexNames.has(M.rxName(x))).concat((old.regex_scripts||[]).filter(x=>regexNames.has(M.rxName(x))).map(M.clone));
@@ -275,7 +291,7 @@ function xzsModel18() {
       return card;
     }),async()=>{
       const card=await api('getCharacter')(j.name);
-      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.fieldsReadable(card)&&M.hash(M.canonicalFields(card))===M.hash(M.canonicalFields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=d.kind==='script'?[d.name]:d.items.map(i=>i.name);return M.hash(M.scripts(card).filter(x=>names.includes(x.name)))===M.hash(M.scripts(j.beforeCard).filter(x=>names.includes(x.name)));});
+      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.fieldsReadable(card)&&M.hash(M.canonicalFields(card))===M.hash(M.canonicalFields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=M.ownedNames(d);return M.hash(M.scripts(card).filter(x=>names.includes(x.name)))===M.hash(M.scripts(j.beforeCard).filter(x=>names.includes(x.name)));});
     },s);
     // Only undo our added binding; never delete a book or revert unrelated global edits.
     if(j.addedBinding){guard(s);const now=binding();if(now.global.includes(j.book)){await waitWrite('恢复世界书绑定',()=>api('rebindGlobalWorldbooks')(now.global.filter(n=>n!==j.book)));if(binding().global.includes(j.book))throw Error('恢复世界书绑定未通过回读');s.binding=M.stable(binding());}}
