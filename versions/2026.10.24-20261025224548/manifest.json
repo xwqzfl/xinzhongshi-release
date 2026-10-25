@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.24-20261025224548",
+  "cardVersion": "2026.10.24",
+  "builtAt": "2026-10-25T14:47:05.313Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "21",
+  "songMark": "9",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "**10.25 世界书上下文优化**\n\n- 26 条常驻规则无损压缩合并，规则条款与功能保留，常驻注入约减少 16%。\n- 19 条成人/外观条目改用更精确的触发词，修复“操场/角色/清洁”等日常词误触发成人条目。\n- 真实对话样本下世界书注入均值降低约 13%，中位约 10.1 万 token。\n- 同时发布此前本机完成的世界书触发优化：住宅递归阻断、名册改为明确查询、社团单项触发与误触修复。\n- 本次仅世界书与手机版本回顾变更，其余组件不变。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "02e771e7",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "6218eed7",
+      "bytes": 5346377
+    },
+    "updater.js": {
+      "hash": "4930ae4f",
+      "bytes": 42023
+    },
+    "songscript.js": {
+      "hash": "67f17485",
+      "bytes": 66262
+    },
+    "jailbreaks.json": {
+      "hash": "a6224481",
+      "bytes": 112745
+    },
+    "worldbook.json": {
+      "hash": "0beb77c1",
+      "bytes": 11264211
+    },
+    "cardfields.json": {
+      "hash": "12f124fb",
+      "bytes": 866189
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}

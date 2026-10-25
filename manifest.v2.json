@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.10.24-20261025205205",
+  "release": "2026.10.24-20261025224548",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "**10.25 抗截断迷你图标补发**\n\n- 抗截断-01 更新至 v1.0.2：32px 迷你图标入口，移除长条文字按钮。\n- 补齐此前漏入发布包的样式更新，保留原有开关与设置。\n- 更新完成后整页刷新一次加载新版。\n\n**10.25 九个日常开局更新**\n\n- 原六篇自由开局替换为审定正文，新增侍奉部、STARRY、Stile三篇。\n- 选择器读取当前角色卡；修复返回开局按钮，已有后续对话时须新建聊天换开局。\n- 旧事件开局编号改为历史来源；新开局不自动继承旧事件完成记录。\n- 手机版本回顾同步。",
+  "notes": "**10.25 世界书上下文优化**\n\n- 26 条常驻规则无损压缩合并，规则条款与功能保留，常驻注入约减少 16%。\n- 19 条成人/外观条目改用更精确的触发词，修复“操场/角色/清洁”等日常词误触发成人条目。\n- 真实对话样本下世界书注入均值降低约 13%，中位约 10.1 万 token。\n- 同时发布此前本机完成的世界书触发优化：住宅递归阻断、名册改为明确查询、社团单项触发与误触修复。\n- 本次仅世界书与手机版本回顾变更，其余组件不变。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5345880,
-      "sha256": "11bcb4f3c1c602d5b98496c5ec0cab33f15655b425207cc8865acc73e33d3120",
-      "path": "assets/11bcb4f3c1c602d5b98496c5ec0cab33f15655b425207cc8865acc73e33d3120/shell.js",
+      "bytes": 5346377,
+      "sha256": "498ecd3bc78ae6cfa5caff1d2777b40993895527586351a4451e55ef644a78cd",
+      "path": "assets/498ecd3bc78ae6cfa5caff1d2777b40993895527586351a4451e55ef644a78cd/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "14d7515f",
+      "contentHash": "6218eed7",
       "compatibleHashes": [
-        "14d7515f"
+        "6218eed7"
       ]
     },
     "updater": {
@@ -88,14 +88,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11207235,
-      "sha256": "0ef3bb8916539c0c6da6ee37520d5b15d82b8d47579ec18355f467257d60818d",
-      "path": "assets/0ef3bb8916539c0c6da6ee37520d5b15d82b8d47579ec18355f467257d60818d/worldbook.json",
+      "bytes": 11264211,
+      "sha256": "e91db453715d320688a9700cf6d58d7abd3b8e4645963ed31738fe75a5915546",
+      "path": "assets/e91db453715d320688a9700cf6d58d7abd3b8e4645963ed31738fe75a5915546/worldbook.json",
       "kind": "world",
-      "contentHash": "3cc91824",
+      "contentHash": "fe9ff3f8",
       "compatibleHashes": [
-        "222206b5",
-        "5e274d07"
+        "fe9ff3f8"
       ]
     },
     "fields": {
