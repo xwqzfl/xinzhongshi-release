@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.24-20261025205205",
+  "cardVersion": "2026.10.24",
+  "builtAt": "2026-10-25T12:52:06.086Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "21",
+  "songMark": "9",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "**10.25 抗截断迷你图标补发**\n\n- 抗截断-01 更新至 v1.0.2：32px 迷你图标入口，移除长条文字按钮。\n- 补齐此前漏入发布包的样式更新，保留原有开关与设置。\n- 更新完成后整页刷新一次加载新版。\n\n**10.25 九个日常开局更新**\n\n- 原六篇自由开局替换为审定正文，新增侍奉部、STARRY、Stile三篇。\n- 选择器读取当前角色卡；修复返回开局按钮，已有后续对话时须新建聊天换开局。\n- 旧事件开局编号改为历史来源；新开局不自动继承旧事件完成记录。\n- 手机版本回顾同步。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "02e771e7",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "14d7515f",
+      "bytes": 5345880
+    },
+    "updater.js": {
+      "hash": "4930ae4f",
+      "bytes": 42023
+    },
+    "songscript.js": {
+      "hash": "67f17485",
+      "bytes": 66262
+    },
+    "jailbreaks.json": {
+      "hash": "a6224481",
+      "bytes": 112745
+    },
+    "worldbook.json": {
+      "hash": "c68d22cd",
+      "bytes": 11207235
+    },
+    "cardfields.json": {
+      "hash": "12f124fb",
+      "bytes": 866189
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}

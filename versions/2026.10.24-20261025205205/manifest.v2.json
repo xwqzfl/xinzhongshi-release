@@ -1,0 +1,139 @@
+{
+  "schema": 2,
+  "release": "2026.10.24-20261025205205",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "**10.25 抗截断迷你图标补发**\n\n- 抗截断-01 更新至 v1.0.2：32px 迷你图标入口，移除长条文字按钮。\n- 补齐此前漏入发布包的样式更新，保留原有开关与设置。\n- 更新完成后整页刷新一次加载新版。\n\n**10.25 九个日常开局更新**\n\n- 原六篇自由开局替换为审定正文，新增侍奉部、STARRY、Stile三篇。\n- 选择器读取当前角色卡；修复返回开局按钮，已有后续对话时须新建聊天换开局。\n- 旧事件开局编号改为历史来源；新开局不自动继承旧事件完成记录。\n- 手机版本回顾同步。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5345880,
+      "sha256": "11bcb4f3c1c602d5b98496c5ec0cab33f15655b425207cc8865acc73e33d3120",
+      "path": "assets/11bcb4f3c1c602d5b98496c5ec0cab33f15655b425207cc8865acc73e33d3120/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "14d7515f",
+      "compatibleHashes": [
+        "14d7515f"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 42023,
+      "sha256": "6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44",
+      "path": "assets/6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "d1ea85df",
+      "mark": 21
+    },
+    "song": {
+      "label": "唱歌播放器",
+      "bytes": 66262,
+      "sha256": "d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0",
+      "path": "assets/d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0/songscript.js",
+      "kind": "script",
+      "name": "唱歌 · 音频直链",
+      "contentHash": "9c30e08d"
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 112745,
+      "sha256": "d859feae771d84fbaa20729ebc4f9bb1946c7caf6a1ff83772f2cfad411ce35f",
+      "path": "assets/d859feae771d84fbaa20729ebc4f9bb1946c7caf6a1ff83772f2cfad411ce35f/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "加强破限A",
+          "contentHash": "073ed9bf"
+        },
+        {
+          "name": "加强破限B",
+          "contentHash": "7d605481"
+        },
+        {
+          "name": "加强破限C",
+          "contentHash": "6907380c"
+        },
+        {
+          "name": "加强破限D",
+          "contentHash": "b71e8305"
+        },
+        {
+          "name": "加强破限E",
+          "contentHash": "04561cb8"
+        },
+        {
+          "name": "加强破限F",
+          "contentHash": "fedd679e"
+        },
+        {
+          "name": "加强破限G",
+          "contentHash": "afe629d2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "54eab7c1",
+          "retired": true
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "9ce22b87",
+          "replaces": [
+            "抗截断A"
+          ]
+        }
+      ],
+      "contentHash": "5db86109"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 11207235,
+      "sha256": "0ef3bb8916539c0c6da6ee37520d5b15d82b8d47579ec18355f467257d60818d",
+      "path": "assets/0ef3bb8916539c0c6da6ee37520d5b15d82b8d47579ec18355f467257d60818d/worldbook.json",
+      "kind": "world",
+      "contentHash": "3cc91824",
+      "compatibleHashes": [
+        "222206b5",
+        "5e274d07"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 866189,
+      "sha256": "41b62516ac7806b76cc7b20a21a8013f278ab47930d07119f96c8f30344e183a",
+      "path": "assets/41b62516ac7806b76cc7b20a21a8013f278ab47930d07119f96c8f30344e183a/cardfields.json",
+      "kind": "fields",
+      "contentHash": "28f41a68",
+      "fieldHashes": {
+        "version": "ab1b77e4",
+        "first_messages": "550ed2c1",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 98204,
+      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
+      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        }
+      ],
+      "contentHash": "ac4c978d"
+    }
+  }
+}

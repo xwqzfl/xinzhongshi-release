@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.10.24-20261025200459",
+  "release": "2026.10.24-20261025205205",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "**10.25 九个日常开局更新**\n\n- 原六篇自由开局替换为审定正文，新增侍奉部、STARRY、Stile三篇。\n- 选择器读取当前角色卡；修复返回开局按钮，已有后续对话时须新建聊天换开局。\n- 旧事件开局编号改为历史来源；新开局不自动继承旧事件完成记录。\n- 手机版本回顾同步。",
+  "notes": "**10.25 抗截断迷你图标补发**\n\n- 抗截断-01 更新至 v1.0.2：32px 迷你图标入口，移除长条文字按钮。\n- 补齐此前漏入发布包的样式更新，保留原有开关与设置。\n- 更新完成后整页刷新一次加载新版。\n\n**10.25 九个日常开局更新**\n\n- 原六篇自由开局替换为审定正文，新增侍奉部、STARRY、Stile三篇。\n- 选择器读取当前角色卡；修复返回开局按钮，已有后续对话时须新建聊天换开局。\n- 旧事件开局编号改为历史来源；新开局不自动继承旧事件完成记录。\n- 手机版本回顾同步。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5345612,
-      "sha256": "92e6442fabbf709ceeb7f7698fa243cceb0902e769b8f28865cb331f8d952c04",
-      "path": "assets/92e6442fabbf709ceeb7f7698fa243cceb0902e769b8f28865cb331f8d952c04/shell.js",
+      "bytes": 5345880,
+      "sha256": "11bcb4f3c1c602d5b98496c5ec0cab33f15655b425207cc8865acc73e33d3120",
+      "path": "assets/11bcb4f3c1c602d5b98496c5ec0cab33f15655b425207cc8865acc73e33d3120/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "06c69dc6",
+      "contentHash": "14d7515f",
       "compatibleHashes": [
-        "06c69dc6"
+        "14d7515f"
       ]
     },
     "updater": {
@@ -38,9 +38,9 @@
     },
     "managed": {
       "label": "托管脚本",
-      "bytes": 111848,
-      "sha256": "1cd54d0ab9cab3dafe7d809633e8e67be2d451b370efb4781922ba00cd593b05",
-      "path": "assets/1cd54d0ab9cab3dafe7d809633e8e67be2d451b370efb4781922ba00cd593b05/jailbreaks.json",
+      "bytes": 112745,
+      "sha256": "d859feae771d84fbaa20729ebc4f9bb1946c7caf6a1ff83772f2cfad411ce35f",
+      "path": "assets/d859feae771d84fbaa20729ebc4f9bb1946c7caf6a1ff83772f2cfad411ce35f/jailbreaks.json",
       "kind": "pack",
       "items": [
         {
@@ -78,13 +78,13 @@
         },
         {
           "name": "抗截断-01",
-          "contentHash": "9b0fcf34",
+          "contentHash": "9ce22b87",
           "replaces": [
             "抗截断A"
           ]
         }
       ],
-      "contentHash": "1dc2ec72"
+      "contentHash": "5db86109"
     },
     "world": {
       "label": "世界书",
@@ -94,6 +94,7 @@
       "kind": "world",
       "contentHash": "3cc91824",
       "compatibleHashes": [
+        "222206b5",
         "5e274d07"
       ]
     },
