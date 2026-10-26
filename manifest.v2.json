@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.10.24-20261026200943",
+  "release": "2026.10.26-20261026224034",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "**10.26 抗截断与返回开局按钮修复**\n\n- 抗截断-01 更新至 v1.0.3，修复迷你图标版状态、字符数及请求记录不刷新的报错。\n- 修复选完开局后“返回开局选择”按钮点击无反应，兼容酒馆渲染后的按钮类名。\n- 更新完成后请整页刷新；需要使用抗截断时确认脚本与面板开关已启用。\n- 保留已有后续对话时的开局切换保护，避免剧情错接。",
+  "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5346883,
-      "sha256": "51f7d716d3e174b010bb86c8c2055ab00767a07fcd605dfd9a23d54049c3f4ea",
-      "path": "assets/51f7d716d3e174b010bb86c8c2055ab00767a07fcd605dfd9a23d54049c3f4ea/shell.js",
+      "bytes": 5372873,
+      "sha256": "8c0657a48ca142956161521939a246b0d18b2e82c52ce6d2de804a5580466e9f",
+      "path": "assets/8c0657a48ca142956161521939a246b0d18b2e82c52ce6d2de804a5580466e9f/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "85d9f728",
+      "contentHash": "411fa648",
       "compatibleHashes": [
-        "85d9f728"
+        "18945d99"
       ]
     },
     "updater": {
@@ -38,38 +38,35 @@
     },
     "managed": {
       "label": "托管脚本",
-      "bytes": 112938,
-      "sha256": "a5d34a3b488ec9937d4f841ae7417d7350acbf30a227adbea35c74caa43bfa2d",
-      "path": "assets/a5d34a3b488ec9937d4f841ae7417d7350acbf30a227adbea35c74caa43bfa2d/jailbreaks.json",
+      "bytes": 72247,
+      "sha256": "09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3",
+      "path": "assets/09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3/jailbreaks.json",
       "kind": "pack",
       "items": [
         {
-          "name": "加强破限A",
-          "contentHash": "073ed9bf"
+          "name": "破限1·身份重置",
+          "contentHash": "04f61d05",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
         },
         {
-          "name": "加强破限B",
-          "contentHash": "7d605481"
+          "name": "破限2·边界申明",
+          "contentHash": "fca05aad"
         },
         {
-          "name": "加强破限C",
-          "contentHash": "6907380c"
+          "name": "破限3·反自审",
+          "contentHash": "5a5c782e"
         },
         {
-          "name": "加强破限D",
-          "contentHash": "b71e8305"
-        },
-        {
-          "name": "加强破限E",
-          "contentHash": "04561cb8"
-        },
-        {
-          "name": "加强破限F",
-          "contentHash": "fedd679e"
-        },
-        {
-          "name": "加强破限G",
-          "contentHash": "afe629d2"
+          "name": "破限4·硬派论证",
+          "contentHash": "6f4b4cd2"
         },
         {
           "name": "抗截断A",
@@ -84,29 +81,28 @@
           ]
         }
       ],
-      "contentHash": "9d413728"
+      "contentHash": "93b08c15"
     },
     "world": {
       "label": "世界书",
-      "bytes": 11264211,
-      "sha256": "e91db453715d320688a9700cf6d58d7abd3b8e4645963ed31738fe75a5915546",
-      "path": "assets/e91db453715d320688a9700cf6d58d7abd3b8e4645963ed31738fe75a5915546/worldbook.json",
+      "bytes": 11825134,
+      "sha256": "b680a57ae3fb5c32b3d29ae64174652d6cd2fb8a77a516add05610ddaf56d76f",
+      "path": "assets/b680a57ae3fb5c32b3d29ae64174652d6cd2fb8a77a516add05610ddaf56d76f/worldbook.json",
       "kind": "world",
-      "contentHash": "fe9ff3f8",
+      "contentHash": "78f61116",
       "compatibleHashes": [
-        "f6875532",
-        "fe9ff3f8"
+        "14bd02cf"
       ]
     },
     "fields": {
       "label": "开场白与描述",
-      "bytes": 866189,
-      "sha256": "41b62516ac7806b76cc7b20a21a8013f278ab47930d07119f96c8f30344e183a",
-      "path": "assets/41b62516ac7806b76cc7b20a21a8013f278ab47930d07119f96c8f30344e183a/cardfields.json",
+      "bytes": 865631,
+      "sha256": "78d6fa86640cdae092afcfa7d0b156db1e3977534bd1f25c94e7e6016af2ac7e",
+      "path": "assets/78d6fa86640cdae092afcfa7d0b156db1e3977534bd1f25c94e7e6016af2ac7e/cardfields.json",
       "kind": "fields",
-      "contentHash": "28f41a68",
+      "contentHash": "531b9bee",
       "fieldHashes": {
-        "version": "ab1b77e4",
+        "version": "a316ee1e",
         "first_messages": "550ed2c1",
         "creator": "806ccad4",
         "creator_notes": "b005410d",

@@ -1,0 +1,135 @@
+{
+  "schema": 2,
+  "release": "2026.10.26-20261026224034",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5372873,
+      "sha256": "8c0657a48ca142956161521939a246b0d18b2e82c52ce6d2de804a5580466e9f",
+      "path": "assets/8c0657a48ca142956161521939a246b0d18b2e82c52ce6d2de804a5580466e9f/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "411fa648",
+      "compatibleHashes": [
+        "18945d99"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 42023,
+      "sha256": "6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44",
+      "path": "assets/6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "d1ea85df",
+      "mark": 21
+    },
+    "song": {
+      "label": "唱歌播放器",
+      "bytes": 66262,
+      "sha256": "d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0",
+      "path": "assets/d2c9a487734294b68e94824e06aeca9c7035f61e186ca35836336eed62919bf0/songscript.js",
+      "kind": "script",
+      "name": "唱歌 · 音频直链",
+      "contentHash": "9c30e08d"
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 72247,
+      "sha256": "09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3",
+      "path": "assets/09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "04f61d05",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "fca05aad"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "5a5c782e"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "6f4b4cd2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "54eab7c1",
+          "retired": true
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "13e651b2",
+          "replaces": [
+            "抗截断A"
+          ]
+        }
+      ],
+      "contentHash": "93b08c15"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 11825134,
+      "sha256": "b680a57ae3fb5c32b3d29ae64174652d6cd2fb8a77a516add05610ddaf56d76f",
+      "path": "assets/b680a57ae3fb5c32b3d29ae64174652d6cd2fb8a77a516add05610ddaf56d76f/worldbook.json",
+      "kind": "world",
+      "contentHash": "78f61116",
+      "compatibleHashes": [
+        "14bd02cf"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 865631,
+      "sha256": "78d6fa86640cdae092afcfa7d0b156db1e3977534bd1f25c94e7e6016af2ac7e",
+      "path": "assets/78d6fa86640cdae092afcfa7d0b156db1e3977534bd1f25c94e7e6016af2ac7e/cardfields.json",
+      "kind": "fields",
+      "contentHash": "531b9bee",
+      "fieldHashes": {
+        "version": "a316ee1e",
+        "first_messages": "550ed2c1",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 98204,
+      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
+      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        }
+      ],
+      "contentHash": "ac4c978d"
+    }
+  }
+}
