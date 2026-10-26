@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.24-20261026200943",
+  "cardVersion": "2026.10.24",
+  "builtAt": "2026-10-26T12:09:44.470Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "21",
+  "songMark": "9",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "**10.26 抗截断与返回开局按钮修复**\n\n- 抗截断-01 更新至 v1.0.3，修复迷你图标版状态、字符数及请求记录不刷新的报错。\n- 修复选完开局后“返回开局选择”按钮点击无反应，兼容酒馆渲染后的按钮类名。\n- 更新完成后请整页刷新；需要使用抗截断时确认脚本与面板开关已启用。\n- 保留已有后续对话时的开局切换保护，避免剧情错接。",
+  "cardFields": {
+    "greetings": 111,
+    "fp": "02e771e7",
+    "firstMesLen": 28002
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "bc97c721"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "85d9f728",
+      "bytes": 5346883
+    },
+    "updater.js": {
+      "hash": "4930ae4f",
+      "bytes": 42023
+    },
+    "songscript.js": {
+      "hash": "67f17485",
+      "bytes": 66262
+    },
+    "jailbreaks.json": {
+      "hash": "a58bdb6c",
+      "bytes": 112938
+    },
+    "worldbook.json": {
+      "hash": "db2f2463",
+      "bytes": 11264211
+    },
+    "cardfields.json": {
+      "hash": "12f124fb",
+      "bytes": 866189
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
