@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.27-20261027194929",
+  "cardVersion": "2026.10.27",
+  "builtAt": "2026-10-27T11:49:29.634Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "21",
+  "songMark": "9",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "**10.27 星月姐妹形象补正**\n\n- 修正「星月枫」「星月铃」的形象描述：发色由深黑改为蓝紫色（藤紫）短发——姐姐不再是及腰长直发＋高马尾＋红发带，妹妹不再是及肩黑短发。\n- 校服与随身物按参考图补正：姐姐白衬衫＋红色缎带蝴蝶结＋驼色 V 领针织开衫，斜挎墨绿色书包；妹妹白衬衫＋同款红色缎带＋黑色西装外套。\n- 妹妹补上右侧头顶呆毛与左侧鬓角的黄色小花发夹；两条各加一行 twin_distinction，写明双胞胎的分辨点（眼睛颜色、呆毛、外套）。\n- 关键词、触发、顺序、分组、体型与 NSFW 信息均未改动；其余 2559 条世界书逐字段不变。\n- 更新完成后请整页刷新。",
+  "cardFields": {
+    "greetings": 106,
+    "fp": "28aa39ea",
+    "firstMesLen": 29911
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "a27e2461"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "dc439968",
+      "bytes": 5372873
+    },
+    "updater.js": {
+      "hash": "4930ae4f",
+      "bytes": 42023
+    },
+    "songscript.js": {
+      "hash": "67f17485",
+      "bytes": 66262
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "worldbook.json": {
+      "hash": "c9fe8fb5",
+      "bytes": 11826183
+    },
+    "cardfields.json": {
+      "hash": "c04d3cf3",
+      "bytes": 865631
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}

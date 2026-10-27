@@ -1,9 +1,9 @@
 {
   "schema": 2,
-  "release": "2026.10.26-20261026224034",
+  "release": "2026.10.27-20261027194929",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
+  "notes": "**10.27 星月姐妹形象补正**\n\n- 修正「星月枫」「星月铃」的形象描述：发色由深黑改为蓝紫色（藤紫）短发——姐姐不再是及腰长直发＋高马尾＋红发带，妹妹不再是及肩黑短发。\n- 校服与随身物按参考图补正：姐姐白衬衫＋红色缎带蝴蝶结＋驼色 V 领针织开衫，斜挎墨绿色书包；妹妹白衬衫＋同款红色缎带＋黑色西装外套。\n- 妹妹补上右侧头顶呆毛与左侧鬓角的黄色小花发夹；两条各加一行 twin_distinction，写明双胞胎的分辨点（眼睛颜色、呆毛、外套）。\n- 关键词、触发、顺序、分组、体型与 NSFW 信息均未改动；其余 2559 条世界书逐字段不变。\n- 更新完成后请整页刷新。",
   "components": {
     "shell": {
       "label": "手机主脚本",
@@ -14,6 +14,7 @@
       "name": "新中市通讯 · 验证版 1.0",
       "contentHash": "411fa648",
       "compatibleHashes": [
+        "dc439968",
         "18945d99"
       ]
     },
@@ -85,13 +86,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11825134,
-      "sha256": "b680a57ae3fb5c32b3d29ae64174652d6cd2fb8a77a516add05610ddaf56d76f",
-      "path": "assets/b680a57ae3fb5c32b3d29ae64174652d6cd2fb8a77a516add05610ddaf56d76f/worldbook.json",
+      "bytes": 11826183,
+      "sha256": "ec79bf178d656c7e27c0d4371c0f407a0506de41f61c5e2558a234f038af4326",
+      "path": "assets/ec79bf178d656c7e27c0d4371c0f407a0506de41f61c5e2558a234f038af4326/worldbook.json",
       "kind": "world",
-      "contentHash": "78f61116",
+      "contentHash": "c966e118",
       "compatibleHashes": [
-        "14bd02cf"
+        "fefaf272"
       ]
     },
     "fields": {
