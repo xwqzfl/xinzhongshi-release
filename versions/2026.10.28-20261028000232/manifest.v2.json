@@ -1,0 +1,135 @@
+{
+  "schema": 2,
+  "release": "2026.10.28-20261028000232",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "**10.28 版本号与开局**\n- 卡片版本更到 2026.10.28；开局页脚那行版本号此前一直停在 2026.10.24，这次一并改成 2026.10.28。\n**10.28 林曦与她的两个人**\n- 新增《林曦（凌霄的母亲·凌路的祖母）》：帝皇的灵体分身受肉，被凌霄的祖父收养，姓林名曦；2.2 米、深肤色、额前金桂冠，对精液执着，住林宅四楼。她自己不知道、也不理解这层来历。\n- 新增《圣吉列斯（大天使之首）》：白翼、2.4 米，天界首座，下凡作林曦的守护天使。\n- 新增《圣人·秘藏（教会不说的那位）》：教会秘藏一幅画像，画的就是她；教阶里的“圣人”只是职衔，她是来处。\n- 《贞德（从者）》多一层“林曦的随从”身份，原御主契约与裁定立场不变。\n- 凌霄的亲属行补上母亲；六位夫人补婆婆、四位孙辈补祖母、曹茗瑜补健身搭子、三位天使补天界之首，两边互相引到。\n**10.28 圣歌入库**\n\n- 音乐库新增「圣歌」分类，27 首圣歌直接从小手机里点播：青衣、一吻天荒、九万字、乱世书、吹梦到西洲、堕、天堂之战、奇迹再现、木兰行、极恶都市、此去半生、沙漠骆驼、泰拉回响、游京、火蜥蜴战歌·火蜥蜴之怒、王座之前说再见、生死相随、真英雄、精卫、纵此生、荒、赐我、长安姑娘、阿斯塔特战曲、雨爱、风催雨、you have to choose your future（旧圣咏）。\n- 青衣为开头曲：一次圣咏、一场弥撒或礼拜，第一支歌就是它，唱完才轮到其余圣歌。\n- 唱诗班条目补了圣歌目録与写法：标记写成【歌曲：战锤40K｜曲名】，裸名不算圣歌；圣歌只在教会场地与礼拜场合唱，不当日常歌点。\n- 唱歌标记规则里那句唱诗班圣咏同步换成这 26 首，旧圣咏《you have to choose your future》一并归在圣歌里，触发名不带前缀。\n- 圣歌是多声部齐唱、没有独唱，也只用在这一处场合。\n- 同批带上「星月枫」「星月铃」的换行修正与「色情服装」的 2 处：这几条此前整行带可见 \\n，现为正常换行。\n- 教会补全（唱诗班 / 内部空间 / 服饰规约 / 告解 / 圣种子 / 夜课 / 四人）也在这一版里。\n**10.28 小手机同步书清理**\n\n- 以前换聊天时，一本同步书只要有一处读不动，整轮清理就中止，剩下的书全留了下来；现在改成逐本处理，一本失败不影响别本。\n- 没有归属标记的同步书以前一律跳过、越攒越多；现在会先整本备份进「新中市-小手机存档·v2」，回读一致后才删。\n- 手机「修复」面板加了一张「同步世界书 · 清点与整理」卡：先看现有几本、哪本没有归属标记，再手动整理。\n- 正在别的窗口用着的那本会跳过（占用检测），普通世界书不会被碰。\n- 更新完成后请整页刷新。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5390117,
+      "sha256": "a7d65b1c752731ac18095a0867151026c540290a058218a106a514e84e8cad1d",
+      "path": "assets/a7d65b1c752731ac18095a0867151026c540290a058218a106a514e84e8cad1d/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "d2e493ea",
+      "compatibleHashes": [
+        "2797615d"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 42023,
+      "sha256": "6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44",
+      "path": "assets/6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "d1ea85df",
+      "mark": 21
+    },
+    "song": {
+      "label": "唱歌播放器",
+      "bytes": 69716,
+      "sha256": "867dbe267d71c466f0abab22163748583189b4d72f8e6133cb0df6f773f3356a",
+      "path": "assets/867dbe267d71c466f0abab22163748583189b4d72f8e6133cb0df6f773f3356a/songscript.js",
+      "kind": "script",
+      "name": "唱歌 · 音频直链",
+      "contentHash": "98191b9b"
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 72247,
+      "sha256": "09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3",
+      "path": "assets/09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "04f61d05",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "fca05aad"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "5a5c782e"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "6f4b4cd2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "54eab7c1",
+          "retired": true
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "13e651b2",
+          "replaces": [
+            "抗截断A"
+          ]
+        }
+      ],
+      "contentHash": "93b08c15"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 11888810,
+      "sha256": "7a2eb46a1afd34830e62f3308c1d3bb0a72e74773c33fd2d230e7535630ef664",
+      "path": "assets/7a2eb46a1afd34830e62f3308c1d3bb0a72e74773c33fd2d230e7535630ef664/worldbook.json",
+      "kind": "world",
+      "contentHash": "c56e77dc",
+      "compatibleHashes": [
+        "c9f917e7"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 865631,
+      "sha256": "0826d6297e2fd1aef727fa6215fbeeda2a20ae3b4ae709b1b397919fe5a992e8",
+      "path": "assets/0826d6297e2fd1aef727fa6215fbeeda2a20ae3b4ae709b1b397919fe5a992e8/cardfields.json",
+      "kind": "fields",
+      "contentHash": "f2d5f740",
+      "fieldHashes": {
+        "version": "13118e40",
+        "first_messages": "63ca5b8d",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 98204,
+      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
+      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        }
+      ],
+      "contentHash": "ac4c978d"
+    }
+  }
+}
