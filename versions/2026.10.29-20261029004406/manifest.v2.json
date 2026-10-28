@@ -1,0 +1,135 @@
+{
+  "schema": 2,
+  "release": "2026.10.29-20261029004406",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "**10.29 角色条目重绘**\n- 24 个角色条目按统一骨架重排：外观、体型（三围-身高-体重-罩杯 + 体型固定 + 形态）、服饰、关系、性格逐段对齐；此前空缺的 NSFW 块按角色补上，处女角色按第一次写。\n- 名单：星野爱、约尔、星野瑠美衣、黑川茜、山田凉、伊地知虹夏、伊地知星歌、喜多郁代、后藤一里、塞妮丝、莉莉雅、堀京子、宇崎月、远坂凛、琉璃川椿、楚凌龄、曹茗瑜、雪之下冬香、由比滨优子、四宫辉夜、白银圭、山城恋、贞德。\n- 新增《后藤美智代（后藤一里的母亲）》：39 岁、粉紫短发挽小丸子，说话慢、从不追问。\n- 林曦、圣吉列斯按同一套子目重排：字段序统一、属性标签收 6 项、relationship 一人一条、战装并入 accessories，旧的动用字段清理干净。\n- 白银圭（14 岁）只重绘外观与服饰，形态与 NSFW 两块留空。\n**10.29 林家与场所**\n- 林家系列（总览、成员速查、家庭交互、关联网络、财务、场景指令、全员速查表、宅邸、女仆团、居住变迁史、家族史、六位夫人来历）补齐互引与人数。\n- 林宅·在家成员动线、场所简述｜林家成员范围、圣人·秘藏、教会·服饰规约、第八届圣杯战争（16）、事件触发器 EV-054-1 一并顺过。\n- 21 条「情趣服装」条目清掉正文里的残句与半角括号（「朦??感」也修成「朦胧感」）。\n- 卡片版本与开局页脚版本号更到 2026.10.29（页脚此前停在 2026.10.28）。\n- 更新完成后请整页刷新一次。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5391854,
+      "sha256": "92ac987b631c0922e2a1ddd05f79ced5eff5fe01dc879473ab488ddc6c925327",
+      "path": "assets/92ac987b631c0922e2a1ddd05f79ced5eff5fe01dc879473ab488ddc6c925327/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "d6c372ff",
+      "compatibleHashes": [
+        "a047ebbd"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 42023,
+      "sha256": "6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44",
+      "path": "assets/6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "d1ea85df",
+      "mark": 21
+    },
+    "song": {
+      "label": "唱歌播放器",
+      "bytes": 69716,
+      "sha256": "867dbe267d71c466f0abab22163748583189b4d72f8e6133cb0df6f773f3356a",
+      "path": "assets/867dbe267d71c466f0abab22163748583189b4d72f8e6133cb0df6f773f3356a/songscript.js",
+      "kind": "script",
+      "name": "唱歌 · 音频直链",
+      "contentHash": "98191b9b"
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 72247,
+      "sha256": "09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3",
+      "path": "assets/09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "04f61d05",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "fca05aad"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "5a5c782e"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "6f4b4cd2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "54eab7c1",
+          "retired": true
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "13e651b2",
+          "replaces": [
+            "抗截断A"
+          ]
+        }
+      ],
+      "contentHash": "93b08c15"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 11950448,
+      "sha256": "ee452be26673164a71f493f02c9853ce8b52af2d83471e19c01d1b01bb7affbe",
+      "path": "assets/ee452be26673164a71f493f02c9853ce8b52af2d83471e19c01d1b01bb7affbe/worldbook.json",
+      "kind": "world",
+      "contentHash": "b2cc010c",
+      "compatibleHashes": [
+        "85968f44"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 865631,
+      "sha256": "8cfc7ad1c6bd4682882c63268bbc435b281d594a12fb4f64044f15801e6a2ea5",
+      "path": "assets/8cfc7ad1c6bd4682882c63268bbc435b281d594a12fb4f64044f15801e6a2ea5/cardfields.json",
+      "kind": "fields",
+      "contentHash": "07cfff30",
+      "fieldHashes": {
+        "version": "3d140ef5",
+        "first_messages": "810f6ee6",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 98204,
+      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
+      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        }
+      ],
+      "contentHash": "ac4c978d"
+    }
+  }
+}
