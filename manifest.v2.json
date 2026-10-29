@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.10.29-20261029004406",
+  "release": "2026.10.29-20261029233200",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "**10.29 角色条目重绘**\n- 24 个角色条目按统一骨架重排：外观、体型（三围-身高-体重-罩杯 + 体型固定 + 形态）、服饰、关系、性格逐段对齐；此前空缺的 NSFW 块按角色补上，处女角色按第一次写。\n- 名单：星野爱、约尔、星野瑠美衣、黑川茜、山田凉、伊地知虹夏、伊地知星歌、喜多郁代、后藤一里、塞妮丝、莉莉雅、堀京子、宇崎月、远坂凛、琉璃川椿、楚凌龄、曹茗瑜、雪之下冬香、由比滨优子、四宫辉夜、白银圭、山城恋、贞德。\n- 新增《后藤美智代（后藤一里的母亲）》：39 岁、粉紫短发挽小丸子，说话慢、从不追问。\n- 林曦、圣吉列斯按同一套子目重排：字段序统一、属性标签收 6 项、relationship 一人一条、战装并入 accessories，旧的动用字段清理干净。\n- 白银圭（14 岁）只重绘外观与服饰，形态与 NSFW 两块留空。\n**10.29 林家与场所**\n- 林家系列（总览、成员速查、家庭交互、关联网络、财务、场景指令、全员速查表、宅邸、女仆团、居住变迁史、家族史、六位夫人来历）补齐互引与人数。\n- 林宅·在家成员动线、场所简述｜林家成员范围、圣人·秘藏、教会·服饰规约、第八届圣杯战争（16）、事件触发器 EV-054-1 一并顺过。\n- 21 条「情趣服装」条目清掉正文里的残句与半角括号（「朦??感」也修成「朦胧感」）。\n- 卡片版本与开局页脚版本号更到 2026.10.29（页脚此前停在 2026.10.28）。\n- 更新完成后请整页刷新一次。",
+  "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5391854,
-      "sha256": "92ac987b631c0922e2a1ddd05f79ced5eff5fe01dc879473ab488ddc6c925327",
-      "path": "assets/92ac987b631c0922e2a1ddd05f79ced5eff5fe01dc879473ab488ddc6c925327/shell.js",
+      "bytes": 5147726,
+      "sha256": "a9daf771542c7e7010f888c2e0f555a6aa6ff744564a49c8a112f1056f85be43",
+      "path": "assets/a9daf771542c7e7010f888c2e0f555a6aa6ff744564a49c8a112f1056f85be43/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "d6c372ff",
+      "contentHash": "aee26094",
       "compatibleHashes": [
-        "a047ebbd"
+        "aee26094"
       ]
     },
     "updater": {
@@ -85,25 +85,25 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11950448,
-      "sha256": "ee452be26673164a71f493f02c9853ce8b52af2d83471e19c01d1b01bb7affbe",
-      "path": "assets/ee452be26673164a71f493f02c9853ce8b52af2d83471e19c01d1b01bb7affbe/worldbook.json",
+      "bytes": 11535137,
+      "sha256": "de873d948aa8ba0edb9f73c9241aa947272e7e6b5c95895273beac0764f80083",
+      "path": "assets/de873d948aa8ba0edb9f73c9241aa947272e7e6b5c95895273beac0764f80083/worldbook.json",
       "kind": "world",
-      "contentHash": "b2cc010c",
+      "contentHash": "b0a4ab26",
       "compatibleHashes": [
-        "85968f44"
+        "9bb328f0"
       ]
     },
     "fields": {
       "label": "开场白与描述",
-      "bytes": 865631,
-      "sha256": "8cfc7ad1c6bd4682882c63268bbc435b281d594a12fb4f64044f15801e6a2ea5",
-      "path": "assets/8cfc7ad1c6bd4682882c63268bbc435b281d594a12fb4f64044f15801e6a2ea5/cardfields.json",
+      "bytes": 875068,
+      "sha256": "ab67f24ccb0b446226eab3e06baf61f20d7fef94cacf55e26f6e9e19d748c62d",
+      "path": "assets/ab67f24ccb0b446226eab3e06baf61f20d7fef94cacf55e26f6e9e19d748c62d/cardfields.json",
       "kind": "fields",
-      "contentHash": "07cfff30",
+      "contentHash": "6e4ff350",
       "fieldHashes": {
         "version": "3d140ef5",
-        "first_messages": "810f6ee6",
+        "first_messages": "baa21098",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
         "description": "ffcaaa85"

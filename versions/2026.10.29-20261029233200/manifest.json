@@ -1,0 +1,59 @@
+{
+  "build": "2026.10.29-20261029233200",
+  "cardVersion": "2026.10.29",
+  "builtAt": "2026-10-29T15:31:18.351Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "21",
+  "songMark": "9",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
+  "cardFields": {
+    "greetings": 106,
+    "fp": "28aa39ea",
+    "firstMesLen": 29911
+  },
+  "regexFields": {
+    "count": 3,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断"
+    ],
+    "fp": "a27e2461"
+  },
+  "regexMark": "cf44ecbc",
+  "payloads": {
+    "shell.js": {
+      "hash": "aee26094",
+      "bytes": 5147726
+    },
+    "updater.js": {
+      "hash": "4930ae4f",
+      "bytes": 42023
+    },
+    "songscript.js": {
+      "hash": "00866543",
+      "bytes": 69716
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "worldbook.json": {
+      "hash": "5e8f01ab",
+      "bytes": 11535137
+    },
+    "cardfields.json": {
+      "hash": "07521a77",
+      "bytes": 875068
+    },
+    "regexscript.json": {
+      "hash": "cf44ecbc",
+      "bytes": 98204
+    }
+  }
+}
