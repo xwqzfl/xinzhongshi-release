@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "release": "2026.10.29-20261029233200",
+  "release": "2026.10.30-20261030000828",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
@@ -8,13 +8,13 @@
     "shell": {
       "label": "手机主脚本",
       "bytes": 5147726,
-      "sha256": "a9daf771542c7e7010f888c2e0f555a6aa6ff744564a49c8a112f1056f85be43",
-      "path": "assets/a9daf771542c7e7010f888c2e0f555a6aa6ff744564a49c8a112f1056f85be43/shell.js",
+      "sha256": "afccecbdb4153f992b9ef7f082e65b8391e023c45a08a90a196c923346735537",
+      "path": "assets/afccecbdb4153f992b9ef7f082e65b8391e023c45a08a90a196c923346735537/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "aee26094",
+      "contentHash": "6b40a538",
       "compatibleHashes": [
-        "aee26094"
+        "6b40a538"
       ]
     },
     "updater": {
@@ -85,13 +85,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11535137,
-      "sha256": "de873d948aa8ba0edb9f73c9241aa947272e7e6b5c95895273beac0764f80083",
-      "path": "assets/de873d948aa8ba0edb9f73c9241aa947272e7e6b5c95895273beac0764f80083/worldbook.json",
+      "bytes": 11549720,
+      "sha256": "9613c1601a609433e3cdf348c91f7ed9bd5498a3c558303743aa440836822272",
+      "path": "assets/9613c1601a609433e3cdf348c91f7ed9bd5498a3c558303743aa440836822272/worldbook.json",
       "kind": "world",
-      "contentHash": "b0a4ab26",
+      "contentHash": "5758fe00",
       "compatibleHashes": [
-        "9bb328f0"
+        "d286f12e"
       ]
     },
     "fields": {
