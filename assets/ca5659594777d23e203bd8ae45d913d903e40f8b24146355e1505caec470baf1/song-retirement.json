@@ -1,0 +1,1 @@
+{"scripts":[{"type":"script","name":"唱歌 · 音频直链","retired":true,"content":"/*XZS_SONG:10*/\n// 正文音乐播放器已集成到新中市小手机。本文件仅用于旧更新器迁移，不注册播放器或监听。\n"}]}

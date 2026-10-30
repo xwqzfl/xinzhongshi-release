@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.10.30-20261030000828",
+  "release": "2026.10.30-20261030233224",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "本地更新器21候选：按组件下载、进度显示、写前备份与失败恢复。尚未发布。",
+  "notes": "10.30 汇总：换装普通读取与界面修复、版本回顾与应用管理修复、音乐集成和实际音源暂定摘要。剩余检测及歌曲听校后续继续。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5147726,
-      "sha256": "afccecbdb4153f992b9ef7f082e65b8391e023c45a08a90a196c923346735537",
-      "path": "assets/afccecbdb4153f992b9ef7f082e65b8391e023c45a08a90a196c923346735537/shell.js",
+      "bytes": 5440698,
+      "sha256": "3a26bfe6c9e3c54cce1e3f5c7df995f0663e0887f43796ea4bda8540a672c8ea",
+      "path": "assets/3a26bfe6c9e3c54cce1e3f5c7df995f0663e0887f43796ea4bda8540a672c8ea/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "6b40a538",
+      "contentHash": "8ee14fef",
       "compatibleHashes": [
-        "6b40a538"
+        "8ee14fef"
       ]
     },
     "updater": {
@@ -28,13 +28,19 @@
       "mark": 21
     },
     "song": {
-      "label": "唱歌播放器",
-      "bytes": 69716,
-      "sha256": "867dbe267d71c466f0abab22163748583189b4d72f8e6133cb0df6f773f3356a",
-      "path": "assets/867dbe267d71c466f0abab22163748583189b4d72f8e6133cb0df6f773f3356a/songscript.js",
-      "kind": "script",
-      "name": "唱歌 · 音频直链",
-      "contentHash": "98191b9b"
+      "label": "音乐集成迁移",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "唱歌 · 音频直链",
+          "retired": true,
+          "contentHash": "6f0264fc"
+        }
+      ],
+      "contentHash": "9a3b3943",
+      "bytes": 236,
+      "sha256": "ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1",
+      "path": "assets/ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1/song-retirement.json"
     },
     "managed": {
       "label": "托管脚本",
@@ -85,25 +91,27 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11549720,
-      "sha256": "9613c1601a609433e3cdf348c91f7ed9bd5498a3c558303743aa440836822272",
-      "path": "assets/9613c1601a609433e3cdf348c91f7ed9bd5498a3c558303743aa440836822272/worldbook.json",
+      "bytes": 11549719,
+      "sha256": "f73fb408fabfab4b47545763c29fce564e85e66e954b3bc659c05fc5de650450",
+      "path": "assets/f73fb408fabfab4b47545763c29fce564e85e66e954b3bc659c05fc5de650450/worldbook.json",
       "kind": "world",
-      "contentHash": "5758fe00",
+      "contentHash": "c20e2bf5",
       "compatibleHashes": [
-        "d286f12e"
+        "f36330b1",
+        "c18476ed",
+        "6e25e7f2"
       ]
     },
     "fields": {
       "label": "开场白与描述",
       "bytes": 875068,
-      "sha256": "ab67f24ccb0b446226eab3e06baf61f20d7fef94cacf55e26f6e9e19d748c62d",
-      "path": "assets/ab67f24ccb0b446226eab3e06baf61f20d7fef94cacf55e26f6e9e19d748c62d/cardfields.json",
+      "sha256": "52423db0c0c3f2912f8e4e749eaa6a1887cfdad12d0297d74ebeabe6b5f9fa33",
+      "path": "assets/52423db0c0c3f2912f8e4e749eaa6a1887cfdad12d0297d74ebeabe6b5f9fa33/cardfields.json",
       "kind": "fields",
-      "contentHash": "6e4ff350",
+      "contentHash": "060e9788",
       "fieldHashes": {
-        "version": "3d140ef5",
-        "first_messages": "baa21098",
+        "version": "02aaaf13",
+        "first_messages": "33acab1a",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
         "description": "ffcaaa85"
