@@ -1,7 +1,7 @@
 {
-  "build": "2026.10.30-20261030233224",
+  "build": "2026.10.30-20261101011753",
   "cardVersion": "2026.10.30",
-  "builtAt": "2026-10-30T15:32:24.542Z",
+  "builtAt": "2026-10-31T17:17:54.454Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "10.30 汇总：换装普通读取与界面修复、版本回顾与应用管理修复、音乐集成和实际音源暂定摘要。剩余检测及歌曲听校后续继续。",
+  "notes": "三级功能10–12：布告板与模拟榜、通讯录与选择器、通用媒体修复。包含前面未发布改动。",
   "cardFields": {
     "greetings": 105,
     "fp": "feaa1b41",
@@ -28,8 +28,8 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "8ee14fef",
-      "bytes": 5440698
+      "hash": "7f2064c5",
+      "bytes": 5495957
     },
     "updater.js": {
       "hash": "4930ae4f",
@@ -44,8 +44,8 @@
       "bytes": 72247
     },
     "worldbook.json": {
-      "hash": "393532e2",
-      "bytes": 11549719
+      "hash": "cf13adac",
+      "bytes": 11559980
     },
     "cardfields.json": {
       "hash": "f2d355af",

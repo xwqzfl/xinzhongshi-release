@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.10.30-20261030233224",
+  "release": "2026.10.30-20261101011753",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "10.30 汇总：换装普通读取与界面修复、版本回顾与应用管理修复、音乐集成和实际音源暂定摘要。剩余检测及歌曲听校后续继续。",
+  "notes": "三级功能10–12：布告板与模拟榜、通讯录与选择器、通用媒体修复。包含前面未发布改动。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5440698,
-      "sha256": "3a26bfe6c9e3c54cce1e3f5c7df995f0663e0887f43796ea4bda8540a672c8ea",
-      "path": "assets/3a26bfe6c9e3c54cce1e3f5c7df995f0663e0887f43796ea4bda8540a672c8ea/shell.js",
+      "bytes": 5495957,
+      "sha256": "af3d3490135817ad7c1d65dd7e2c06aadc202881ebd5d06ea803b938cf432b1c",
+      "path": "assets/af3d3490135817ad7c1d65dd7e2c06aadc202881ebd5d06ea803b938cf432b1c/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "8ee14fef",
+      "contentHash": "c46d574d",
       "compatibleHashes": [
-        "8ee14fef"
+        "c46d574d"
       ]
     },
     "updater": {
@@ -91,15 +91,20 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11549719,
-      "sha256": "f73fb408fabfab4b47545763c29fce564e85e66e954b3bc659c05fc5de650450",
-      "path": "assets/f73fb408fabfab4b47545763c29fce564e85e66e954b3bc659c05fc5de650450/worldbook.json",
+      "bytes": 11559980,
+      "sha256": "d7be5d036cc0eb6ca24d1e140016ffc7a97c8e1ef911178464ffe964d845e15c",
+      "path": "assets/d7be5d036cc0eb6ca24d1e140016ffc7a97c8e1ef911178464ffe964d845e15c/worldbook.json",
       "kind": "world",
-      "contentHash": "c20e2bf5",
+      "contentHash": "71b102c1",
       "compatibleHashes": [
-        "f36330b1",
-        "c18476ed",
-        "6e25e7f2"
+        "e4eafead",
+        "cb886052",
+        "7b433743",
+        "c86384e6",
+        "7d1cfb84",
+        "cb01bf43",
+        "99408c90",
+        "719f00fa"
       ]
     },
     "fields": {
