@@ -1,20 +1,20 @@
 {
-  "build": "2026.10.30-20261101011753",
-  "cardVersion": "2026.10.30",
-  "builtAt": "2026-10-31T17:17:54.454Z",
+  "build": "2026.11.1-20261101210532",
+  "cardVersion": "2026.11.1",
+  "builtAt": "2026-11-01T13:05:33.032Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "worldbookMark": "【系统】世界书版本",
-  "updaterMark": "21",
+  "updaterMark": "22",
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "三级功能10–12：布告板与模拟榜、通讯录与选择器、通用媒体修复。包含前面未发布改动。",
+  "notes": "11.1 小手机四级功能累计更新：身份考试与名册、通信直播、钱物生活、规则时间位置、锁屏通知、生成存档扫描、更新器22及窄屏修复。",
   "cardFields": {
     "greetings": 105,
-    "fp": "feaa1b41",
-    "firstMesLen": 29989
+    "fp": "6a7c8d84",
+    "firstMesLen": 29988
   },
   "regexFields": {
     "count": 3,
@@ -28,12 +28,12 @@
   "regexMark": "cf44ecbc",
   "payloads": {
     "shell.js": {
-      "hash": "7f2064c5",
-      "bytes": 5495957
+      "hash": "2988afcc",
+      "bytes": 5655000
     },
     "updater.js": {
-      "hash": "4930ae4f",
-      "bytes": 42023
+      "hash": "c54d6b7e",
+      "bytes": 43173
     },
     "songscript.js": {
       "hash": "b6c4ef42",
@@ -44,12 +44,12 @@
       "bytes": 72247
     },
     "worldbook.json": {
-      "hash": "cf13adac",
-      "bytes": 11559980
+      "hash": "e082b4f1",
+      "bytes": 11561676
     },
     "cardfields.json": {
-      "hash": "f2d355af",
-      "bytes": 875068
+      "hash": "6bb842f3",
+      "bytes": 875066
     },
     "regexscript.json": {
       "hash": "cf44ecbc",

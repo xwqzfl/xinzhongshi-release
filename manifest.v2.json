@@ -1,31 +1,31 @@
 {
   "schema": 2,
-  "release": "2026.10.30-20261101011753",
+  "release": "2026.11.1-20261101210532",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "三级功能10–12：布告板与模拟榜、通讯录与选择器、通用媒体修复。包含前面未发布改动。",
+  "notes": "11.1 小手机四级功能累计更新：身份考试与名册、通信直播、钱物生活、规则时间位置、锁屏通知、生成存档扫描、更新器22及窄屏修复。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5495957,
-      "sha256": "af3d3490135817ad7c1d65dd7e2c06aadc202881ebd5d06ea803b938cf432b1c",
-      "path": "assets/af3d3490135817ad7c1d65dd7e2c06aadc202881ebd5d06ea803b938cf432b1c/shell.js",
+      "bytes": 5655000,
+      "sha256": "00e830385ecf02f488a309910276c50756af772b0c9c2956639015987e8015f9",
+      "path": "assets/00e830385ecf02f488a309910276c50756af772b0c9c2956639015987e8015f9/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "c46d574d",
+      "contentHash": "d0c4a08e",
       "compatibleHashes": [
-        "c46d574d"
+        "d0c4a08e"
       ]
     },
     "updater": {
       "label": "更新器",
-      "bytes": 42023,
-      "sha256": "6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44",
-      "path": "assets/6b6c1bba3f6a9f18ee587cd0de0ceae7613a99496cae6134413bb6cf78f66f44/updater.js",
+      "bytes": 43173,
+      "sha256": "9d6a1f8d66a2e33224efe9007d97ca668e813fd922d867155aacba8cc0a88ff5",
+      "path": "assets/9d6a1f8d66a2e33224efe9007d97ca668e813fd922d867155aacba8cc0a88ff5/updater.js",
       "kind": "script",
       "name": "新中市更新器",
-      "contentHash": "d1ea85df",
-      "mark": 21
+      "contentHash": "9d358d40",
+      "mark": 22
     },
     "song": {
       "label": "音乐集成迁移",
@@ -91,32 +91,31 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 11559980,
-      "sha256": "d7be5d036cc0eb6ca24d1e140016ffc7a97c8e1ef911178464ffe964d845e15c",
-      "path": "assets/d7be5d036cc0eb6ca24d1e140016ffc7a97c8e1ef911178464ffe964d845e15c/worldbook.json",
+      "bytes": 12611099,
+      "sha256": "dd0bd8d88cdd2f30fb329f17c59b99fb8558d3f2c3a3b859f9764da49b0157dd",
+      "path": "assets/dd0bd8d88cdd2f30fb329f17c59b99fb8558d3f2c3a3b859f9764da49b0157dd/worldbook.json",
       "kind": "world",
-      "contentHash": "71b102c1",
+      "contentHash": "aa297d77",
       "compatibleHashes": [
-        "e4eafead",
-        "cb886052",
-        "7b433743",
-        "c86384e6",
-        "7d1cfb84",
-        "cb01bf43",
-        "99408c90",
-        "719f00fa"
+        "f04d17e0",
+        "2ed4be64",
+        "59472722",
+        "ac090b66",
+        "ba4015e5",
+        "0b7a0bad",
+        "15bd00d1"
       ]
     },
     "fields": {
       "label": "开场白与描述",
-      "bytes": 875068,
-      "sha256": "52423db0c0c3f2912f8e4e749eaa6a1887cfdad12d0297d74ebeabe6b5f9fa33",
-      "path": "assets/52423db0c0c3f2912f8e4e749eaa6a1887cfdad12d0297d74ebeabe6b5f9fa33/cardfields.json",
+      "bytes": 875066,
+      "sha256": "0bb4a4313b77d428bf6e4e12428031d17efd507768bbb2c1e12b718e509f053f",
+      "path": "assets/0bb4a4313b77d428bf6e4e12428031d17efd507768bbb2c1e12b718e509f053f/cardfields.json",
       "kind": "fields",
-      "contentHash": "060e9788",
+      "contentHash": "fccd62f8",
       "fieldHashes": {
-        "version": "02aaaf13",
-        "first_messages": "33acab1a",
+        "version": "07e6465a",
+        "first_messages": "fb09b9e9",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
         "description": "ffcaaa85"

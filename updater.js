@@ -1,4 +1,4 @@
-/*XZS_UPDATER:21*/
+/*XZS_UPDATER:22*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
   const norm = s => String(s == null ? '' : s).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
@@ -117,7 +117,7 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=21;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=22;
   const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,readNotice:5000,readTimeout:25000,auto:8000};
   let host=window;
   try { while(host.parent&&host.parent!==host&&host.parent.document)host=host.parent; }catch(_){}
@@ -147,7 +147,7 @@ function xzsModel19() {
   ];
   function api(n,required=true){const f=host.TavernHelper?.[n]||window[n];if(typeof f==='function')return f.bind(host.TavernHelper||window);if(required)throw Error('酒馆助手缺少接口：'+n);return null;}
   function context(){try{return host.SillyTavern?.getContext?.()||{};}catch(_){return {};}}
-  function identity(){const c=context();return JSON.stringify([api('getCurrentCharacterName',false)?.()||c.name2||'',c.getCurrentChatId?.()||c.chatId||c.chat_id||'',c.chatMetadata?.world_info||'']);}
+  function identity(){const c=context();return JSON.stringify([api('getCurrentCharacterName',false)?.()||c.name2||'',c.getCurrentChatId?.()||c.chatId||c.chat_id||'',c.chatMetadata?.world_info||'',c.groupId??c.group_id??'',c.characters?.[c.characterId]?.avatar||'']);}
   function binding(){const ctx=context();let chat=ctx.chatMetadata?.world_info; if(chat===undefined&&!ctx.chatMetadata)chat=api('getChatWorldbookName',false)?.('current');return {global:api('getGlobalWorldbookNames',false)?.()||[],char:api('getCharWorldbookNames',false)?.('current')||{},chat:chat||''};}
   function guard(s){if(identity()!==s.identity||M.stable(binding())!==s.binding)throw Error('角色、聊天或世界书绑定已改变。已停止继续写入，请回到原聊天检查。');}
   function mb(n){return (n/1048576).toFixed(2)+' MiB';}
@@ -216,7 +216,7 @@ function xzsModel19() {
   const fieldLabels={version:'卡片版本号',first_messages:'开场白',creator:'作者',creator_notes:'作者备注',description:'角色描述'};
   function installed(c,d){if(d.kind==='fields')return M.fieldsReadable(c)&&(d.fieldHashes?M.fieldDiff(c,d.fieldHashes).length===0:M.want(c,d));if(d.kind==='script'){const hits=M.scripts(c).filter(x=>x.name===d.name);return hits.length>0&&hits.every(x=>matches(M.scriptHash(x.content),d));}return M.want(c,d);}
   const fieldChoice=(c,d)=>({target:d.sha256,actual:M.hash(M.canonicalFields(c))});
-  async function readWorld(name){try{return await api('getWorldbook')(name);}catch(e){const names=api('getWorldbookNames',false)?.();if(names&&!names.includes(name))return null;throw e;}}
+  async function readWorld(name){try{return await waitRead('读取世界书',()=>api('getWorldbook')(name));}catch(e){const names=api('getWorldbookNames',false)?.();if(names&&!names.includes(name))return null;throw e;}}
   function chooseBook(m,b){const names=[b.char.primary,...(b.char.additional||[]),b.chat,...b.global].filter(Boolean);if(names.includes(m.worldbookName))return m.worldbookName;return names.find(n=>n.startsWith(m.worldbookNamePrefix))||m.worldbookName;}
   async function waitWrite(label,fn){status('write',label);const t=timer(()=>status('uncertain',label+'\n保存耗时较长，结果尚未确认。请勿重复提交；可以保持页面等待，或重开后检查备份记录。'),CONFIG.writeNotice);try{return await fn();}finally{clear(t);}}
   async function waitRead(label,fn){
@@ -228,8 +228,8 @@ function xzsModel19() {
   }
   async function editCard(name,change,s){
     const replace=api('replaceCharacter',false);
-    if(!replace)return api('updateCharacterWith')(name,card=>{guard(s);return change(card);});
-    const current=await waitRead('读取待保存角色卡',()=>api('getCharacter')(name));guard(s);
+    if(!replace)return api('updateCharacterWith')(name,card=>{guard(s);if(s.avatar&&card.avatar!==s.avatar)throw Error('待保存角色卡已改变，已停止写入');return change(card);});
+    const current=await waitRead('读取待保存角色卡',()=>api('getCharacter')(name));guard(s);if(s.avatar&&current.avatar!==s.avatar)throw Error('待保存角色卡已改变，已停止写入');
     const next=await change(current);guard(s);
     // Avoid the helper's default delayed re-render, which can regenerate the
     // first message, reload scripts and re-open the card during verification.
@@ -256,9 +256,10 @@ function xzsModel19() {
     if(d.kind==='pack'||d.kind==='regex'){const p=JSON.parse(t);if(!Array.isArray(p.scripts)||p.scripts.length!==d.items.length)throw Error('脚本包条目不一致');const names=new Set();for(let i=0;i<p.scripts.length;i++){const v=p.scripts[i],n=d.kind==='pack'?v.name:M.rxName(v);const expected=d.items.find(x=>x.name===n);if(names.has(n)||!expected||(d.kind==='pack'?M.scriptHash(v.content):M.hash(M.rx(v)))!==expected.contentHash)throw Error('脚本包内容不一致');if(d.kind==='pack'&&(!!v.retired!==!!expected.retired||M.stable(v.replaces||[])!==M.stable(expected.replaces||[])))throw Error('脚本迁移规则不一致');names.add(n);if(d.kind==='pack')new Function(v.content);}}
   }
   async function execute(manual){
-    status('check','正在读取角色卡');const c=await api('getCharacter')('current');
+    status('check','正在读取角色卡');const ctx=context();if((ctx.groupId??ctx.group_id)!=null&&String(ctx.groupId??ctx.group_id)!=='')throw Error('群聊中不能确定要更新哪张角色卡，请从对应角色卡检查更新');
+    const s={identity:identity(),binding:M.stable(binding())};const c=await waitRead('读取角色卡',()=>api('getCharacter')('current'));guard(s);
     if(!String(c.avatar||'').includes('新中市人间世'))throw Error('当前不是新中市角色卡');
-    const name=String(c.avatar).replace(/\.png$/,'');const s={identity:identity(),binding:M.stable(binding()),name};
+    const name=String(c.avatar).replace(/\.png$/,'');s.name=name;s.avatar=c.avatar;
     const localRelease=await storage('installed:'+name);
     const b=binding();let book,world;
     // A successful HTTP response may still contain a stale CDN manifest. Validate
@@ -329,7 +330,7 @@ function xzsModel19() {
     if(j.book!==book)throw Error('恢复记录的世界书目标不一致');
     for(const [k,d]of plan)if(!j.plan.some(x=>x.key===k))j.plan.push({key:k,descriptor:d});
     await storage('journal:'+name,j);const saved=await storage('journal:'+name);if(M.encode(saved)!==M.encode(j))throw Error('备份回读失败，已取消写入');
-    const changed=await api('getCharacter')(name);if(M.encode(changed)!==M.encode(c))throw Error('下载期间角色卡已改变，已停止写入，请重新检查');guard(s);
+    const changed=await waitRead('核对下载期间角色卡',()=>api('getCharacter')(name));if(M.encode(changed)!==M.encode(c))throw Error('下载期间角色卡已改变，已停止写入，请重新检查');guard(s);
     if(plan.some(([k,d])=>d.kind==='world')){const now=await readWorld(book);if(M.hash(now?M.world(now):null)!==M.hash(world?M.world(world):null))throw Error('下载期间世界书已改变，已停止写入，请重新检查');guard(s);}
     // The transaction now survives iframe replacement in the parent realm.
     const wd=plan.find(([k,d])=>d.kind==='world');
@@ -345,16 +346,17 @@ function xzsModel19() {
   }
   function check(manual=true){if(R.busy){panel();return R.promise;}R.busy=true;R.cancelled=false;
     const work=async()=>{try{await execute(manual);}catch(e){status(R.cancelled?'cancelled':'error',(R.cancelled?'已取消。':'更新未完成：')+e.message+'\n已保存的备份会保留；可重试检查或恢复备份。');}finally{R.busy=false;panel();}};
-    R.promise=host.navigator?.locks?host.navigator.locks.request('xzs-updater-write17',{ifAvailable:true},lock=>{if(!lock){R.busy=false;status('error','其他页面正在更新，请稍后重试');return;}return work();}):work();return R.promise;
+    R.promise=withLock(work);return R.promise;
   }
-  async function currentJournal(){const c=await api('getCharacter')('current');const name=String(c.avatar||'').replace(/\.png$/,'');const j=await storage('journal:'+name);if(!j)throw Error('当前角色卡没有本地备份');return j;}
-  async function exportBackup(){try{const j=await currentJournal(),history=[],seen=new Set();let key=j.previousBackupKey;while(key){if(seen.has(key))throw Error('历史备份链重复');seen.add(key);const prior=await storage(key);if(!prior)throw Error('历史备份缺失');history.push(prior);key=prior.previousBackupKey;}const blob=new host.Blob([M.encode(history.length?{...j,previousBackups:history}:j)],{type:'application/json'});const u=host.URL.createObjectURL(blob),a=host.document.createElement('a');a.href=u;a.download='新中市更新备份-'+j.release+'.json';a.click();timer(()=>host.URL.revokeObjectURL(u),1000);}catch(e){status('error','导出失败：'+e.message);}}
+  async function currentJournal(){const ctx=context();if((ctx.groupId??ctx.group_id)!=null&&String(ctx.groupId??ctx.group_id)!=='')throw Error('请从对应角色卡读取更新备份');const s={identity:identity(),binding:M.stable(binding())};const c=await waitRead('读取备份角色卡',()=>api('getCharacter')('current'));guard(s);const name=String(c.avatar||'').replace(/\.png$/,'');const j=await storage('journal:'+name);guard(s);if(!j)throw Error('当前角色卡没有本地备份');if(j.name!==name||!j.beforeCard||typeof j.beforeCard!=='object'||j.beforeCard.avatar&&j.beforeCard.avatar!==c.avatar||!Array.isArray(j.plan)||!j.plan.length||j.plan.some(x=>!x||!x.descriptor||!['world','script','pack','regex','fields'].includes(x.descriptor.kind)))throw Error('备份目标或组件记录无效，已停止恢复');s.name=name;s.avatar=c.avatar;return {journal:j,scope:s};}
+  async function exportBackup(){try{const {journal:j}=await currentJournal(),history=[],seen=new Set();let key=j.previousBackupKey;while(key){if(seen.has(key))throw Error('历史备份链重复');seen.add(key);const prior=await storage(key);if(!prior)throw Error('历史备份缺失');history.push(prior);key=prior.previousBackupKey;}const blob=new host.Blob([M.encode(history.length?{...j,previousBackups:history}:j)],{type:'application/json'});const u=host.URL.createObjectURL(blob),a=host.document.createElement('a');a.href=u;a.download='新中市更新备份-'+j.release+'.json';a.click();timer(()=>host.URL.revokeObjectURL(u),1000);}catch(e){status('error','导出失败：'+e.message);}}
   function recover(){if(R.busy)return R.promise;R.busy=true;
-    R.promise=host.navigator?.locks?host.navigator.locks.request('xzs-updater-write17',{ifAvailable:true},lock=>{if(!lock){R.busy=false;status('error','其他页面正在更新或恢复，请稍后重试');return;}return recoverWork();}):recoverWork();return R.promise;
+    R.promise=withLock(recoverWork);return R.promise;
   }
+  function withLock(work){return Promise.resolve().then(()=>host.navigator?.locks?host.navigator.locks.request('xzs-updater-write17',{ifAvailable:true},lock=>{if(!lock)throw Error('其他页面正在更新或恢复，请稍后重试');return work();}):work()).catch(e=>{R.busy=false;status('error','更新操作未完成：'+(e?.message||e));});}
   async function recoverWork(){try{
-    const j=await currentJournal();if(!host.confirm('恢复本角色卡最近一次更新前的组件和世界书？聊天消息不会被替换。'))return;
-    const s={identity:identity(),binding:M.stable(binding()),name:j.name};j.state='restoring';await storage('journal:'+j.name,j);
+    const {journal:j,scope:s}=await currentJournal();if(!host.confirm('恢复本角色卡最近一次更新前的组件和世界书？聊天消息不会被替换。'))return;
+    guard(s);j.state='restoring';await storage('journal:'+j.name,j);
     if(j.plan.some(x=>x.descriptor.kind==='world')&&j.beforeWorld){await writeChecked('恢复世界书',()=>api('replaceWorldbook')(j.book,M.clone(j.beforeWorld)),async()=>M.hash(M.world(await readWorld(j.book)))===M.hash(M.world(j.beforeWorld)),s);}
     await writeChecked('恢复角色卡组件',()=>editCard(j.name,card=>{
       guard(s);const e=M.ext(card),old=M.ext(j.beforeCard);e.tavern_helper=e.tavern_helper||{};
