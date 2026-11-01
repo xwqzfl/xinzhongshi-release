@@ -1,0 +1,64 @@
+{
+  "build": "2026.11.1-20261101232245",
+  "cardVersion": "2026.11.1",
+  "builtAt": "2026-11-01T15:22:46.331Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "22",
+  "songMark": "10",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "11.1 上下文优化补充：通知存档与历史规划提示过滤、误触收紧、场景资料按需投放、物品身份成绩去重及全字段紧凑表示；保留完整设定、分支与存档恢复。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "6a7c8d84",
+    "firstMesLen": 29988
+  },
+  "regexFields": {
+    "count": 8,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤"
+    ],
+    "fp": "e69ebc85"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "519aa038",
+      "bytes": 5723069
+    },
+    "updater.js": {
+      "hash": "c54d6b7e",
+      "bytes": 43173
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "worldbook.json": {
+      "hash": "3a45f521",
+      "bytes": 11708188
+    },
+    "cardfields.json": {
+      "hash": "6bb842f3",
+      "bytes": 875066
+    },
+    "regexscript.json": {
+      "hash": "72bfc5b9",
+      "bytes": 101577
+    }
+  }
+}

@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.1-20261101210532",
+  "release": "2026.11.1-20261101232245",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.1 小手机四级功能累计更新：身份考试与名册、通信直播、钱物生活、规则时间位置、锁屏通知、生成存档扫描、更新器22及窄屏修复。",
+  "notes": "11.1 上下文优化补充：通知存档与历史规划提示过滤、误触收紧、场景资料按需投放、物品身份成绩去重及全字段紧凑表示；保留完整设定、分支与存档恢复。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5655000,
-      "sha256": "00e830385ecf02f488a309910276c50756af772b0c9c2956639015987e8015f9",
-      "path": "assets/00e830385ecf02f488a309910276c50756af772b0c9c2956639015987e8015f9/shell.js",
+      "bytes": 5723069,
+      "sha256": "61427f9fd1c3755b634da1ade74bffd3acc042263f9eca95092393f8b73bce41",
+      "path": "assets/61427f9fd1c3755b634da1ade74bffd3acc042263f9eca95092393f8b73bce41/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "d0c4a08e",
+      "contentHash": "b54de1e2",
       "compatibleHashes": [
-        "d0c4a08e"
+        "b54de1e2"
       ]
     },
     "updater": {
@@ -91,19 +91,15 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 12611099,
-      "sha256": "dd0bd8d88cdd2f30fb329f17c59b99fb8558d3f2c3a3b859f9764da49b0157dd",
-      "path": "assets/dd0bd8d88cdd2f30fb329f17c59b99fb8558d3f2c3a3b859f9764da49b0157dd/worldbook.json",
+      "bytes": 11708189,
+      "sha256": "62eb1d351b1c804c8894c1d6e77d2ad417bb7155b0c0b917ea7f2a4950ab4b19",
+      "path": "assets/62eb1d351b1c804c8894c1d6e77d2ad417bb7155b0c0b917ea7f2a4950ab4b19/worldbook.json",
       "kind": "world",
-      "contentHash": "aa297d77",
+      "contentHash": "5e6e9279",
       "compatibleHashes": [
-        "f04d17e0",
-        "2ed4be64",
-        "59472722",
-        "ac090b66",
-        "ba4015e5",
-        "0b7a0bad",
-        "15bd00d1"
+        "2ae31a5d",
+        "c2c88b5c",
+        "1474fcbc"
       ]
     },
     "fields": {
@@ -123,9 +119,9 @@
     },
     "regex": {
       "label": "官方正则",
-      "bytes": 98204,
-      "sha256": "2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a",
-      "path": "assets/2c8979ba9112647327c3572468fe9e88b2fd6607515949e4eba7aaffaf48921a/regexscript.json",
+      "bytes": 101577,
+      "sha256": "ea5afee7ba3751426fa0fb3dbb5fb68cdab768a0c8e48f6fcc7773b51daed698",
+      "path": "assets/ea5afee7ba3751426fa0fb3dbb5fb68cdab768a0c8e48f6fcc7773b51daed698/regexscript.json",
       "kind": "regex",
       "items": [
         {
@@ -139,9 +135,29 @@
         {
           "name": "抗年龄截断",
           "contentHash": "53717202"
+        },
+        {
+          "name": "上下文·通知存档过滤",
+          "contentHash": "1c61db5e"
+        },
+        {
+          "name": "上下文·开局界面过滤",
+          "contentHash": "d01d3d15"
+        },
+        {
+          "name": "上下文·历史草稿过滤",
+          "contentHash": "b6a05491"
+        },
+        {
+          "name": "上下文·旧版剧情规划过滤",
+          "contentHash": "569b467b"
+        },
+        {
+          "name": "上下文·旧版技术规划过滤",
+          "contentHash": "e50f478b"
         }
       ],
-      "contentHash": "ac4c978d"
+      "contentHash": "eaa55ab5"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.1-20261101210532",
+  "build": "2026.11.1-20261101232245",
   "cardVersion": "2026.11.1",
-  "builtAt": "2026-11-01T13:05:33.032Z",
+  "builtAt": "2026-11-01T15:22:46.331Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,26 +10,31 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "11.1 小手机四级功能累计更新：身份考试与名册、通信直播、钱物生活、规则时间位置、锁屏通知、生成存档扫描、更新器22及窄屏修复。",
+  "notes": "11.1 上下文优化补充：通知存档与历史规划提示过滤、误触收紧、场景资料按需投放、物品身份成绩去重及全字段紧凑表示；保留完整设定、分支与存档恢复。",
   "cardFields": {
     "greetings": 105,
     "fp": "6a7c8d84",
     "firstMesLen": 29988
   },
   "regexFields": {
-    "count": 3,
+    "count": 8,
     "names": [
       "自定义开局",
       "回退按钮·仅提示词剥离",
-      "抗年龄截断"
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤"
     ],
-    "fp": "a27e2461"
+    "fp": "e69ebc85"
   },
-  "regexMark": "cf44ecbc",
+  "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "2988afcc",
-      "bytes": 5655000
+      "hash": "519aa038",
+      "bytes": 5723069
     },
     "updater.js": {
       "hash": "c54d6b7e",
@@ -44,16 +49,16 @@
       "bytes": 72247
     },
     "worldbook.json": {
-      "hash": "e082b4f1",
-      "bytes": 11561676
+      "hash": "3a45f521",
+      "bytes": 11708188
     },
     "cardfields.json": {
       "hash": "6bb842f3",
       "bytes": 875066
     },
     "regexscript.json": {
-      "hash": "cf44ecbc",
-      "bytes": 98204
+      "hash": "72bfc5b9",
+      "bytes": 101577
     }
   }
 }
