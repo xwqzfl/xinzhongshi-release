@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.1-20261101232245",
+  "release": "2026.11.2-20261102201316",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.1 上下文优化补充：通知存档与历史规划提示过滤、误触收紧、场景资料按需投放、物品身份成绩去重及全字段紧凑表示；保留完整设定、分支与存档恢复。",
+  "notes": "11.2 手机可用性审计：修复登记死路、跨聊天弹层、锁等待及迟到写入、旧记录整理阻断、单条卡片损坏连锁封锁与真实宿主上下文误判；保留读档及时间修复。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5723069,
-      "sha256": "61427f9fd1c3755b634da1ade74bffd3acc042263f9eca95092393f8b73bce41",
-      "path": "assets/61427f9fd1c3755b634da1ade74bffd3acc042263f9eca95092393f8b73bce41/shell.js",
+      "bytes": 5737102,
+      "sha256": "6e97f565dda137da4bc7c58cf244bf1bf171e38ba62d762c024f517ca2ef271b",
+      "path": "assets/6e97f565dda137da4bc7c58cf244bf1bf171e38ba62d762c024f517ca2ef271b/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "b54de1e2",
+      "contentHash": "72d769f7",
       "compatibleHashes": [
-        "b54de1e2"
+        "72d769f7"
       ]
     },
     "updater": {
@@ -97,6 +97,8 @@
       "kind": "world",
       "contentHash": "5e6e9279",
       "compatibleHashes": [
+        "36f52b6c",
+        "c4c8c8a1",
         "2ae31a5d",
         "c2c88b5c",
         "1474fcbc"
@@ -105,12 +107,12 @@
     "fields": {
       "label": "开场白与描述",
       "bytes": 875066,
-      "sha256": "0bb4a4313b77d428bf6e4e12428031d17efd507768bbb2c1e12b718e509f053f",
-      "path": "assets/0bb4a4313b77d428bf6e4e12428031d17efd507768bbb2c1e12b718e509f053f/cardfields.json",
+      "sha256": "5898ce58cb70d7092a029012abf133c84363f5da73655f9bb3c9ed2d1cbd2675",
+      "path": "assets/5898ce58cb70d7092a029012abf133c84363f5da73655f9bb3c9ed2d1cbd2675/cardfields.json",
       "kind": "fields",
-      "contentHash": "fccd62f8",
+      "contentHash": "ba1a0925",
       "fieldHashes": {
-        "version": "07e6465a",
+        "version": "79edb595",
         "first_messages": "fb09b9e9",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
