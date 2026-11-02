@@ -1,0 +1,64 @@
+{
+  "build": "2026.11.2-20261102225609",
+  "cardVersion": "2026.11.2",
+  "builtAt": "2026-11-02T14:56:11.008Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "23",
+  "songMark": "10",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "11.2 规则读取与主播部补全：修复首次无规则记录误报和失败空基线，保留旧规则及分支；补齐咕咕咕主播部26名成员、社长白上吹雪、副部长物述有栖、指导老师南日和子、旧校舍场地与选择清单。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "6a7c8d84",
+    "firstMesLen": 29988
+  },
+  "regexFields": {
+    "count": 8,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤"
+    ],
+    "fp": "e69ebc85"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "248e0fd1",
+      "bytes": 5786926
+    },
+    "updater.js": {
+      "hash": "d9c3a694",
+      "bytes": 44200
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "worldbook.json": {
+      "hash": "3e166ea4",
+      "bytes": 11714825
+    },
+    "cardfields.json": {
+      "hash": "fcada78c",
+      "bytes": 875066
+    },
+    "regexscript.json": {
+      "hash": "72bfc5b9",
+      "bytes": 101577
+    }
+  }
+}
