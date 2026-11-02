@@ -1,4 +1,5 @@
-/*XZS_UPDATER:22*/
+/*XZS_UPDATER:23*/
+/* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
   const norm = s => String(s == null ? '' : s).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
@@ -29,7 +30,22 @@ function xzsModel19() {
   const number = s => Number((/-(\d{14})$/.exec(s||'')||[])[1]||0);
   const mark = s => Number((/\/\*XZS_UPDATER:(\d+)\*\//.exec(s||'')||[])[1]||0);
   const ext = c => c.extensions || (c.data&&c.data.extensions) || {};
-  const scripts = c => (ext(c).tavern_helper||{}).scripts || [];
+  const scriptRoots = c => (ext(c).tavern_helper||{}).scripts || [];
+  function scripts(c) {const roots=scriptRoots(c);return roots.some(s=>s.type==='folder')?roots.flatMap(s=>s.type==='folder'?(s.scripts||[]):[s]):roots;}
+  function removeScripts(c,names) {
+    const roots=scriptRoots(c),lists=[roots,...roots.filter(s=>s.type==='folder').map(s=>s.scripts||[])];
+    for(const list of lists)for(let i=list.length-1;i>=0;i--)if(list[i].type!=='folder'&&names.has(list[i].name))list.splice(i,1);
+  }
+  function restoreScripts(c,before,names) {
+    removeScripts(c,names);const roots=scriptRoots(c);
+    for(const old of scriptRoots(before)){
+      if(old.type==='folder'){
+        const children=(old.scripts||[]).filter(s=>names.has(s.name)).map(clone);if(!children.length)continue;
+        const folder=roots.find(s=>s.type==='folder'&&s.id===old.id);
+        if(folder)folder.scripts.push(...children);else roots.push({...clone(old),scripts:children});
+      }else if(names.has(old.name))roots.push(clone(old));
+    }
+  }
   const rxName = r => r.script_name == null ? r.scriptName : r.script_name;
   function rx(r) {
     // Player enablement and ID are deliberately not owned by the publisher.
@@ -75,9 +91,9 @@ function xzsModel19() {
   function putScript(c,item,enabled) {
     const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;
     e.tavern_helper=e.tavern_helper||{};const ss=e.tavern_helper.scripts=e.tavern_helper.scripts||[];
-    const found=ss.filter(s=>s.name===item.name);
+    const found=scripts(c).filter(s=>s.name===item.name);
     if(found.length)found.forEach(s=>{s.content=item.content;if(item.button)s.button=clone(item.button);if(item.info)s.info=item.info;if(item.export_with)s.export_with=clone(item.export_with);});
-    else ss.push({type:'script',name:item.name,content:item.content,enabled:!!enabled,id:item.id&&!ss.some(s=>s.id===item.id)?item.id:'xzs-'+Date.now()+'-'+Math.random().toString(36).slice(2),info:item.info||'新中市组件',data:clone(item.data||{}),button:clone(item.button||{enabled:true,buttons:[]}),export_with:clone(item.export_with||{data:true,button:true})});
+    else ss.push({type:'script',name:item.name,content:item.content,enabled:!!enabled,id:item.id&&!scripts(c).some(s=>s.id===item.id)?item.id:'xzs-'+Date.now()+'-'+Math.random().toString(36).slice(2),info:item.info||'新中市组件',data:clone(item.data||{}),button:clone(item.button||{enabled:true,buttons:[]}),export_with:clone(item.export_with||{data:true,button:true})});
   }
   const ownedNames=d=>d.kind==='script'?[d.name]:d.kind==='pack'?d.items.flatMap(i=>[i.name,...(i.replaces||[])]):[];
   function apply(c,d,text) {
@@ -86,7 +102,7 @@ function xzsModel19() {
       const items=JSON.parse(text).scripts, before=scripts(c).slice(), retired=new Set(items.filter(i=>i.retired).map(i=>i.name));
       for(const item of items)for(const n of item.replaces||[])retired.add(n);
       const e=ext(c);if(!c.extensions&&!c.data?.extensions)c.extensions=e;e.tavern_helper=e.tavern_helper||{};
-      e.tavern_helper.scripts=before.filter(s=>!retired.has(s.name));
+      e.tavern_helper.scripts=e.tavern_helper.scripts||[];removeScripts(c,retired);
       for(const item of items.filter(i=>!i.retired)){
         const replacing=(item.replaces||[]).some(n=>before.some(s=>s.name===n));
         putScript(c,item,false);
@@ -99,7 +115,7 @@ function xzsModel19() {
       let list=e.regex_scripts||[];for(const r of JSON.parse(text).scripts){const hits=list.filter(s=>rxName(s)===rxName(r));if(hits.length)list=list.map(s=>rxName(s)===rxName(r)?{...clone(r),id:s.id,enabled:s.enabled}:s);else list.push(clone(r));}e.regex_scripts=list;
     }return c;
   }
-  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames};
+  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scriptRoots,scripts,restoreScripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames};
 }
 
 
@@ -117,7 +133,7 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=22;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=23;
   const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,readNotice:5000,readTimeout:25000,auto:8000};
   let host=window;
   try { while(host.parent&&host.parent!==host&&host.parent.document)host=host.parent; }catch(_){}
@@ -361,14 +377,14 @@ function xzsModel19() {
     await writeChecked('恢复角色卡组件',()=>editCard(j.name,card=>{
       guard(s);const e=M.ext(card),old=M.ext(j.beforeCard);e.tavern_helper=e.tavern_helper||{};
       const owned=new Set(j.plan.flatMap(x=>M.ownedNames(x.descriptor)));
-      e.tavern_helper.scripts=M.scripts(card).filter(x=>!owned.has(x.name)).concat(M.scripts(j.beforeCard).filter(x=>owned.has(x.name)).map(M.clone));
+      M.restoreScripts(card,j.beforeCard,owned);
       const regexNames=new Set(j.plan.filter(x=>x.descriptor.kind==='regex').flatMap(x=>x.descriptor.items.map(i=>i.name)));
       if(regexNames.size)e.regex_scripts=(e.regex_scripts||[]).filter(x=>!regexNames.has(M.rxName(x))).concat((old.regex_scripts||[]).filter(x=>regexNames.has(M.rxName(x))).map(M.clone));
       if(j.plan.some(x=>x.descriptor.kind==='fields'))for(const k of Object.keys(M.fields(j.beforeCard)))card[k]=M.clone(j.beforeCard[k]??(k==='first_messages'?[]:''));
       return card;
     },s),async()=>{
       const card=await api('getCharacter')(j.name);
-      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.fieldsReadable(card)&&M.hash(M.canonicalFields(card))===M.hash(M.canonicalFields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=M.ownedNames(d);return M.hash(M.scripts(card).filter(x=>names.includes(x.name)))===M.hash(M.scripts(j.beforeCard).filter(x=>names.includes(x.name)));});
+      return j.plan.filter(x=>x.descriptor.kind!=='world').every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.fieldsReadable(card)&&M.hash(M.canonicalFields(card))===M.hash(M.canonicalFields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=M.ownedNames(d),owned=c=>M.scripts(c).filter(x=>names.includes(x.name)).sort((a,b)=>String(a.id).localeCompare(String(b.id)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));});
     },s);
     // Only undo our added binding; never delete a book or revert unrelated global edits.
     if(j.addedBinding){guard(s);const now=binding();if(now.global.includes(j.book)){await waitWrite('恢复世界书绑定',()=>api('rebindGlobalWorldbooks')(now.global.filter(n=>n!==j.book)));if(binding().global.includes(j.book))throw Error('恢复世界书绑定未通过回读');s.binding=M.stable(binding());}}

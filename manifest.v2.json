@@ -1,31 +1,31 @@
 {
   "schema": 2,
-  "release": "2026.11.2-20261102201316",
+  "release": "2026.11.2-20261102221631",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.2 手机可用性审计：修复登记死路、跨聊天弹层、锁等待及迟到写入、旧记录整理阻断、单条卡片损坏连锁封锁与真实宿主上下文误判；保留读档及时间修复。",
+  "notes": "11.2 旧卡更新与本地存储修复：更新器23补齐文件夹内旧脚本；账本和通知本地副本无损压缩并回读验证，保留原钱物与分支；修复通知缓存满额误报未读完及生成前核对误报。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5737102,
-      "sha256": "6e97f565dda137da4bc7c58cf244bf1bf171e38ba62d762c024f517ca2ef271b",
-      "path": "assets/6e97f565dda137da4bc7c58cf244bf1bf171e38ba62d762c024f517ca2ef271b/shell.js",
+      "bytes": 5780779,
+      "sha256": "493a16e2179472ab272501c3d02562f3bf466a2fbc4a53b74ef448c5209ceafd",
+      "path": "assets/493a16e2179472ab272501c3d02562f3bf466a2fbc4a53b74ef448c5209ceafd/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "72d769f7",
+      "contentHash": "ae7c6dda",
       "compatibleHashes": [
-        "72d769f7"
+        "ae7c6dda"
       ]
     },
     "updater": {
       "label": "更新器",
-      "bytes": 43173,
-      "sha256": "9d6a1f8d66a2e33224efe9007d97ca668e813fd922d867155aacba8cc0a88ff5",
-      "path": "assets/9d6a1f8d66a2e33224efe9007d97ca668e813fd922d867155aacba8cc0a88ff5/updater.js",
+      "bytes": 44200,
+      "sha256": "67560dfd7618be885de367c65dfde16fa9d1282f0c7711dfc16624152fb03877",
+      "path": "assets/67560dfd7618be885de367c65dfde16fa9d1282f0c7711dfc16624152fb03877/updater.js",
       "kind": "script",
       "name": "新中市更新器",
-      "contentHash": "9d358d40",
-      "mark": 22
+      "contentHash": "f7e52b96",
+      "mark": 23
     },
     "song": {
       "label": "音乐集成迁移",
@@ -97,6 +97,7 @@
       "kind": "world",
       "contentHash": "5e6e9279",
       "compatibleHashes": [
+        "0dd39ade",
         "36f52b6c",
         "c4c8c8a1",
         "2ae31a5d",

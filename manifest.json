@@ -1,16 +1,16 @@
 {
-  "build": "2026.11.2-20261102201316",
+  "build": "2026.11.2-20261102221631",
   "cardVersion": "2026.11.2",
-  "builtAt": "2026-11-02T12:13:16.539Z",
+  "builtAt": "2026-11-02T14:16:32.229Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
   "worldbookMark": "【系统】世界书版本",
-  "updaterMark": "22",
+  "updaterMark": "23",
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "11.2 手机可用性审计：修复登记死路、跨聊天弹层、锁等待及迟到写入、旧记录整理阻断、单条卡片损坏连锁封锁与真实宿主上下文误判；保留读档及时间修复。",
+  "notes": "11.2 旧卡更新与本地存储修复：更新器23补齐文件夹内旧脚本；账本和通知本地副本无损压缩并回读验证，保留原钱物与分支；修复通知缓存满额误报未读完及生成前核对误报。",
   "cardFields": {
     "greetings": 105,
     "fp": "6a7c8d84",
@@ -33,12 +33,12 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "c61bd947",
-      "bytes": 5737102
+      "hash": "7de0de70",
+      "bytes": 5780779
     },
     "updater.js": {
-      "hash": "c54d6b7e",
-      "bytes": 43173
+      "hash": "d9c3a694",
+      "bytes": 44200
     },
     "songscript.js": {
       "hash": "b6c4ef42",
@@ -49,7 +49,7 @@
       "bytes": 72247
     },
     "worldbook.json": {
-      "hash": "35e753f0",
+      "hash": "462ad9fe",
       "bytes": 11708188
     },
     "cardfields.json": {

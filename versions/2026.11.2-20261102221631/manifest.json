@@ -1,0 +1,64 @@
+{
+  "build": "2026.11.2-20261102221631",
+  "cardVersion": "2026.11.2",
+  "builtAt": "2026-11-02T14:16:32.229Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "23",
+  "songMark": "10",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "11.2 旧卡更新与本地存储修复：更新器23补齐文件夹内旧脚本；账本和通知本地副本无损压缩并回读验证，保留原钱物与分支；修复通知缓存满额误报未读完及生成前核对误报。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "6a7c8d84",
+    "firstMesLen": 29988
+  },
+  "regexFields": {
+    "count": 8,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤"
+    ],
+    "fp": "e69ebc85"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "7de0de70",
+      "bytes": 5780779
+    },
+    "updater.js": {
+      "hash": "d9c3a694",
+      "bytes": 44200
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "worldbook.json": {
+      "hash": "462ad9fe",
+      "bytes": 11708188
+    },
+    "cardfields.json": {
+      "hash": "fcada78c",
+      "bytes": 875066
+    },
+    "regexscript.json": {
+      "hash": "72bfc5b9",
+      "bytes": 101577
+    }
+  }
+}
