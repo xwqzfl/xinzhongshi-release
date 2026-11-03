@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.3-20261103181916",
+  "release": "2026.11.3-20261103211452",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.3修复：后台归档旧同步书、生成前刷新任课教师表，补回教师及日常关键资料入口，校验日常可用性和分支恢复。",
+  "notes": "11.3剧情时钟修复：保护已确认正文时间，拒绝错误日期与区间起点，隔离草稿及伪校准，保留正常等待跨日与分支恢复。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5799108,
-      "sha256": "f965d4aef9b4185d1391cfa2092df90ce5e22712173ef713ec31d5de4ce572bc",
-      "path": "assets/f965d4aef9b4185d1391cfa2092df90ce5e22712173ef713ec31d5de4ce572bc/shell.js",
+      "bytes": 5803526,
+      "sha256": "a4ad57c0ab737b3845496c00ea180cdd438d59334271343d1b47c0103aa10c03",
+      "path": "assets/a4ad57c0ab737b3845496c00ea180cdd438d59334271343d1b47c0103aa10c03/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "44bb3854",
+      "contentHash": "338daaae",
       "compatibleHashes": [
-        "44bb3854"
+        "338daaae"
       ]
     },
     "updater": {
@@ -92,12 +92,12 @@
     "world": {
       "label": "世界书",
       "bytes": 12959579,
-      "sha256": "2f7656cd17a9fdf2e249c2e5933d51ac7988351ec2a12b6919985959e1593cb2",
-      "path": "assets/2f7656cd17a9fdf2e249c2e5933d51ac7988351ec2a12b6919985959e1593cb2/worldbook.json",
+      "sha256": "0791a910d25b8c4eb5befc28dd0b6a084833472749cc8bd0edd6d5ba4cf606a2",
+      "path": "assets/0791a910d25b8c4eb5befc28dd0b6a084833472749cc8bd0edd6d5ba4cf606a2/worldbook.json",
       "kind": "world",
-      "contentHash": "70de85b3",
+      "contentHash": "f8414708",
       "compatibleHashes": [
-        "70de85b3"
+        "f8414708"
       ]
     },
     "fields": {
