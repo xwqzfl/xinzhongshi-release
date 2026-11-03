@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.2-20261102225609",
+  "release": "2026.11.3-20261103181916",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.2 规则读取与主播部补全：修复首次无规则记录误报和失败空基线，保留旧规则及分支；补齐咕咕咕主播部26名成员、社长白上吹雪、副部长物述有栖、指导老师南日和子、旧校舍场地与选择清单。",
+  "notes": "11.3修复：后台归档旧同步书、生成前刷新任课教师表，补回教师及日常关键资料入口，校验日常可用性和分支恢复。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5786926,
-      "sha256": "9c8d8da5c8f3000ae46040d088f8d944b93fbf6f397bb4ae018f8621ba4928fd",
-      "path": "assets/9c8d8da5c8f3000ae46040d088f8d944b93fbf6f397bb4ae018f8621ba4928fd/shell.js",
+      "bytes": 5799108,
+      "sha256": "f965d4aef9b4185d1391cfa2092df90ce5e22712173ef713ec31d5de4ce572bc",
+      "path": "assets/f965d4aef9b4185d1391cfa2092df90ce5e22712173ef713ec31d5de4ce572bc/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "c6931781",
+      "contentHash": "44bb3854",
       "compatibleHashes": [
-        "c6931781"
+        "44bb3854"
       ]
     },
     "updater": {
@@ -91,13 +91,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 12831324,
-      "sha256": "d58d6dd2557fdbfbd7f778f3e02e473a40f6f03e99d5964d857109564ad39ecd",
-      "path": "assets/d58d6dd2557fdbfbd7f778f3e02e473a40f6f03e99d5964d857109564ad39ecd/worldbook.json",
+      "bytes": 12959579,
+      "sha256": "2f7656cd17a9fdf2e249c2e5933d51ac7988351ec2a12b6919985959e1593cb2",
+      "path": "assets/2f7656cd17a9fdf2e249c2e5933d51ac7988351ec2a12b6919985959e1593cb2/worldbook.json",
       "kind": "world",
-      "contentHash": "1d76662b",
+      "contentHash": "70de85b3",
       "compatibleHashes": [
-        "1d76662b"
+        "70de85b3"
       ]
     },
     "fields": {

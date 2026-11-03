@@ -1,0 +1,64 @@
+{
+  "build": "2026.11.3-20261103181916",
+  "cardVersion": "2026.11.3",
+  "builtAt": "2026-11-03T10:19:16.699Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "23",
+  "songMark": "10",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "11.3修复：后台归档旧同步书、生成前刷新任课教师表，补回教师及日常关键资料入口，校验日常可用性和分支恢复。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "6a7c8d84",
+    "firstMesLen": 29988
+  },
+  "regexFields": {
+    "count": 8,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤"
+    ],
+    "fp": "e69ebc85"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "90b9bbfa",
+      "bytes": 5799108
+    },
+    "updater.js": {
+      "hash": "d9c3a694",
+      "bytes": 44200
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "worldbook.json": {
+      "hash": "b916fc2f",
+      "bytes": 11818534
+    },
+    "cardfields.json": {
+      "hash": "fcada78c",
+      "bytes": 875066
+    },
+    "regexscript.json": {
+      "hash": "72bfc5b9",
+      "bytes": 101577
+    }
+  }
+}
