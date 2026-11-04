@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.3-20261103211452",
-  "cardVersion": "2026.11.3",
-  "builtAt": "2026-11-03T13:14:53.006Z",
+  "build": "2026.11.4-20261104235327",
+  "cardVersion": "2026.11.4",
+  "builtAt": "2026-11-04T15:53:28.156Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "11.3剧情时钟修复：保护已确认正文时间，拒绝错误日期与区间起点，隔离草稿及伪校准，保留正常等待跨日与分支恢复。",
+  "notes": "11.4规则衔接与场景触发：保留通用约束和关键日常资料，修复年龄正则截断，不增加模型调用。",
   "cardFields": {
     "greetings": 105,
     "fp": "6a7c8d84",
@@ -33,8 +33,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "cc03a02c",
-      "bytes": 5803526
+      "hash": "d8044546",
+      "bytes": 5804377
     },
     "updater.js": {
       "hash": "d9c3a694",
@@ -49,16 +49,16 @@
       "bytes": 72247
     },
     "worldbook.json": {
-      "hash": "bb46d8b8",
-      "bytes": 11818534
+      "hash": "b587d92d",
+      "bytes": 11849116
     },
     "cardfields.json": {
       "hash": "fcada78c",
       "bytes": 875066
     },
     "regexscript.json": {
-      "hash": "72bfc5b9",
-      "bytes": 101577
+      "hash": "e12f332e",
+      "bytes": 102962
     }
   }
 }

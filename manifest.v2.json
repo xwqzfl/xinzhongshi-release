@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.3-20261103211452",
+  "release": "2026.11.4-20261104235327",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.3剧情时钟修复：保护已确认正文时间，拒绝错误日期与区间起点，隔离草稿及伪校准，保留正常等待跨日与分支恢复。",
+  "notes": "11.4规则衔接与场景触发：保留通用约束和关键日常资料，修复年龄正则截断，不增加模型调用。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5803526,
-      "sha256": "a4ad57c0ab737b3845496c00ea180cdd438d59334271343d1b47c0103aa10c03",
-      "path": "assets/a4ad57c0ab737b3845496c00ea180cdd438d59334271343d1b47c0103aa10c03/shell.js",
+      "bytes": 5804377,
+      "sha256": "4e6604d899647e2b7d6479a8c9564e8a5c0c31d66b3f852f4a8debc18e0e82f2",
+      "path": "assets/4e6604d899647e2b7d6479a8c9564e8a5c0c31d66b3f852f4a8debc18e0e82f2/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "338daaae",
+      "contentHash": "a1a48968",
       "compatibleHashes": [
-        "338daaae"
+        "a1a48968"
       ]
     },
     "updater": {
@@ -91,13 +91,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 12959579,
-      "sha256": "0791a910d25b8c4eb5befc28dd0b6a084833472749cc8bd0edd6d5ba4cf606a2",
-      "path": "assets/0791a910d25b8c4eb5befc28dd0b6a084833472749cc8bd0edd6d5ba4cf606a2/worldbook.json",
+      "bytes": 13007126,
+      "sha256": "5200f69fad47cd3f8e4c08b386877ad7cfc41d9dcbfc6c9a038fd20dfa24dc82",
+      "path": "assets/5200f69fad47cd3f8e4c08b386877ad7cfc41d9dcbfc6c9a038fd20dfa24dc82/worldbook.json",
       "kind": "world",
-      "contentHash": "f8414708",
+      "contentHash": "ac755c7e",
       "compatibleHashes": [
-        "f8414708"
+        "ac755c7e"
       ]
     },
     "fields": {
@@ -117,9 +117,9 @@
     },
     "regex": {
       "label": "官方正则",
-      "bytes": 101577,
-      "sha256": "ea5afee7ba3751426fa0fb3dbb5fb68cdab768a0c8e48f6fcc7773b51daed698",
-      "path": "assets/ea5afee7ba3751426fa0fb3dbb5fb68cdab768a0c8e48f6fcc7773b51daed698/regexscript.json",
+      "bytes": 102962,
+      "sha256": "e4ffc1219dfb98de554cc8b5d230a3e81a51a535aed1aac32d7f072c9250305b",
+      "path": "assets/e4ffc1219dfb98de554cc8b5d230a3e81a51a535aed1aac32d7f072c9250305b/regexscript.json",
       "kind": "regex",
       "items": [
         {
