@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.4-20261104235327",
-  "cardVersion": "2026.11.4",
-  "builtAt": "2026-11-04T15:53:28.156Z",
+  "build": "2026.11.5-20261105233019",
+  "cardVersion": "2026.11.5",
+  "builtAt": "2026-11-05T15:30:20.047Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "11.4规则衔接与场景触发：保留通用约束和关键日常资料，修复年龄正则截断，不增加模型调用。",
+  "notes": "11.5：日常资料衔接、20个可选剧情、真实音乐融入与漏标兜底、场景遭遇及任职一致性修订。",
   "cardFields": {
     "greetings": 105,
     "fp": "6a7c8d84",
@@ -33,8 +33,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "d8044546",
-      "bytes": 5804377
+      "hash": "b06b7cc0",
+      "bytes": 5823863
     },
     "updater.js": {
       "hash": "d9c3a694",
@@ -49,8 +49,8 @@
       "bytes": 72247
     },
     "worldbook.json": {
-      "hash": "b587d92d",
-      "bytes": 11849116
+      "hash": "b0052d85",
+      "bytes": 12164318
     },
     "cardfields.json": {
       "hash": "fcada78c",

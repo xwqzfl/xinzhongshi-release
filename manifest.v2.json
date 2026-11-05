@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.4-20261104235327",
+  "release": "2026.11.5-20261105233019",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.4规则衔接与场景触发：保留通用约束和关键日常资料，修复年龄正则截断，不增加模型调用。",
+  "notes": "11.5：日常资料衔接、20个可选剧情、真实音乐融入与漏标兜底、场景遭遇及任职一致性修订。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5804377,
-      "sha256": "4e6604d899647e2b7d6479a8c9564e8a5c0c31d66b3f852f4a8debc18e0e82f2",
-      "path": "assets/4e6604d899647e2b7d6479a8c9564e8a5c0c31d66b3f852f4a8debc18e0e82f2/shell.js",
+      "bytes": 5823863,
+      "sha256": "6e7ece4c754d5f0ae4abfccf7ce1e7881eb7ff24ab05db9f28f73827ca6bb44e",
+      "path": "assets/6e7ece4c754d5f0ae4abfccf7ce1e7881eb7ff24ab05db9f28f73827ca6bb44e/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "a1a48968",
+      "contentHash": "2337884a",
       "compatibleHashes": [
-        "a1a48968"
+        "2337884a"
       ]
     },
     "updater": {
@@ -91,13 +91,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 13007126,
-      "sha256": "5200f69fad47cd3f8e4c08b386877ad7cfc41d9dcbfc6c9a038fd20dfa24dc82",
-      "path": "assets/5200f69fad47cd3f8e4c08b386877ad7cfc41d9dcbfc6c9a038fd20dfa24dc82/worldbook.json",
+      "bytes": 12164318,
+      "sha256": "62a07dea4dc39992fb8410705ba8137d36f17ee3939048013f84d441adfbfd3f",
+      "path": "assets/62a07dea4dc39992fb8410705ba8137d36f17ee3939048013f84d441adfbfd3f/worldbook.json",
       "kind": "world",
-      "contentHash": "ac755c7e",
+      "contentHash": "0d2caf25",
       "compatibleHashes": [
-        "ac755c7e"
+        "0d2caf25"
       ]
     },
     "fields": {
