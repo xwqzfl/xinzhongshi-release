@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.5-20261106000233",
+  "release": "2026.11.5-20261107001807",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.5修复：统一4个触发正则的换行序列化，解决世界书保存成功后回读指纹误报。",
+  "notes": "同步本地酒馆世界书到发布包：新增 9 条场所与规则条目，更新 577 条既有条目。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5824381,
-      "sha256": "a31b72ce665436213acf7a03d4b75595582a4d3cac2009815a4529de4f79e74e",
-      "path": "assets/a31b72ce665436213acf7a03d4b75595582a4d3cac2009815a4529de4f79e74e/shell.js",
+      "bytes": 5830409,
+      "sha256": "4e4e70f2619ed0172b35b29c2159049d008edd98e5791a12f4e18e52260c52d0",
+      "path": "assets/4e4e70f2619ed0172b35b29c2159049d008edd98e5791a12f4e18e52260c52d0/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "fbd8e57d",
+      "contentHash": "6bc16081",
       "compatibleHashes": [
-        "fbd8e57d"
+        "6bc16081"
       ]
     },
     "updater": {
@@ -41,6 +41,32 @@
       "bytes": 236,
       "sha256": "ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1",
       "path": "assets/ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1/song-retirement.json"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 12306379,
+      "sha256": "244c1db7c68a89a9b4e6ccc2a95e52ec7fd4f0b26d5e09ef5f95d16d288b56c7",
+      "path": "assets/244c1db7c68a89a9b4e6ccc2a95e52ec7fd4f0b26d5e09ef5f95d16d288b56c7/worldbook.json",
+      "kind": "world",
+      "contentHash": "8a7188c1",
+      "compatibleHashes": [
+        "8a7188c1"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 875066,
+      "sha256": "5898ce58cb70d7092a029012abf133c84363f5da73655f9bb3c9ed2d1cbd2675",
+      "path": "assets/5898ce58cb70d7092a029012abf133c84363f5da73655f9bb3c9ed2d1cbd2675/cardfields.json",
+      "kind": "fields",
+      "contentHash": "ba1a0925",
+      "fieldHashes": {
+        "version": "79edb595",
+        "first_messages": "fb09b9e9",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
     },
     "managed": {
       "label": "托管脚本",
@@ -88,32 +114,6 @@
         }
       ],
       "contentHash": "93b08c15"
-    },
-    "world": {
-      "label": "世界书",
-      "bytes": 12164355,
-      "sha256": "72da54c7401442c3231769c3861c97cdc80eba5c2c73b4cf79ae6c8b3cffe253",
-      "path": "assets/72da54c7401442c3231769c3861c97cdc80eba5c2c73b4cf79ae6c8b3cffe253/worldbook.json",
-      "kind": "world",
-      "contentHash": "392f7a24",
-      "compatibleHashes": [
-        "392f7a24"
-      ]
-    },
-    "fields": {
-      "label": "开场白与描述",
-      "bytes": 875066,
-      "sha256": "5898ce58cb70d7092a029012abf133c84363f5da73655f9bb3c9ed2d1cbd2675",
-      "path": "assets/5898ce58cb70d7092a029012abf133c84363f5da73655f9bb3c9ed2d1cbd2675/cardfields.json",
-      "kind": "fields",
-      "contentHash": "ba1a0925",
-      "fieldHashes": {
-        "version": "79edb595",
-        "first_messages": "fb09b9e9",
-        "creator": "806ccad4",
-        "creator_notes": "b005410d",
-        "description": "ffcaaa85"
-      }
     },
     "regex": {
       "label": "官方正则",
