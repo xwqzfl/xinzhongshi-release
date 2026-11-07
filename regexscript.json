@@ -167,6 +167,28 @@
       "run_on_edit": true,
       "min_depth": null,
       "max_depth": null
+    },
+    {
+      "id": "xzs-antitrunc-tail-1156",
+      "script_name": "正文·抗截断尾部残片过滤",
+      "enabled": true,
+      "find_regex": "/(<\\/(?:meow_FM|content)>)[ \\t]*(?:\\}[\\u3400-\\u9fff]{0,8}\\})?\\s*call:default_api:antitrunc_reply\\{text:\\s*$/g",
+      "replace_string": "$1",
+      "source": {
+        "user_input": false,
+        "ai_output": true,
+        "slash_command": false,
+        "world_info": false,
+        "reasoning": false
+      },
+      "destination": {
+        "display": true,
+        "prompt": true
+      },
+      "run_on_edit": true,
+      "min_depth": null,
+      "max_depth": null,
+      "trim_strings": []
     }
   ]
 }

@@ -1,0 +1,178 @@
+{
+  "schema": 2,
+  "release": "2026.11.8-20261108000324",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "notes": "11.8累计发布：课堂音乐与临时代课修复、旧提示清理、按日期归档日志、专属预设及手机布局、30项同源规则挂载、更新器24预设安装更新与参数兼容；预设不自动选择。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5834799,
+      "sha256": "60cd4463f8300307db4ae268d2845572de5e9a437966dec9152bb923a00dbc5b",
+      "path": "assets/60cd4463f8300307db4ae268d2845572de5e9a437966dec9152bb923a00dbc5b/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "bbabf1c2",
+      "compatibleHashes": [
+        "bbabf1c2"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 51856,
+      "sha256": "241effe195bf1b6d31ef4b8d6eecbd1b3188f5ad7332bd77a303c8164d665438",
+      "path": "assets/241effe195bf1b6d31ef4b8d6eecbd1b3188f5ad7332bd77a303c8164d665438/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "b5d7ab76",
+      "mark": 24
+    },
+    "song": {
+      "label": "音乐集成迁移",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "唱歌 · 音频直链",
+          "retired": true,
+          "contentHash": "6f0264fc"
+        }
+      ],
+      "contentHash": "9a3b3943",
+      "bytes": 236,
+      "sha256": "ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1",
+      "path": "assets/ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1/songscript.js"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 12308671,
+      "sha256": "b9538394153677675c1dbb674b91551bc6f7a903b1fd31a859ed0cb8de019eeb",
+      "path": "assets/b9538394153677675c1dbb674b91551bc6f7a903b1fd31a859ed0cb8de019eeb/worldbook.json",
+      "kind": "world",
+      "contentHash": "e01048ae",
+      "compatibleHashes": [
+        "e01048ae"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 847794,
+      "sha256": "b13dacb5cfa0ee3d8cc564cf42b1a76586df6367cda1c9726522de26f831f9c7",
+      "path": "assets/b13dacb5cfa0ee3d8cc564cf42b1a76586df6367cda1c9726522de26f831f9c7/cardfields.json",
+      "kind": "fields",
+      "contentHash": "f712248f",
+      "fieldHashes": {
+        "version": "59fc8dbf",
+        "first_messages": "fb09b9e9",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      }
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 72247,
+      "sha256": "09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3",
+      "path": "assets/09fe1a98ece5e45019842c191078550f77fffe7700ea901b499fdf334ea1b8b3/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "04f61d05",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "fca05aad"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "5a5c782e"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "6f4b4cd2"
+        },
+        {
+          "name": "抗截断A",
+          "contentHash": "54eab7c1",
+          "retired": true
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "13e651b2",
+          "replaces": [
+            "抗截断A"
+          ]
+        }
+      ],
+      "contentHash": "93b08c15"
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 103622,
+      "sha256": "4c60f157e3da1f408ff25603d77b1cfe1ef83976d303feb74d10d081541b6229",
+      "path": "assets/4c60f157e3da1f408ff25603d77b1cfe1ef83976d303feb74d10d081541b6229/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        },
+        {
+          "name": "上下文·通知存档过滤",
+          "contentHash": "1c61db5e"
+        },
+        {
+          "name": "上下文·开局界面过滤",
+          "contentHash": "d01d3d15"
+        },
+        {
+          "name": "上下文·历史草稿过滤",
+          "contentHash": "b6a05491"
+        },
+        {
+          "name": "上下文·旧版剧情规划过滤",
+          "contentHash": "569b467b"
+        },
+        {
+          "name": "上下文·旧版技术规划过滤",
+          "contentHash": "e50f478b"
+        },
+        {
+          "name": "正文·抗截断尾部残片过滤",
+          "contentHash": "b1ab9411"
+        }
+      ],
+      "contentHash": "01292d62"
+    }
+  },
+  "optionalComponents": {
+    "preset": {
+      "kind": "preset",
+      "name": "新中市专属预设 v0.1",
+      "apiId": "openai",
+      "autoSelect": false,
+      "label": "专属预设（不自动选择）",
+      "bytes": 58708,
+      "sha256": "911f2442302342e53512895dd7f09c73808be4a35df3697974175091f15edc07",
+      "contentHash": "327295f2",
+      "path": "assets/911f2442302342e53512895dd7f09c73808be4a35df3697974175091f15edc07/preset.json"
+    }
+  }
+}
