@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.8-20261108191253",
+  "build": "2026.11.8-20261108203341",
   "cardVersion": "2026.11.8",
-  "builtAt": "2026-11-08T11:12:54.917Z",
+  "builtAt": "2026-11-08T12:33:41.789Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "累计修复首次时间、聊天分支与同场剧情衔接；补齐吹奏乐选拔与校园圈层、社团同好、伍六七人物身份；修正凌路能力边界、人物年龄并清理失效子目。",
+  "notes": "创作规划按相关小项展开并约束正文，固定核对时间与最近节点；普通续写每轮最多15分钟，长途分段接续、短途沿真实路径，电车续程依有效分支保留与撤回。",
   "cardFields": {
     "greetings": 105,
     "fp": "6a7c8d84",
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "78ab33a3",
-      "bytes": 5858676
+      "hash": "bbd54419",
+      "bytes": 5868303
     },
     "updater.js": {
       "hash": "be82f434",
@@ -46,7 +46,7 @@
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "eb1ccf4d",
+      "hash": "6d9eee0f",
       "bytes": 12888384
     },
     "cardfields.json": {

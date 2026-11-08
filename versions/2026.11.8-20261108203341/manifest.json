@@ -1,0 +1,65 @@
+{
+  "build": "2026.11.8-20261108203341",
+  "cardVersion": "2026.11.8",
+  "builtAt": "2026-11-08T12:33:41.789Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市个人删减版（更新）",
+  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "24",
+  "songMark": "10",
+  "jbMark": 5,
+  "updateUpdater": true,
+  "notes": "创作规划按相关小项展开并约束正文，固定核对时间与最近节点；普通续写每轮最多15分钟，长途分段接续、短途沿真实路径，电车续程依有效分支保留与撤回。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "6a7c8d84",
+    "firstMesLen": 29988
+  },
+  "regexFields": {
+    "count": 9,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤",
+      "正文·抗截断尾部残片过滤"
+    ],
+    "fp": "e69ebc85"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "bbd54419",
+      "bytes": 5868303
+    },
+    "updater.js": {
+      "hash": "be82f434",
+      "bytes": 51856
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "worldbook.json": {
+      "hash": "6d9eee0f",
+      "bytes": 12888384
+    },
+    "cardfields.json": {
+      "hash": "e7cc1add",
+      "bytes": 847794
+    },
+    "jailbreaks.json": {
+      "hash": "a3547118",
+      "bytes": 72247
+    },
+    "regexscript.json": {
+      "hash": "fbd918a1",
+      "bytes": 103622
+    }
+  }
+}
