@@ -1,1240 +1,1258 @@
 {
-  "name": "新中市专属预设 v0.1",
-  "temperature": 1,
-  "frequency_penalty": 0,
-  "presence_penalty": 0,
-  "top_p": 1,
-  "top_k": 0,
-  "top_a": 0,
-  "min_p": 0,
-  "repetition_penalty": 1,
-  "openai_max_context": 2000000,
-  "openai_max_tokens": 32768,
-  "max_context_unlocked": true,
-  "stream_openai": true,
-  "n": 1,
-  "seed": -1,
-  "names_behavior": -1,
-  "wrap_in_quotes": false,
-  "send_if_empty": "",
-  "new_chat_prompt": "[开始当前聊天。]",
-  "new_group_chat_prompt": "[群体场景开始，参与者：{{group}}。按实际在场与知识边界写作。]",
-  "new_example_chat_prompt": "[对话示例]",
-  "continue_nudge_prompt": "[续写上一条尚未完成的回复，从断处承接，不重演、不新开一轮，不重复正文边界或时间戳。]",
-  "group_nudge_prompt": "[承接当前群体场景，保持参与者身份与知识边界。]",
-  "impersonation_prompt": "[仅应玩家明确要求，协助起草玩家角色的拟议措辞；草稿不表示已经行动或同意。]",
-  "assistant_prefill": "",
-  "assistant_impersonation": "",
-  "continue_prefill": false,
-  "continue_postfix": " ",
-  "use_sysprompt": false,
-  "squash_system_messages": false,
-  "wi_format": "{0}",
-  "scenario_format": "{{scenario}}",
-  "personality_format": "{{personality}}",
-  "reasoning_effort": "auto",
-  "show_thoughts": false,
-  "request_images": false,
-  "function_calling": false,
-  "enable_web_search": false,
-  "inline_image_quality": "auto",
-  "video_inlining": false,
-  "bias_preset_selected": "Default (none)",
-  "prompts": [
-    {
-      "identifier": "main",
-      "name": "新中市｜任务与资料桥接",
-      "system_prompt": true,
-      "marker": false,
-      "role": "system",
-      "content": "你负责续写《新中市人间世》的当前场景，呈现NPC群像、环境及玩家行动带来的回应。这是一张世界卡，不是一个叫“新中市”的单一人物；{{user}}的身份由当前玩家资料定义。具体设定、角色知识、用语限制和事实取舍，遵守本轮实际投放的世界书及其中的来源优先规则，衔接当前有效分支。本预设只补叙述方法，不另设人物、时间线或状态。",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-camera",
-      "name": "新中市｜群像流动外部视角",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "采用第三人称的群像流动外部视角。围绕当前场景与事件，通过动作交接、对白和注意力转移自然调整焦点，每个焦点段主体清楚。不直接展现任何角色的内心话、内心独白或未表达的心理结论；以动作、神态、对白和可观察处境表现人物。镜头不继承人物见闻，读者看见不等于玩家获知，聚焦玩家也不补写其内心、同意或重大决定。同场切镜可以自然发生；离屏切镜仅在有明确因果关联和叙述价值时使用，不强制每轮发生，不剧透未解锁事件，不改变玩家位置、知识和控制权。",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-interaction",
-      "name": "新中市｜互动节奏",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "用自然现代中文承接当下，写出NPC的即时回应、对白与具体变化。重要互动写透，琐碎过程简略；不靠反复转述输入、盘点外貌或空泛议论撑篇幅。在需要玩家新决定前自然停下。玩家明确要求快进、概述或展开时相应调整；字数不等于事件数量、镜头数量或固定经过分钟数。",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-writing",
-      "name": "新中市｜字数与文风",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "<xzs_writing_config>\n正文目标：800—1400个可见字符，优先写到区间中段约1100字。只计叙述与对白；空白、标签、思考、时间戳、协议标记和媒体控件不计。中文、标点、字母及数字各计一个字符。收束前核对正文篇幅：低于800字时补足当前互动的具体动作、对白与可观察细节，不把约数当作可以提前结束的理由。字数是写作目标，不通过截断补齐；扩写当前互动，不为了篇幅替玩家决定或增加事件、镜头和经过时间。\n当前文风：现代日常。\n用具体生活细节、自然口语对白与轻微幽默组织日常。关系从共同做事和即时回应中显露；保留人物差异、冲突和失落，不强行温情或治愈。\n文风只控制语言、句式、节奏和描写密度，仍遵守人物、时间、知识边界、玩家控制及输出协议。\n</xzs_writing_config>",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "worldInfoBefore",
-      "name": "世界书（前）",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "personaDescription",
-      "name": "玩家资料",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "charDescription",
-      "name": "角色描述",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "charPersonality",
-      "name": "角色性格",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "scenario",
-      "name": "情景",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "worldInfoAfter",
-      "name": "世界书（后）",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "dialogueExamples",
-      "name": "对话示例",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "chatHistory",
-      "name": "当前聊天历史",
-      "system_prompt": true,
-      "marker": true,
-      "role": "system",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100
-    },
-    {
-      "identifier": "jailbreak",
-      "name": "新中市｜本轮衔接与输出",
-      "system_prompt": true,
-      "marker": false,
-      "role": "system",
-      "content": "从当前输入已到达的地方继续，不重演已完成动作。常规剧情按以下结构交付，不输出思考、创作计划、检查表、角色内心话、固定小剧场或未请求的总结、状态栏与选项：\n<content>\n剧情正文及本轮实际需要的完整音乐、场景、照片等协议标记\n</content>\n<time>\nYYYY.MM.DD.星期X☆HH:mm-HH:mm\nscene:玩家当前实际地点\n</time>\n模板符号由当前有效事实填写，不照抄占位符。日期、星期、起止时刻和地点来自当前有效聊天及脚本时钟，不使用现实日期或另立开局时间线；未知部分写“未明确”，不补造。日期是区间起始日，跨午夜用实际起止时刻，保持前后衔接。没有明确经过时间时，起止时刻相同。明确的玩家等待、快进已结算时，不再重复增加；正文多焦点同时发生的片段不累加耗时。时间戳只记录本轮当前场景，不将回忆、约定和离屏片段当作玩家到达的新时间或地点。scene只填玩家实际地点；玩家位置未明确时写“未明确”，不使用离屏镜头或NPC当前位置代填。\n已生效世界书和脚本要求的完整标记原样输出，放在对应正文现场。不要将协议放进代码块、改写前缀或只写曲名；播放器出现不等于已点击、听完或获得任何进度。没有本轮明确协议时不补造标记。进度、知识和后续解锁以当前有效分支及既有脚本判定为准，预设不另建账本。场外讨论或应用专用任务遵从该任务格式，不强套剧情正文与时间戳。继续生成时承接尚未完成的正文或标签，不重复已写部分；完整回复仅有一组正文边界和尾部时间戳。",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "nsfw",
-      "name": "新中市｜辅助槽（空，关闭）",
-      "system_prompt": true,
-      "marker": false,
-      "role": "system",
-      "content": "",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false,
-      "enabled": false
-    },
-    {
-      "identifier": "enhanceDefinitions",
-      "name": "新中市｜设定补全槽（空，关闭）",
-      "system_prompt": true,
-      "marker": false,
-      "role": "system",
-      "content": "",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false,
-      "enabled": false
-    },
-    {
-      "identifier": "xzs-world-rule-18",
-      "name": "新中市｜引用规则·角色知识边界",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_18}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-20",
-      "name": "新中市｜引用规则·班级社交边界",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_20}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-1996",
-      "name": "新中市｜引用规则·小手机与正文分工",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_1996}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2071",
-      "name": "新中市｜引用规则·饮食描写",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2071}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2232",
-      "name": "新中市｜引用规则·角色扮演规范",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2232}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2234",
-      "name": "新中市｜引用规则·禁词表",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2234}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2284",
-      "name": "新中市｜引用规则·命名规范",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2284}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 159,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2285",
-      "name": "新中市｜引用规则·视觉创作总则",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2285}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 159,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2348",
-      "name": "新中市｜引用规则·衣物描写",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2348}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2467",
-      "name": "新中市｜引用规则·角色扮演限制器",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2467}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2515",
-      "name": "新中市｜引用规则·地图与导航口径",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2515}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 981,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-2635",
-      "name": "新中市｜引用规则·主线统一规则",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_2635}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 900,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3063",
-      "name": "新中市｜引用规则·事件调度规则",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3063}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 700,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3672",
-      "name": "新中市｜引用规则·经济与生活逻辑",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3672}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3673",
-      "name": "新中市｜引用规则·日常生理与卫生",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3673}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3674",
-      "name": "新中市｜引用规则·去职业化",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3674}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3675",
-      "name": "新中市｜引用规则·群像调度",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3675}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3676",
-      "name": "新中市｜引用规则·人际社交",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3676}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3801",
-      "name": "新中市｜引用规则·条件·真实社交",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3801}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3802",
-      "name": "新中市｜引用规则·条件·恋爱机制",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3802}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3804",
-      "name": "新中市｜引用规则·条件·基础生理需求",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3804}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3805",
-      "name": "新中市｜引用规则·条件·工作疲惫",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3805}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3806",
-      "name": "新中市｜引用规则·条件·学业疲惫",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3806}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3807",
-      "name": "新中市｜引用规则·条件·四季衣着",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3807}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3808",
-      "name": "新中市｜引用规则·条件·职业生活化",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3808}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3813",
-      "name": "新中市｜引用规则·条件·美食总纲",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3813}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3822",
-      "name": "新中市｜引用规则·条件·经济锚定",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3822}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3823",
-      "name": "新中市｜引用规则·时间流逝",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3823}}",
-      "injection_position": 0,
-      "injection_depth": 4,
-      "injection_order": 100,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-3882",
-      "name": "新中市｜引用规则·文娱投放边界",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_3882}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 160,
-      "forbid_overrides": false
-    },
-    {
-      "identifier": "xzs-world-rule-4135",
-      "name": "新中市｜引用规则·既定外貌优先",
-      "system_prompt": false,
-      "marker": false,
-      "role": "system",
-      "content": "{{outlet::XZS_RULE_4135}}",
-      "injection_position": 1,
-      "injection_depth": 2,
-      "injection_order": 500,
-      "forbid_overrides": false
-    }
-  ],
-  "prompt_order": [
-    {
-      "character_id": 100000,
-      "order": [
+    "name": "新中市专属预设 v0.1",
+    "temperature": 1,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "top_p": 1,
+    "top_k": 0,
+    "top_a": 0,
+    "min_p": 0,
+    "repetition_penalty": 1,
+    "openai_max_context": 2000000,
+    "openai_max_tokens": 32768,
+    "max_context_unlocked": true,
+    "stream_openai": true,
+    "n": 1,
+    "seed": -1,
+    "names_behavior": -1,
+    "wrap_in_quotes": false,
+    "send_if_empty": "",
+    "new_chat_prompt": "[开始当前聊天。]",
+    "new_group_chat_prompt": "[群体场景开始，参与者：{{group}}。按实际在场与知识边界写作。]",
+    "new_example_chat_prompt": "[对话示例]",
+    "continue_nudge_prompt": "[续写上一条尚未完成的回复，从断处承接，不重演、不新开一轮，不重复正文边界或时间戳。]",
+    "group_nudge_prompt": "[承接当前群体场景，保持参与者身份与知识边界。]",
+    "impersonation_prompt": "[仅应玩家明确要求，协助起草玩家角色的拟议措辞；草稿不表示已经行动或同意。]",
+    "assistant_prefill": "",
+    "assistant_impersonation": "",
+    "continue_prefill": false,
+    "continue_postfix": " ",
+    "use_sysprompt": false,
+    "squash_system_messages": false,
+    "wi_format": "{0}",
+    "scenario_format": "{{scenario}}",
+    "personality_format": "{{personality}}",
+    "reasoning_effort": "auto",
+    "show_thoughts": false,
+    "request_images": false,
+    "function_calling": false,
+    "enable_web_search": false,
+    "inline_image_quality": "auto",
+    "video_inlining": false,
+    "bias_preset_selected": "Default (none)",
+    "prompts": [
         {
-          "identifier": "main",
-          "enabled": true
+            "identifier": "main",
+            "name": "新中市｜任务与资料桥接",
+            "system_prompt": true,
+            "marker": false,
+            "role": "system",
+            "content": "你负责续写《新中市人间世》的当前场景，呈现NPC群像、环境及玩家行动带来的回应。这是一张世界卡，不是一个叫“新中市”的单一人物；{{user}}的身份由当前玩家资料定义。具体设定、角色知识、用语限制和事实取舍，遵守本轮实际投放的世界书及其中的来源优先规则，衔接当前有效分支。本预设只补叙述方法，不另设人物、时间线或状态。",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-camera",
-          "enabled": true
+            "identifier": "xzs-camera",
+            "name": "新中市｜群像流动外部视角",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "采用第三人称的群像流动外部视角。围绕当前场景与事件，通过动作交接、对白和注意力转移自然调整焦点，每个焦点段主体清楚。不直接展现任何角色的内心话、内心独白或未表达的心理结论；以动作、神态、对白和可观察处境表现人物。镜头不继承人物见闻，读者看见不等于玩家获知，聚焦玩家也不补写其内心、同意或重大决定。同场切镜可以自然发生；离屏切镜仅在有明确因果关联和叙述价值时使用，不强制每轮发生，不剧透未解锁事件，不改变玩家位置、知识和控制权。",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-interaction",
-          "enabled": true
+            "identifier": "xzs-interaction",
+            "name": "新中市｜互动节奏",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "用自然现代中文承接当下，写出NPC的即时回应、对白与具体变化。重要互动写透，琐碎过程简略；不靠反复转述输入、盘点外貌或空泛议论撑篇幅。在需要玩家新决定前自然停下。玩家明确要求快进、概述或展开时相应调整；字数不等于事件数量、镜头数量或固定经过分钟数。",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-writing",
-          "enabled": true
+            "identifier": "xzs-writing",
+            "name": "新中市｜字数与文风",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "<xzs_writing_config>\n正文目标：800—1400个可见字符，优先写到区间中段约1100字。只计叙述与对白；空白、标签、思考、时间戳、协议标记和媒体控件不计。中文、标点、字母及数字各计一个字符。收束前核对正文篇幅：低于800字时补足当前互动的具体动作、对白与可观察细节，不把约数当作可以提前结束的理由。字数是写作目标，不通过截断补齐；扩写当前互动，不为了篇幅替玩家决定或增加事件、镜头和经过时间。\n当前文风：现代日常。\n用具体生活细节、自然口语对白与轻微幽默组织日常。关系从共同做事和即时回应中显露；保留人物差异、冲突和失落，不强行温情或治愈。\n文风只控制语言、句式、节奏和描写密度，仍遵守人物、时间、知识边界、玩家控制及输出协议。\n</xzs_writing_config>",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3801",
-          "enabled": true
+            "identifier": "worldInfoBefore",
+            "name": "世界书（前）",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3802",
-          "enabled": true
+            "identifier": "personaDescription",
+            "name": "玩家资料",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3804",
-          "enabled": true
+            "identifier": "charDescription",
+            "name": "角色描述",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3805",
-          "enabled": true
+            "identifier": "charPersonality",
+            "name": "角色性格",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3806",
-          "enabled": true
+            "identifier": "scenario",
+            "name": "情景",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3807",
-          "enabled": true
+            "identifier": "worldInfoAfter",
+            "name": "世界书（后）",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3808",
-          "enabled": true
+            "identifier": "dialogueExamples",
+            "name": "对话示例",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3813",
-          "enabled": true
+            "identifier": "chatHistory",
+            "name": "当前聊天历史",
+            "system_prompt": true,
+            "marker": true,
+            "role": "system",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100
         },
         {
-          "identifier": "xzs-world-rule-3822",
-          "enabled": true
+            "identifier": "jailbreak",
+            "name": "新中市｜本轮衔接与输出",
+            "system_prompt": true,
+            "marker": false,
+            "role": "system",
+            "content": "从当前输入已到达的地方继续，不重演已完成动作。常规剧情按以下结构交付，除已开启的简短可见思考摘要外，不输出思考、创作计划、检查表、角色内心话、固定小剧场或未请求的总结、状态栏与选项：\n<content>\n剧情正文及本轮实际需要的完整音乐、场景、照片等协议标记\n</content>\n<time>\nYYYY.MM.DD.星期X☆HH:mm-HH:mm\nscene:玩家当前实际地点\n</time>\n模板符号由当前有效事实填写，不照抄占位符。日期、星期、起止时刻和地点来自当前有效聊天及脚本时钟，不使用现实日期或另立开局时间线；仅首次剧情尚未建立日期或时刻时，依据玩家设定、开局正文与统一校历初始化完整时间；缺少的部分在统一设定年份2026及当前场景范围内选定合理值，不覆盖已知部分。首次回复必须填出完整时间，不反复写“未明确”；后续直接承接脚本有效时钟，按实际剧情经过时间推进，不固定每轮加时。日期是区间起始日，跨午夜用实际起止时刻，保持前后衔接。没有明确经过时间时，起止时刻相同。明确的玩家等待、快进已结算时，不再重复增加；正文多焦点同时发生的片段不累加耗时。时间戳只记录本轮当前场景，不将回忆、约定和离屏片段当作玩家到达的新时间或地点。scene只填玩家实际地点；玩家位置未明确时写“未明确”，不使用离屏镜头或NPC当前位置代填。\n已生效世界书和脚本要求的完整标记原样输出，放在对应正文现场。不要将协议放进代码块、改写前缀或只写曲名；播放器出现不等于已点击、听完或获得任何进度。没有本轮明确协议时不补造标记。进度、知识和后续解锁以当前有效分支及既有脚本判定为准，预设不另建账本。场外讨论或应用专用任务遵从该任务格式，不强套剧情正文与时间戳。继续生成时承接尚未完成的正文或标签，不重复已写部分；完整回复仅有一组正文边界和尾部时间戳。",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3823",
-          "enabled": true
+            "identifier": "nsfw",
+            "name": "新中市｜辅助槽（空，关闭）",
+            "system_prompt": true,
+            "marker": false,
+            "role": "system",
+            "content": "",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false,
+            "enabled": false
         },
         {
-          "identifier": "worldInfoBefore",
-          "enabled": true
+            "identifier": "enhanceDefinitions",
+            "name": "新中市｜设定补全槽（空，关闭）",
+            "system_prompt": true,
+            "marker": false,
+            "role": "system",
+            "content": "",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false,
+            "enabled": false
         },
         {
-          "identifier": "personaDescription",
-          "enabled": true
+            "identifier": "xzs-world-rule-18",
+            "name": "新中市｜引用规则·角色知识边界",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_18}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "charDescription",
-          "enabled": true
+            "identifier": "xzs-world-rule-20",
+            "name": "新中市｜引用规则·班级社交边界",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_20}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "charPersonality",
-          "enabled": true
+            "identifier": "xzs-world-rule-1996",
+            "name": "新中市｜引用规则·小手机与正文分工",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_1996}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "scenario",
-          "enabled": true
+            "identifier": "xzs-world-rule-2071",
+            "name": "新中市｜引用规则·饮食描写",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2071}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "worldInfoAfter",
-          "enabled": true
+            "identifier": "xzs-world-rule-2232",
+            "name": "新中市｜引用规则·角色扮演规范",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2232}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-18",
-          "enabled": true
+            "identifier": "xzs-world-rule-2234",
+            "name": "新中市｜引用规则·禁词表",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2234}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-20",
-          "enabled": true
+            "identifier": "xzs-world-rule-2284",
+            "name": "新中市｜引用规则·命名规范",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2284}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 159,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-1996",
-          "enabled": true
+            "identifier": "xzs-world-rule-2285",
+            "name": "新中市｜引用规则·视觉创作总则",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2285}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 159,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2071",
-          "enabled": true
+            "identifier": "xzs-world-rule-2348",
+            "name": "新中市｜引用规则·衣物描写",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2348}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2232",
-          "enabled": true
+            "identifier": "xzs-world-rule-2467",
+            "name": "新中市｜引用规则·角色扮演限制器",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2467}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2234",
-          "enabled": true
+            "identifier": "xzs-world-rule-2515",
+            "name": "新中市｜引用规则·地图与导航口径",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2515}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 981,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2284",
-          "enabled": true
+            "identifier": "xzs-world-rule-2635",
+            "name": "新中市｜引用规则·主线统一规则",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_2635}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 900,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2285",
-          "enabled": true
+            "identifier": "xzs-world-rule-3063",
+            "name": "新中市｜引用规则·事件调度规则",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3063}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 700,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2348",
-          "enabled": true
+            "identifier": "xzs-world-rule-3672",
+            "name": "新中市｜引用规则·经济与生活逻辑",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3672}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2467",
-          "enabled": true
+            "identifier": "xzs-world-rule-3673",
+            "name": "新中市｜引用规则·日常生理与卫生",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3673}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2515",
-          "enabled": true
+            "identifier": "xzs-world-rule-3674",
+            "name": "新中市｜引用规则·去职业化",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3674}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-2635",
-          "enabled": true
+            "identifier": "xzs-world-rule-3675",
+            "name": "新中市｜引用规则·群像调度",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3675}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3063",
-          "enabled": true
+            "identifier": "xzs-world-rule-3676",
+            "name": "新中市｜引用规则·人际社交",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3676}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3672",
-          "enabled": true
+            "identifier": "xzs-world-rule-3801",
+            "name": "新中市｜引用规则·条件·真实社交",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3801}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3673",
-          "enabled": true
+            "identifier": "xzs-world-rule-3802",
+            "name": "新中市｜引用规则·条件·恋爱机制",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3802}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3674",
-          "enabled": true
+            "identifier": "xzs-world-rule-3804",
+            "name": "新中市｜引用规则·条件·基础生理需求",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3804}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3675",
-          "enabled": true
+            "identifier": "xzs-world-rule-3805",
+            "name": "新中市｜引用规则·条件·工作疲惫",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3805}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3676",
-          "enabled": true
+            "identifier": "xzs-world-rule-3806",
+            "name": "新中市｜引用规则·条件·学业疲惫",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3806}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-3882",
-          "enabled": true
+            "identifier": "xzs-world-rule-3807",
+            "name": "新中市｜引用规则·条件·四季衣着",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3807}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "xzs-world-rule-4135",
-          "enabled": true
+            "identifier": "xzs-world-rule-3808",
+            "name": "新中市｜引用规则·条件·职业生活化",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3808}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "dialogueExamples",
-          "enabled": true
+            "identifier": "xzs-world-rule-3813",
+            "name": "新中市｜引用规则·条件·美食总纲",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3813}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "chatHistory",
-          "enabled": true
+            "identifier": "xzs-world-rule-3822",
+            "name": "新中市｜引用规则·条件·经济锚定",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3822}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "jailbreak",
-          "enabled": true
+            "identifier": "xzs-world-rule-3823",
+            "name": "新中市｜引用规则·时间流逝",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3823}}",
+            "injection_position": 0,
+            "injection_depth": 4,
+            "injection_order": 100,
+            "forbid_overrides": false
         },
         {
-          "identifier": "nsfw",
-          "enabled": false
+            "identifier": "xzs-world-rule-3882",
+            "name": "新中市｜引用规则·文娱投放边界",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_3882}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 160,
+            "forbid_overrides": false
         },
         {
-          "identifier": "enhanceDefinitions",
-          "enabled": false
+            "identifier": "xzs-world-rule-4135",
+            "name": "新中市｜引用规则·既定外貌优先",
+            "system_prompt": false,
+            "marker": false,
+            "role": "system",
+            "content": "{{outlet::XZS_RULE_4135}}",
+            "injection_position": 1,
+            "injection_depth": 2,
+            "injection_order": 500,
+            "forbid_overrides": false
         }
-      ]
-    },
-    {
-      "character_id": 100001,
-      "order": [
+    ],
+    "prompt_order": [
         {
-          "identifier": "main",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-camera",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-interaction",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-writing",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3801",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3802",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3804",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3805",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3806",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3807",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3808",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3813",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3822",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3823",
-          "enabled": true
-        },
-        {
-          "identifier": "worldInfoBefore",
-          "enabled": true
-        },
-        {
-          "identifier": "personaDescription",
-          "enabled": true
-        },
-        {
-          "identifier": "charDescription",
-          "enabled": true
-        },
-        {
-          "identifier": "charPersonality",
-          "enabled": true
-        },
-        {
-          "identifier": "scenario",
-          "enabled": true
-        },
-        {
-          "identifier": "worldInfoAfter",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-18",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-20",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-1996",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2071",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2232",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2234",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2284",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2285",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2348",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2467",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2515",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-2635",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3063",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3672",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3673",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3674",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3675",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3676",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-3882",
-          "enabled": true
-        },
-        {
-          "identifier": "xzs-world-rule-4135",
-          "enabled": true
-        },
-        {
-          "identifier": "dialogueExamples",
-          "enabled": true
-        },
-        {
-          "identifier": "chatHistory",
-          "enabled": true
-        },
-        {
-          "identifier": "jailbreak",
-          "enabled": true
-        },
-        {
-          "identifier": "nsfw",
-          "enabled": false
-        },
-        {
-          "identifier": "enhanceDefinitions",
-          "enabled": false
-        }
-      ]
-    }
-  ],
-  "extensions": {
-    "tavern_helper": {
-      "scripts": [
-        {
-          "type": "script",
-          "enabled": true,
-          "name": "新中市预设设置",
-          "id": "7b3378f3-7396-4b9c-a710-d50fbb98f160",
-          "content": "const defaults = {length: 'normal', min: 800, max: 1400, style: 'daily', custom: ''};\nconst lengths = {short: [400, 700], normal: [800, 1400], long: [1600, 2400]};\nconst styles = {\n  daily: ['现代日常', '用具体生活细节、自然口语对白与轻微幽默组织日常。关系从共同做事和即时回应中显露；保留人物差异、冲突和失落，不强行温情或治愈。'],\n  novel: ['轻小说群像', '以清楚的动作、鲜明对白与人物反应形成节奏，可有符合人物口吻的自然吐槽；不堆砌夸张比喻，不把所有人写成同一种声音。'],\n  plain: ['克制白描', '以准确、简洁的动作、对白及可观察细节推进场景，少作解释与评价，让具体变化和停顿承担表达。'],\n  lyrical: ['细腻抒情', '通过环境、声音、动作节奏和留白呈现细腻氛围，语言清楚节制，不把普通小事强写成宏大情绪。'],\n  mystery: ['悬疑写实', '重视可观察线索、行动因果与人物信息差，细节有依据，疑点来自已有事实；不为营造气氛硬造危险或暗中改写设定。'],\n  custom: ['自定义文风', ''],\n};\nconst thoughtTags = 'think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive';\nconst noiseRules = [\n  {key:'thought-blocks', label:'思考与草稿块', pattern:'<('+thoughtTags+')\\\\b[^>]*>[\\\\s\\\\S]*?(?:<\\\\/\\\\1\\\\s*>|$)', flags:'gi', replacement:'', raw:true},\n  {key:'thought-fences', label:'思考与草稿代码块', pattern:'```(?:thinking|think|reasoning|analysis|cot|draft)\\\\b[^\\\\n]*\\\\r?\\\\n[\\\\s\\\\S]*?(?:```|$)', flags:'gi', replacement:'', raw:true},\n  {key:'thought-heading', label:'思考过程前缀', pattern:'^\\\\s*(?:思考过程|推理过程|内部分析|analysis|thinking|reasoning)\\\\s*[:：][\\\\s\\\\S]*?(?=<content\\\\b|$)', flags:'i', replacement:'', raw:true},\n  {key:'thought-closers', label:'残留思考闭合标签', pattern:'<\\\\/(?:'+thoughtTags+')\\\\s*>', flags:'gi', replacement:'', raw:true},\n  {key:'transport-tail', label:'异常工具协议尾缀', pattern:'(<\\\\/(?:content|time)\\\\s*>\\\\s*)(?:```[^\\\\r\\\\n]*\\\\r?\\\\n)?(?:call\\\\s*:\\\\s*default_api\\\\s*:\\\\s*antitrunc_reply\\\\b|<\\\\|(?:im_end|eot_id|endoftext)\\\\|>|\\\\[DONE\\\\])[^]*$', flags:'gi', replacement:'$1', raw:true},\n  {key:'partial-tag', label:'流式未完成标签', pattern:'<(?:[A-Za-z_/][^>\\\\r\\\\n]*)?$', flags:'g', replacement:'', raw:false},\n];\nfunction cleanOutput(raw, delimiters) {\n  let text = String(raw ?? '');\n  if (delimiters?.prefix && delimiters?.suffix) {\n    const escape = value => String(value).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n    text = text.replace(new RegExp(escape(delimiters.prefix)+'[\\\\s\\\\S]*?(?:'+escape(delimiters.suffix)+'|$)','g'), '');\n  }\n  for (const rule of noiseRules) text = text.replace(new RegExp(rule.pattern, rule.flags), rule.replacement);\n  return text;\n}\nfunction normalizeConfig(value) {\n  const c = {...defaults, ...value};\n  if (!Object.hasOwn(lengths, c.length) && c.length !== 'custom') throw Error('请选择有效的字数档位。');\n  if (!Object.hasOwn(styles, c.style)) throw Error('请选择有效的文风。');\n  if (c.length !== 'custom') [c.min, c.max] = lengths[c.length];\n  c.min = Number(c.min); c.max = Number(c.max);\n  if (!Number.isInteger(c.min) || !Number.isInteger(c.max) || c.min < 100 || c.max > 10000 || c.min > c.max) throw Error('自定义字数须为100—10000之间的整数，且下限不高于上限。');\n  c.custom = String(c.custom ?? '').trim();\n  if (c.style === 'custom' && !c.custom) throw Error('选择自定义文风时，请填写文风内容。');\n  return c;\n}\nfunction writingPrompt(value) {\n  const c = normalizeConfig(value);\n  return '<xzs_writing_config>\\n正文目标：' + c.min + '—' + c.max + '个可见字符，优先写到区间中段约' + Math.round((c.min+c.max)/2) + '字。只计叙述与对白；空白、标签、思考、时间戳、协议标记和媒体控件不计。中文、标点、字母及数字各计一个字符。收束前核对正文篇幅：低于' + c.min + '字时补足当前互动的具体动作、对白与可观察细节，不把约数当作可以提前结束的理由。字数是写作目标，不通过截断补齐；扩写当前互动，不为了篇幅替玩家决定或增加事件、镜头和经过时间。\\n当前文风：' + styles[c.style][0] + '。\\n' + (c.style === 'custom' ? c.custom : styles[c.style][1]) + '\\n文风只控制语言、句式、节奏和描写密度，仍遵守人物、时间、知识边界、玩家控制及输出协议。\\n</xzs_writing_config>';\n}\nfunction bodyText(raw) {\n  let text = cleanOutput(raw);\n  const blocks = [...text.matchAll(/<content\\b[^>]*>([\\s\\S]*?)(?:<\\/content\\s*>|$)/gi)];\n  if (!blocks.length) return null;\n  text = blocks.map(m => m[1]).join('\\n');\n  return text.replace(/<(time|bbs_start|bbs_end|audio|video|script|style|iframe)\\b[^>]*>[\\s\\S]*?(?:<\\/\\1\\s*>|$)/gi, '')\n    .replace(/^\\s*[\\[【](?:场景事件|剧情触发|世界事件|奉心祭)[\\]】].*$/gm, '')\n    .replace(/<!--[^]*?(?:-->|$)/g, '')\n    .replace(/【(?:歌曲|演奏|演出|点歌|照片|场景|场景事件|事件|主线|剧情|XZS)[^】]*】/g, '')\n    .replace(/\\[\\[(?:XZS|SCENE|STORY)[^\\]]*\\]\\]/gi, '')\n    .replace(/<[^>]*>/g, '')\n    .replace(/!\\[[^\\]]*\\]\\([^)]*\\)/g, '').replace(/\\[([^\\]]*)\\]\\([^)]*\\)/g, '$1').replace(/\\*\\*|__|~~|`/g, '')\n    .replace(/&(?:amp|lt|gt|quot|apos|nbsp|#\\d+|#x[\\da-f]+);/gi, entity => {\n      const named = {'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'\"','&apos;':\"'\",'&nbsp;':' '}[entity.toLowerCase()];\n      if (named !== undefined) return named;\n      const hex = /^&#x/i.test(entity), point = parseInt(entity.slice(hex ? 3 : 2), hex ? 16 : 10);\n      return point <= 0x10ffff ? String.fromCodePoint(point) : '\\ufffd';\n    })\n    .replace(/[\\s\\u200b\\ufeff]/g, '');\n}\nfunction bodyCount(raw) { const text = bodyText(raw); return text === null ? null : [...text].length; }\n\n// Bundled after the pure writing/count functions by build.cjs. No external imports.\n(() => {\n  'use strict';\n  const doc = window.parent.document;\n  const id = 'xzs-preset-controls-v01';\n  // The iframe is unloaded by TavernHelper when this preset is deselected.\n  if (doc.getElementById(id)) return;\n  const root = doc.createElement('div'); root.id = id;\n  const guardStyle = doc.createElement('style');\n  guardStyle.textContent = '#chat .mes_reasoning_details{display:none!important} #chat .mes_text :is(think,thinking,reasoning,analysis,ecot,cot,draft,draft_notes,acg_think){display:none!important}';\n  guardStyle.textContent += `\n    #script_container_7b3378f3-7396-4b9c-a710-d50fbb98f160{min-width:0;max-width:100%}\n    #script_container_7b3378f3-7396-4b9c-a710-d50fbb98f160 .qr--button.menu_button{box-sizing:border-box;min-height:44px;min-width:44px;width:max-content;max-width:100%;height:auto;padding:10px 12px;font-size:16px;line-height:1.4;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;flex:0 0 auto;touch-action:manipulation}\n    #${id} *,#${id} dialog{box-sizing:border-box}\n    #${id} form{display:flex;flex-direction:column;height:100%;min-height:0;margin:0;text-align:left}\n    #${id} .xzs-heading{flex:none;padding:16px 18px 12px;border-bottom:1px solid #666}\n    #${id} h3{margin:0;font-size:18px;line-height:1.4}\n    #${id} .xzs-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px 18px;display:flex;flex-direction:column;gap:12px;scroll-padding:12px}\n    #${id} label{display:flex;flex-direction:column;gap:6px;min-width:0;flex:none}\n    #${id} .xzs-range{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;flex:none}\n    #${id} input,#${id} select,#${id} textarea{width:100%;max-width:100%;min-width:0;min-height:44px;margin:0;font:inherit;font-size:16px;line-height:1.4;padding:9px 10px}\n    #${id} textarea{min-height:108px;resize:vertical}\n    #${id} small{font-size:12px;line-height:1.5;overflow-wrap:anywhere;flex:none}\n    #${id} output{font-size:13px;line-height:1.5;overflow-wrap:anywhere;flex:none}\n    #${id} .xzs-footer{flex:none;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid #666;display:flex;flex-direction:column;gap:8px;background:inherit}\n    #${id} [name=status]{color:#f2cc8f}\n    #${id} [name=status]:empty,#${id} [hidden]{display:none!important}\n    #${id} .xzs-actions{display:flex;justify-content:flex-end;gap:12px}\n    #${id} button{padding:9px 14px;border:1px solid #8993a5;border-radius:6px;background:#303747;color:#f4f6fb;cursor:pointer;font:inherit;font-size:16px;line-height:1.3;white-space:nowrap;width:auto;min-width:100px;max-width:none;min-height:44px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;touch-action:manipulation}\n    #${id} button[type=submit]{background:#2d5b71}\n    #${id} dialog[data-compact=true] .xzs-heading{padding:9px 14px}\n    #${id} dialog[data-compact=true] .xzs-body{padding:10px 14px;gap:10px}\n    #${id} dialog[data-compact=true] .xzs-footer{padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px))}\n    @media(max-width:600px){#${id} .xzs-heading{padding:12px 14px}#${id} .xzs-body{padding:12px 14px}#${id} .xzs-footer{padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}#${id} .xzs-actions button{flex:1;min-width:0}}\n  `;\n  root.append(guardStyle);\n  const panel = doc.createElement('dialog'); panel.setAttribute('aria-label','新中市预设设置');\n  panel.style.cssText = 'position:fixed;inset:0 auto auto 0;margin:0;width:min(520px,calc(var(--xzs-viewport-width,100vw) - 24px));height:min(700px,calc(var(--xzs-viewport-height,100vh) - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)));max-width:calc(100vw - 24px);overflow:hidden;padding:0;border:1px solid #777;border-radius:14px;background:var(--SmartThemeBlurTintColor,#252735);color:var(--SmartThemeBodyColor,#eee);font-family:inherit;font-size:14px;line-height:1.5';\n  panel.innerHTML = `<form method=\"dialog\">\n    <header class=\"xzs-heading\"><h3>新中市预设设置</h3></header>\n    <div class=\"xzs-body\">\n      <label>正文字数<select name=\"length\"><option value=\"short\">短篇 · 400—700</option><option value=\"normal\">常规 · 800—1400</option><option value=\"long\">长篇 · 1600—2400</option><option value=\"custom\">自定义上下限</option></select></label>\n      <div class=\"xzs-range\"><label>下限<input name=\"min\" type=\"number\" inputmode=\"numeric\" min=\"100\" max=\"10000\" step=\"1\"></label><label>上限<input name=\"max\" type=\"number\" inputmode=\"numeric\" min=\"100\" max=\"10000\" step=\"1\"></label></div>\n      <small>按正文可见字符统计，标点、字母和数字各计一字；思考、时间戳、标签、协议和媒体不计。字数为写作目标，不会截断或自动重抽。</small>\n      <label>文风<select name=\"style\"></select></label>\n      <label data-custom-style>自定义文风内容<textarea name=\"custom\" rows=\"4\" placeholder=\"填写希望单独使用的写作风格。\"></textarea></label>\n      <small>自定义文风与其他文风单选。切换后保留填写内容，只有选中时才生效。</small>\n      <small>默认：第三人称 · 群像流动外部视角，不展示角色内心话。</small>\n      <output name=\"count\" aria-live=\"polite\"></output>\n    </div>\n    <footer class=\"xzs-footer\"><output name=\"status\" aria-live=\"polite\"></output><div class=\"xzs-actions\"><button type=\"button\" name=\"close\">关闭</button><button type=\"submit\">保存设置</button></div></footer>\n  </form>`;\n  root.append(panel);doc.body.append(root);\n  const form = panel.querySelector('form'), field = name => form.elements.namedItem(name);\n  const win=doc.defaultView,viewport=win.visualViewport,scrollBody=form.querySelector('.xzs-body');\n  function place() {\n    if(!panel.open)return;\n    const height=viewport?.height||win.innerHeight,width=viewport?.width||win.innerWidth;\n    panel.style.setProperty('--xzs-viewport-height',height+'px');panel.style.setProperty('--xzs-viewport-width',width+'px');\n    panel.dataset.compact=String(height<480);\n    panel.style.top=((viewport?.offsetTop||0)+Math.max(0,(height-panel.offsetHeight)/2))+'px';\n    panel.style.left=((viewport?.offsetLeft||0)+Math.max(0,(width-panel.offsetWidth)/2))+'px';\n  }\n  function resize() { place();const active=doc.activeElement;if(panel.open&&scrollBody.contains(active))active.scrollIntoView({block:'nearest',inline:'nearest'}); }\n  win.addEventListener('resize',resize);viewport?.addEventListener('resize',resize);viewport?.addEventListener('scroll',place);\n  for (const [value,[label]] of Object.entries(styles)) { const option=doc.createElement('option');option.value=value;option.textContent=label;field('style').append(option); }\n  function config() { try { return normalizeConfig(getVariables({type:'preset'}).xzsWriting || defaults); } catch { return {...defaults}; } }\n  function setRange() {\n    const mode=field('length').value, custom=mode==='custom';\n    if (!custom) [field('min').value,field('max').value]=lengths[mode];\n    field('min').disabled=field('max').disabled=!custom;\n  }\n  function setStyle() { const custom=field('style').value==='custom';field('custom').disabled=!custom;form.querySelector('[data-custom-style]').hidden=!custom; }\n  function count() {\n    const rows = window.parent.SillyTavern.getContext().chat || [];\n    const row=rows.filter(m=>!m.is_user&&!m.is_system&&!m.is_hidden&&!m.hidden&&!m.is_archived&&!m.extra?.bbs_hidden).at(-1);\n    const n=bodyCount(row?.mes),c=config();\n    field('count').textContent=n===null?'当前回复没有 <content> 正文边界，暂不计数。':'当前有效回复正文：'+n+' 字'+(n<c.min?'（低于当前目标）':n>c.max?'（高于当前目标）':'（在当前目标内）');\n  }\n  function open() {\n    const c=config();for(const key of ['length','min','max','style','custom'])field(key).value=c[key];\n    setRange();setStyle();field('status').textContent='';count();if(!panel.open)panel.showModal();place();\n  }\n  field('close').addEventListener('click',()=>panel.close());\n  field('length').addEventListener('change',setRange);\n  field('style').addEventListener('change',setStyle);\n  form.addEventListener('submit',event=>{\n    event.preventDefault();\n    try {\n      const c=normalizeConfig(Object.fromEntries(['length','min','max','style','custom'].map(key=>[key,field(key).value])));\n      const variables=getVariables({type:'preset'});variables.xzsWriting=c;replaceVariables(variables,{type:'preset'});\n      field('status').textContent='已保存，从下一次生成生效。';count();\n    } catch(error) { field('status').textContent=error.message; }\n  });\n  function prepare(payload) {\n    const content=writingPrompt(config());\n    for(const row of payload?.chat || []) {\n      if(row.role==='assistant') {\n        const delimiters=window.parent.SillyTavern.getContext().powerUserSettings?.reasoning;\n        if(typeof row.content==='string')row.content=cleanOutput(row.content,delimiters);\n        else if(Array.isArray(row.content))row.content=row.content.filter(part=>!['thinking','reasoning','redacted_thinking'].includes(part.type)).map(part=>part.type==='text'?{...part,text:cleanOutput(part.text,delimiters)}:part);\n        for(const key of ['reasoning','reasoning_content','thinking','analysis'])delete row[key];\n      }\n      if(row.role!=='system')continue;\n      if(typeof row.content==='string')row.content=row.content.replace(/<xzs_writing_config>[\\s\\S]*?<\\/xzs_writing_config>/g,()=>content);\n      else if(Array.isArray(row.content))for(const part of row.content)if(part.type==='text')part.text=part.text.replace(/<xzs_writing_config>[\\s\\S]*?<\\/xzs_writing_config>/g,()=>content);\n    }\n  }\n  eventOn(tavern_events.CHAT_COMPLETION_PROMPT_READY,prepare);\n  eventOn(getButtonEvent('新中市预设设置'),open);\n  for(const event of ['CHAT_CHANGED','MESSAGE_SWIPED','MESSAGE_EDITED','MESSAGE_UPDATED','MESSAGE_DELETED','MESSAGE_RECEIVED'])if(tavern_events[event])eventOn(tavern_events[event],()=>{if(panel.open)count();});\n  window.addEventListener('pagehide',()=>{win.removeEventListener('resize',resize);viewport?.removeEventListener('resize',resize);viewport?.removeEventListener('scroll',place);panel.close();root.remove();},{once:true});\n})();\n",
-          "info": "新中市专属预设 v0.1：可调字数、五种内置文风及独立单选的自定义文风、当前回复计数。预设变量独立保存；切换预设时移除界面。无需外部资源。",
-          "button": {
-            "enabled": true,
-            "buttons": [
-              {
-                "name": "新中市预设设置",
-                "visible": true
-              }
+            "character_id": 100000,
+            "order": [
+                {
+                    "identifier": "main",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-camera",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-interaction",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-writing",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3801",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3802",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3804",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3805",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3806",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3807",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3808",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3813",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3822",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3823",
+                    "enabled": true
+                },
+                {
+                    "identifier": "worldInfoBefore",
+                    "enabled": true
+                },
+                {
+                    "identifier": "personaDescription",
+                    "enabled": true
+                },
+                {
+                    "identifier": "charDescription",
+                    "enabled": true
+                },
+                {
+                    "identifier": "charPersonality",
+                    "enabled": true
+                },
+                {
+                    "identifier": "scenario",
+                    "enabled": true
+                },
+                {
+                    "identifier": "worldInfoAfter",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-18",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-20",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-1996",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2071",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2232",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2234",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2284",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2285",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2348",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2467",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2515",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2635",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3063",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3672",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3673",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3674",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3675",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3676",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3882",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-4135",
+                    "enabled": true
+                },
+                {
+                    "identifier": "dialogueExamples",
+                    "enabled": true
+                },
+                {
+                    "identifier": "chatHistory",
+                    "enabled": true
+                },
+                {
+                    "identifier": "jailbreak",
+                    "enabled": true
+                },
+                {
+                    "identifier": "nsfw",
+                    "enabled": false
+                },
+                {
+                    "identifier": "enhanceDefinitions",
+                    "enabled": false
+                }
             ]
-          },
-          "data": {},
-          "export_with": {
-            "data": true,
-            "button": true
-          }
         },
         {
-          "type": "script",
-          "enabled": true,
-          "name": "新中市共用规则挂载",
-          "id": "a96fd1d0-f40b-4222-a269-71c35b47a163",
-          "content": "// Preset-scoped routing. Read the same native World Info entries on every scan.\n(() => {\n  'use strict';\n  const worldName = '新中市个人删减版（更新）';\n  const routes = [18,20,1996,2071,2232,2234,2284,2285,2348,2467,2515,2635,3063,3672,3673,3674,3675,3676,3801,3802,3804,3805,3806,3807,3808,3813,3822,3823,3882,4135].map(uid => ({uid, promptId:'xzs-world-rule-'+uid, outlet:'XZS_RULE_'+uid}));\n  function routeWorldRules(sources, preset) {\n    const prompts = (preset?.prompts || []).filter(prompt => prompt.enabled);\n    const active = new Map(routes.filter(route => {\n      const macro = '{{outlet::'+route.outlet+'}}';\n      const slot = prompts.find(prompt => prompt.id === route.promptId);\n      return slot?.role === 'system' && slot.content?.includes(macro)\n        && prompts.reduce((count,prompt) => count+String(prompt.content || '').split(macro).length-1,0) === 1;\n    }).map(route => [route.uid,route]));\n    let count = 0;\n    for (const key of ['globalLore','characterLore','chatLore','personaLore']) {\n      const entries = sources?.[key];\n      if (!Array.isArray(entries)) continue;\n      for (let index = 0; index < entries.length; index++) {\n        const entry = entries[index], route = active.get(entry?.uid);\n        if (!route || entry.world !== worldName || entry.disable) continue;\n        // Only replace this scan's entry object. Never edit the World Info source.\n        entries[index] = {...entry, position:7, outletName:route.outlet};\n        count++;\n      }\n    }\n    return count;\n  }\n  eventOn(tavern_events.WORLDINFO_ENTRIES_LOADED, sources => {\n    if (window.parent.SillyTavern.getContext().mainApi !== 'openai') return;\n    let preset;\n    try { preset = getPreset('in_use'); } catch { return; }\n    routeWorldRules(sources,preset);\n  });\n})();\n",
-          "info": "逐轮将30项规则的原文转交给对应预设引用槽位。保留常驻/关键词、概率、预算、递归与其他筛选；条件规则只在原条件成立时投放。同一条目只投放一次；切换预设、脚本停用、非对话补全API或引用槽位不可用时沿用世界书。不改世界书、角色卡、聊天和手机数据。",
-          "button": {
-            "enabled": false,
-            "buttons": []
-          },
-          "data": {},
-          "export_with": {
-            "data": true,
-            "button": true
-          }
+            "character_id": 100001,
+            "order": [
+                {
+                    "identifier": "main",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-camera",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-interaction",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-writing",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3801",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3802",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3804",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3805",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3806",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3807",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3808",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3813",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3822",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3823",
+                    "enabled": true
+                },
+                {
+                    "identifier": "worldInfoBefore",
+                    "enabled": true
+                },
+                {
+                    "identifier": "personaDescription",
+                    "enabled": true
+                },
+                {
+                    "identifier": "charDescription",
+                    "enabled": true
+                },
+                {
+                    "identifier": "charPersonality",
+                    "enabled": true
+                },
+                {
+                    "identifier": "scenario",
+                    "enabled": true
+                },
+                {
+                    "identifier": "worldInfoAfter",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-18",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-20",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-1996",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2071",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2232",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2234",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2284",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2285",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2348",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2467",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2515",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-2635",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3063",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3672",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3673",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3674",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3675",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3676",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-3882",
+                    "enabled": true
+                },
+                {
+                    "identifier": "xzs-world-rule-4135",
+                    "enabled": true
+                },
+                {
+                    "identifier": "dialogueExamples",
+                    "enabled": true
+                },
+                {
+                    "identifier": "chatHistory",
+                    "enabled": true
+                },
+                {
+                    "identifier": "jailbreak",
+                    "enabled": true
+                },
+                {
+                    "identifier": "nsfw",
+                    "enabled": false
+                },
+                {
+                    "identifier": "enhanceDefinitions",
+                    "enabled": false
+                }
+            ]
+        }
+    ],
+    "extensions": {
+        "tavern_helper": {
+            "scripts": [
+                {
+                    "type": "script",
+                    "enabled": true,
+                    "name": "新中市预设设置",
+                    "id": "7b3378f3-7396-4b9c-a710-d50fbb98f160",
+                    "content": "const defaults = {length: 'normal', min: 800, max: 1400, style: 'daily', custom: '', thoughtSummary: false};\nconst lengths = {short: [400, 700], normal: [800, 1400], long: [1600, 2400]};\nconst styles = {\n  daily: ['现代日常', '用具体生活细节、自然口语对白与轻微幽默组织日常。关系从共同做事和即时回应中显露；保留人物差异、冲突和失落，不强行温情或治愈。'],\n  novel: ['轻小说群像', '以清楚的动作、鲜明对白与人物反应形成节奏，可有符合人物口吻的自然吐槽；不堆砌夸张比喻，不把所有人写成同一种声音。'],\n  plain: ['克制白描', '以准确、简洁的动作、对白及可观察细节推进场景，少作解释与评价，让具体变化和停顿承担表达。'],\n  lyrical: ['细腻抒情', '通过环境、声音、动作节奏和留白呈现细腻氛围，语言清楚节制，不把普通小事强写成宏大情绪。'],\n  mystery: ['悬疑写实', '重视可观察线索、行动因果与人物信息差，细节有依据，疑点来自已有事实；不为营造气氛硬造危险或暗中改写设定。'],\n  custom: ['自定义文风', ''],\n};\nconst thoughtTags = 'think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive';\nconst noiseRules = [\n  {key:'thought-blocks', label:'思考与草稿块', pattern:'<('+thoughtTags+')\\\\b[^>]*>[\\\\s\\\\S]*?(?:<\\\\/\\\\1\\\\s*>|$)', flags:'gi', replacement:'', raw:true},\n  {key:'thought-fences', label:'思考与草稿代码块', pattern:'```(?:thinking|think|reasoning|analysis|cot|draft)\\\\b[^\\\\n]*\\\\r?\\\\n[\\\\s\\\\S]*?(?:```|$)', flags:'gi', replacement:'', raw:true},\n  {key:'thought-heading', label:'思考过程前缀', pattern:'^\\\\s*(?:思考过程|推理过程|内部分析|analysis|thinking|reasoning)\\\\s*[:：][\\\\s\\\\S]*?(?=<content\\\\b|$)', flags:'i', replacement:'', raw:true},\n  {key:'thought-closers', label:'残留思考闭合标签', pattern:'<\\\\/(?:'+thoughtTags+')\\\\s*>', flags:'gi', replacement:'', raw:true},\n  {key:'transport-tail', label:'异常工具协议尾缀', pattern:'(<\\\\/(?:content|time)\\\\s*>\\\\s*)(?:```[^\\\\r\\\\n]*\\\\r?\\\\n)?(?:call\\\\s*:\\\\s*default_api\\\\s*:\\\\s*antitrunc_reply\\\\b|<\\\\|(?:im_end|eot_id|endoftext)\\\\|>|\\\\[DONE\\\\])[^]*$', flags:'gi', replacement:'$1', raw:true},\n  {key:'partial-tag', label:'流式未完成标签', pattern:'<(?:[A-Za-z_/][^>\\\\r\\\\n]*)?$', flags:'g', replacement:'', raw:false},\n];\nfunction cleanOutput(raw, delimiters) {\n  let text = String(raw ?? '').replace(/<xzs_summary\\b[^>]*>[\\s\\S]*?(?:<\\/xzs_summary\\s*>|$)/gi, '');\n  if (delimiters?.prefix && delimiters?.suffix) {\n    const escape = value => String(value).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n    text = text.replace(new RegExp(escape(delimiters.prefix)+'[\\\\s\\\\S]*?(?:'+escape(delimiters.suffix)+'|$)','g'), '');\n  }\n  for (const rule of noiseRules) text = text.replace(new RegExp(rule.pattern, rule.flags), rule.replacement);\n  return text;\n}\nfunction normalizeConfig(value) {\n  const c = {...defaults, ...value};\n  if (!Object.hasOwn(lengths, c.length) && c.length !== 'custom') throw Error('请选择有效的字数档位。');\n  if (!Object.hasOwn(styles, c.style)) throw Error('请选择有效的文风。');\n  if (c.length !== 'custom') [c.min, c.max] = lengths[c.length];\n  c.min = Number(c.min); c.max = Number(c.max);\n  if (!Number.isInteger(c.min) || !Number.isInteger(c.max) || c.min < 100 || c.max > 10000 || c.min > c.max) throw Error('自定义字数须为100—10000之间的整数，且下限不高于上限。');\n  c.thoughtSummary = c.thoughtSummary === true || c.thoughtSummary === 'true';\n  c.custom = String(c.custom ?? '').trim();\n  if (c.style === 'custom' && !c.custom) throw Error('选择自定义文风时，请填写文风内容。');\n  return c;\n}\nfunction writingPrompt(value) {\n  const c = normalizeConfig(value);\n  return '<xzs_writing_config>\\n正文目标：' + c.min + '—' + c.max + '个可见字符，优先写到区间中段约' + Math.round((c.min+c.max)/2) + '字。只计叙述与对白；空白、标签、思考、时间戳、协议标记和媒体控件不计。中文、标点、字母及数字各计一个字符。收束前核对正文篇幅：低于' + c.min + '字时补足当前互动的具体动作、对白与可观察细节，不把约数当作可以提前结束的理由。字数是写作目标，不通过截断补齐；扩写当前互动，不为了篇幅替玩家决定或增加事件、镜头和经过时间。\\n当前文风：' + styles[c.style][0] + '。\\n' + (c.style === 'custom' ? c.custom : styles[c.style][1]) + '\\n文风只控制语言、句式、节奏和描写密度，仍遵守人物、时间、知识边界、玩家控制及输出协议。\\n' + (c.thoughtSummary ? '可见思考摘要开启：在<content>正文前用<xzs_summary>输出1—3句简短的场景依据与处理原则说明；只给高层摘要，不展示内部逐步推理、隐藏思维链或草稿，不补造新事实。摘要不计入正文字数。\\n' : '可见思考摘要关闭：直接输出正文，不添加<xzs_summary>。\\n') + '</xzs_writing_config>';\n}\nfunction bodyText(raw) {\n  let text = cleanOutput(raw);\n  const blocks = [...text.matchAll(/<content\\b[^>]*>([\\s\\S]*?)(?:<\\/content\\s*>|$)/gi)];\n  if (!blocks.length) return null;\n  text = blocks.map(m => m[1]).join('\\n');\n  return text.replace(/<(time|bbs_start|bbs_end|audio|video|script|style|iframe)\\b[^>]*>[\\s\\S]*?(?:<\\/\\1\\s*>|$)/gi, '')\n    .replace(/^\\s*[\\[【](?:场景事件|剧情触发|世界事件|奉心祭)[\\]】].*$/gm, '')\n    .replace(/<!--[^]*?(?:-->|$)/g, '')\n    .replace(/【(?:歌曲|演奏|演出|点歌|照片|场景|场景事件|事件|主线|剧情|XZS)[^】]*】/g, '')\n    .replace(/\\[\\[(?:XZS|SCENE|STORY)[^\\]]*\\]\\]/gi, '')\n    .replace(/<[^>]*>/g, '')\n    .replace(/!\\[[^\\]]*\\]\\([^)]*\\)/g, '').replace(/\\[([^\\]]*)\\]\\([^)]*\\)/g, '$1').replace(/\\*\\*|__|~~|`/g, '')\n    .replace(/&(?:amp|lt|gt|quot|apos|nbsp|#\\d+|#x[\\da-f]+);/gi, entity => {\n      const named = {'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'\"','&apos;':\"'\",'&nbsp;':' '}[entity.toLowerCase()];\n      if (named !== undefined) return named;\n      const hex = /^&#x/i.test(entity), point = parseInt(entity.slice(hex ? 3 : 2), hex ? 16 : 10);\n      return point <= 0x10ffff ? String.fromCodePoint(point) : '\\ufffd';\n    })\n    .replace(/[\\s\\u200b\\ufeff]/g, '');\n}\nfunction bodyCount(raw) { const text = bodyText(raw); return text === null ? null : [...text].length; }\n\n// Bundled after the pure writing/count functions by build.cjs. No external imports.\n(() => {\n  'use strict';\n  const doc = window.parent.document;\n  const id = 'xzs-preset-controls-v01';\n  // The iframe is unloaded by TavernHelper when this preset is deselected.\n  if (doc.getElementById(id)) return;\n  const root = doc.createElement('div'); root.id = id;\n  const guardStyle = doc.createElement('style');\n  guardStyle.textContent = '#chat .mes_reasoning_details{display:none!important} #chat .mes_text :is(think,thinking,reasoning,analysis,ecot,cot,draft,draft_notes,acg_think){display:none!important}';\n  guardStyle.textContent += `\n    #script_container_7b3378f3-7396-4b9c-a710-d50fbb98f160{min-width:0;max-width:100%}\n    #script_container_7b3378f3-7396-4b9c-a710-d50fbb98f160 .qr--button.menu_button{box-sizing:border-box;min-height:44px;min-width:44px;width:max-content;max-width:100%;height:auto;padding:10px 12px;font-size:16px;line-height:1.4;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;flex:0 0 auto;touch-action:manipulation}\n    #${id} *,#${id} dialog{box-sizing:border-box}\n    #${id} form{display:flex;flex-direction:column;height:100%;min-height:0;margin:0;text-align:left}\n    #${id} .xzs-heading{flex:none;padding:16px 18px 12px;border-bottom:1px solid #666}\n    #${id} h3{margin:0;font-size:18px;line-height:1.4}\n    #${id} .xzs-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px 18px;display:flex;flex-direction:column;gap:12px;scroll-padding:12px}\n    #${id} label{display:flex;flex-direction:column;gap:6px;min-width:0;flex:none}\n    #${id} .xzs-range{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;flex:none}\n    #${id} input,#${id} select,#${id} textarea{width:100%;max-width:100%;min-width:0;min-height:44px;margin:0;font:inherit;font-size:16px;line-height:1.4;padding:9px 10px}\n    #${id} textarea{min-height:108px;resize:vertical}\n    #${id} small{font-size:12px;line-height:1.5;overflow-wrap:anywhere;flex:none}\n    #${id} output{font-size:13px;line-height:1.5;overflow-wrap:anywhere;flex:none}\n    #${id} .xzs-footer{flex:none;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid #666;display:flex;flex-direction:column;gap:8px;background:inherit}\n    #${id} [name=status]{color:#f2cc8f}\n    #${id} [name=status]:empty,#${id} [hidden]{display:none!important}\n    #${id} .xzs-actions{display:flex;justify-content:flex-end;gap:12px}\n    #${id} button{padding:9px 14px;border:1px solid #8993a5;border-radius:6px;background:#303747;color:#f4f6fb;cursor:pointer;font:inherit;font-size:16px;line-height:1.3;white-space:nowrap;width:auto;min-width:100px;max-width:none;min-height:44px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;touch-action:manipulation}\n    #${id} button[type=submit]{background:#2d5b71}\n    #${id} dialog[data-compact=true] .xzs-heading{padding:9px 14px}\n    #${id} dialog[data-compact=true] .xzs-body{padding:10px 14px;gap:10px}\n    #${id} dialog[data-compact=true] .xzs-footer{padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px))}\n    @media(max-width:600px){#${id} .xzs-heading{padding:12px 14px}#${id} .xzs-body{padding:12px 14px}#${id} .xzs-footer{padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}#${id} .xzs-actions button{flex:1;min-width:0}}\n  `;\n  root.append(guardStyle);\n  const panel = doc.createElement('dialog'); panel.setAttribute('aria-label','新中市预设设置');\n  panel.style.cssText = 'position:fixed;inset:0 auto auto 0;margin:0;width:min(520px,calc(var(--xzs-viewport-width,100vw) - 24px));height:min(700px,calc(var(--xzs-viewport-height,100vh) - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)));max-width:calc(100vw - 24px);overflow:hidden;padding:0;border:1px solid #777;border-radius:14px;background:var(--SmartThemeBlurTintColor,#252735);color:var(--SmartThemeBodyColor,#eee);font-family:inherit;font-size:14px;line-height:1.5';\n  panel.innerHTML = `<form method=\"dialog\">\n    <header class=\"xzs-heading\"><h3>新中市预设设置</h3></header>\n    <div class=\"xzs-body\">\n      <label>正文字数<select name=\"length\"><option value=\"short\">短篇 · 400—700</option><option value=\"normal\">常规 · 800—1400</option><option value=\"long\">长篇 · 1600—2400</option><option value=\"custom\">自定义上下限</option></select></label>\n      <div class=\"xzs-range\"><label>下限<input name=\"min\" type=\"number\" inputmode=\"numeric\" min=\"100\" max=\"10000\" step=\"1\"></label><label>上限<input name=\"max\" type=\"number\" inputmode=\"numeric\" min=\"100\" max=\"10000\" step=\"1\"></label></div>\n      <small>按正文可见字符统计，标点、字母和数字各计一字；思考、时间戳、标签、协议和媒体不计。字数为写作目标，不会截断或自动重抽。</small>\n      <label>文风<select name=\"style\"></select></label>\n      <label data-custom-style>自定义文风内容<textarea name=\"custom\" rows=\"4\" placeholder=\"填写希望单独使用的写作风格。\"></textarea></label>\n      <small>自定义文风与其他文风单选。切换后保留填写内容，只有选中时才生效。</small>\n      <small>默认：第三人称 · 群像流动外部视角，不展示角色内心话。</small>\n      <label>思考摘要<select name=\"thoughtSummary\"><option value=\"false\">关闭</option><option value=\"true\">开启</option></select></label>\n      <small>开启后显示简短的场景依据与处理原则摘要；摘要独立于正文，不展示模型内部逐步推理。</small>\n      <output name=\"count\" aria-live=\"polite\"></output>\n    </div>\n    <footer class=\"xzs-footer\"><output name=\"status\" aria-live=\"polite\"></output><div class=\"xzs-actions\"><button type=\"button\" name=\"close\">关闭</button><button type=\"submit\">保存设置</button></div></footer>\n  </form>`;\n  root.append(panel);doc.body.append(root);\n  const summaryStyle=doc.createElement('style');root.append(summaryStyle);\n  function syncSummaryVisibility(){summaryStyle.textContent=config().thoughtSummary?'':'#chat .xzs-thinking-summary{display:none!important}';}\n  const form = panel.querySelector('form'), field = name => form.elements.namedItem(name);\n  const win=doc.defaultView,viewport=win.visualViewport,scrollBody=form.querySelector('.xzs-body');\n  function place() {\n    if(!panel.open)return;\n    const height=viewport?.height||win.innerHeight,width=viewport?.width||win.innerWidth;\n    panel.style.setProperty('--xzs-viewport-height',height+'px');panel.style.setProperty('--xzs-viewport-width',width+'px');\n    panel.dataset.compact=String(height<480);\n    panel.style.top=((viewport?.offsetTop||0)+Math.max(0,(height-panel.offsetHeight)/2))+'px';\n    panel.style.left=((viewport?.offsetLeft||0)+Math.max(0,(width-panel.offsetWidth)/2))+'px';\n  }\n  function resize() { place();const active=doc.activeElement;if(panel.open&&scrollBody.contains(active))active.scrollIntoView({block:'nearest',inline:'nearest'}); }\n  win.addEventListener('resize',resize);viewport?.addEventListener('resize',resize);viewport?.addEventListener('scroll',place);\n  for (const [value,[label]] of Object.entries(styles)) { const option=doc.createElement('option');option.value=value;option.textContent=label;field('style').append(option); }\n  function config() { try { return normalizeConfig(getVariables({type:'preset'}).xzsWriting || defaults); } catch { return {...defaults}; } }\n  function setRange() {\n    const mode=field('length').value, custom=mode==='custom';\n    if (!custom) [field('min').value,field('max').value]=lengths[mode];\n    field('min').disabled=field('max').disabled=!custom;\n  }\n  function setStyle() { const custom=field('style').value==='custom';field('custom').disabled=!custom;form.querySelector('[data-custom-style]').hidden=!custom; }\n  function count() {\n    const rows = window.parent.SillyTavern.getContext().chat || [];\n    const row=rows.filter(m=>!m.is_user&&!m.is_system&&!m.is_hidden&&!m.hidden&&!m.is_archived&&!m.extra?.bbs_hidden).at(-1);\n    const n=bodyCount(row?.mes),c=config();\n    field('count').textContent=n===null?'当前回复没有 <content> 正文边界，暂不计数。':'当前有效回复正文：'+n+' 字'+(n<c.min?'（低于当前目标）':n>c.max?'（高于当前目标）':'（在当前目标内）');\n  }\n  function open() {\n    const c=config();for(const key of ['length','min','max','style','custom','thoughtSummary'])field(key).value=c[key];\n    setRange();setStyle();field('status').textContent='';count();if(!panel.open)panel.showModal();place();\n  }\n  field('close').addEventListener('click',()=>panel.close());\n  field('length').addEventListener('change',setRange);\n  field('style').addEventListener('change',setStyle);\n  form.addEventListener('submit',event=>{\n    event.preventDefault();\n    try {\n      const c=normalizeConfig(Object.fromEntries(['length','min','max','style','custom','thoughtSummary'].map(key=>[key,field(key).value])));\n      const variables=getVariables({type:'preset'});variables.xzsWriting=c;replaceVariables(variables,{type:'preset'});\n      syncSummaryVisibility();field('status').textContent='已保存，从下一次生成生效。';count();\n    } catch(error) { field('status').textContent=error.message; }\n  });\n  function prepare(payload) {\n    const content=writingPrompt(config());\n    for(const row of payload?.chat || []) {\n      if(row.role==='assistant') {\n        const delimiters=window.parent.SillyTavern.getContext().powerUserSettings?.reasoning;\n        if(typeof row.content==='string')row.content=cleanOutput(row.content,delimiters);\n        else if(Array.isArray(row.content))row.content=row.content.filter(part=>!['thinking','reasoning','redacted_thinking'].includes(part.type)).map(part=>part.type==='text'?{...part,text:cleanOutput(part.text,delimiters)}:part);\n        for(const key of ['reasoning','reasoning_content','thinking','analysis'])delete row[key];\n      }\n      if(row.role!=='system')continue;\n      if(typeof row.content==='string')row.content=row.content.replace(/<xzs_writing_config>[\\s\\S]*?<\\/xzs_writing_config>/g,()=>content);\n      else if(Array.isArray(row.content))for(const part of row.content)if(part.type==='text')part.text=part.text.replace(/<xzs_writing_config>[\\s\\S]*?<\\/xzs_writing_config>/g,()=>content);\n    }\n  }\n  syncSummaryVisibility();\n  eventOn(tavern_events.CHAT_COMPLETION_PROMPT_READY,prepare);\n  eventOn(getButtonEvent('新中市预设设置'),open);\n  for(const event of ['CHAT_CHANGED','MESSAGE_SWIPED','MESSAGE_EDITED','MESSAGE_UPDATED','MESSAGE_DELETED','MESSAGE_RECEIVED'])if(tavern_events[event])eventOn(tavern_events[event],()=>{if(panel.open)count();});\n  window.addEventListener('pagehide',()=>{win.removeEventListener('resize',resize);viewport?.removeEventListener('resize',resize);viewport?.removeEventListener('scroll',place);panel.close();root.remove();},{once:true});\n})();\n",
+                    "info": "新中市专属预设 v0.1：可调字数、五种内置文风及独立单选的自定义文风、当前回复计数。预设变量独立保存；切换预设时移除界面。无需外部资源。 可切换显示简短思考摘要。",
+                    "button": {
+                        "enabled": true,
+                        "buttons": [
+                            {
+                                "name": "新中市预设设置",
+                                "visible": true
+                            }
+                        ]
+                    },
+                    "data": {},
+                    "export_with": {
+                        "data": true,
+                        "button": true
+                    }
+                },
+                {
+                    "type": "script",
+                    "enabled": true,
+                    "name": "新中市共用规则挂载",
+                    "id": "a96fd1d0-f40b-4222-a269-71c35b47a163",
+                    "content": "// Preset-scoped routing. Read the same native World Info entries on every scan.\n(() => {\n  'use strict';\n  const worldName = '新中市个人删减版（更新）';\n  const routes = [18,20,1996,2071,2232,2234,2284,2285,2348,2467,2515,2635,3063,3672,3673,3674,3675,3676,3801,3802,3804,3805,3806,3807,3808,3813,3822,3823,3882,4135].map(uid => ({uid, promptId:'xzs-world-rule-'+uid, outlet:'XZS_RULE_'+uid}));\n  function routeWorldRules(sources, preset) {\n    const prompts = (preset?.prompts || []).filter(prompt => prompt.enabled);\n    const active = new Map(routes.filter(route => {\n      const macro = '{{outlet::'+route.outlet+'}}';\n      const slot = prompts.find(prompt => prompt.id === route.promptId);\n      return slot?.role === 'system' && slot.content?.includes(macro)\n        && prompts.reduce((count,prompt) => count+String(prompt.content || '').split(macro).length-1,0) === 1;\n    }).map(route => [route.uid,route]));\n    let count = 0;\n    for (const key of ['globalLore','characterLore','chatLore','personaLore']) {\n      const entries = sources?.[key];\n      if (!Array.isArray(entries)) continue;\n      for (let index = 0; index < entries.length; index++) {\n        const entry = entries[index], route = active.get(entry?.uid);\n        if (!route || entry.world !== worldName || entry.disable) continue;\n        // Only replace this scan's entry object. Never edit the World Info source.\n        entries[index] = {...entry, position:7, outletName:route.outlet};\n        count++;\n      }\n    }\n    return count;\n  }\n  eventOn(tavern_events.WORLDINFO_ENTRIES_LOADED, sources => {\n    if (window.parent.SillyTavern.getContext().mainApi !== 'openai') return;\n    let preset;\n    try { preset = getPreset('in_use'); } catch { return; }\n    routeWorldRules(sources,preset);\n  });\n})();\n",
+                    "info": "逐轮将30项规则的原文转交给对应预设引用槽位。保留常驻/关键词、概率、预算、递归与其他筛选；条件规则只在原条件成立时投放。同一条目只投放一次；切换预设、脚本停用、非对话补全API或引用槽位不可用时沿用世界书。不改世界书、角色卡、聊天和手机数据。",
+                    "button": {
+                        "enabled": false,
+                        "buttons": []
+                    },
+                    "data": {},
+                    "export_with": {
+                        "data": true,
+                        "button": true
+                    }
+                },
+                {
+                    "type": "script",
+                    "id": "a5bf65b4-030d-49d0-a476-0f5e5893c3c8",
+                    "name": "新中市模型请求兼容",
+                    "enabled": true,
+                    "content": "// Lives inside this preset; never changes the player's saved connection or other presets.\n(() => {\n  'use strict';\n  eventOn(tavern_events.CHAT_COMPLETION_SETTINGS_READY, data => {\n    let preset;\n    try{preset=getPreset('in_use');}catch{return;}\n    if(!preset?.prompts?.some(p=>p.id==='xzs-camera'&&p.enabled))return;\n    const model=String(data?.model||'').toLowerCase();\n    const modernGemini=/^(?:google\\/)?gemini-(?:3\\.(?:[89])(?:[.-]|$)|4(?:[.-]|$))/.test(model);\n    if(!modernGemini)return;\n    for(const key of ['temperature','top_p','top_k','top_a','min_p','frequency_penalty','presence_penalty','repetition_penalty','n','candidate_count'])delete data[key];\n    // Use the host's native reasoning field and keep reasoning out of the visible answer.\n    data.include_reasoning=false;\n    if(!data.reasoning_effort||['auto','minimal','min'].includes(data.reasoning_effort))data.reasoning_effort='medium';\n    delete data.assistant_prefill;\n  });\n})();\n",
+                    "info": "仅随当前专属预设运行。识别实际请求模型ID，移除新款Gemini不支持的采样字段，使用medium内部推理但不请求展示思考。不更改连接或其他预设。",
+                    "data": {},
+                    "button": {
+                        "enabled": false,
+                        "buttons": []
+                    },
+                    "export_with": {
+                        "data": true,
+                        "button": true
+                    }
+                }
+            ],
+            "variables": {
+                "xzsWriting": {
+                    "length": "normal",
+                    "min": 800,
+                    "max": 1400,
+                    "style": "daily",
+                    "custom": "",
+                    "thoughtSummary": false
+                }
+            }
         },
-        {
-          "type": "script",
-          "id": "a5bf65b4-030d-49d0-a476-0f5e5893c3c8",
-          "name": "新中市模型请求兼容",
-          "enabled": true,
-          "content": "// Lives inside this preset; never changes the player's saved connection or other presets.\n(() => {\n  'use strict';\n  eventOn(tavern_events.CHAT_COMPLETION_SETTINGS_READY, data => {\n    let preset;\n    try{preset=getPreset('in_use');}catch{return;}\n    if(!preset?.prompts?.some(p=>p.id==='xzs-camera'&&p.enabled))return;\n    const model=String(data?.model||'').toLowerCase();\n    const modernGemini=/^(?:google\\/)?gemini-(?:3\\.(?:[89])(?:[.-]|$)|4(?:[.-]|$))/.test(model);\n    if(!modernGemini)return;\n    for(const key of ['temperature','top_p','top_k','top_a','min_p','frequency_penalty','presence_penalty','repetition_penalty','n','candidate_count'])delete data[key];\n    // Use the host's native reasoning field and keep reasoning out of the visible answer.\n    data.include_reasoning=false;\n    if(!data.reasoning_effort||['auto','minimal','min'].includes(data.reasoning_effort))data.reasoning_effort='medium';\n    delete data.assistant_prefill;\n  });\n})();\n",
-          "info": "仅随当前专属预设运行。识别实际请求模型ID，移除新款Gemini不支持的采样字段，使用medium内部推理但不请求展示思考。不更改连接或其他预设。",
-          "data": {},
-          "button": {
-            "enabled": false,
-            "buttons": []
-          },
-          "export_with": {
-            "data": true,
-            "button": true
-          }
-        }
-      ],
-      "variables": {
-        "xzsWriting": {
-          "length": "normal",
-          "min": 800,
-          "max": 1400,
-          "style": "daily",
-          "custom": ""
-        }
-      }
+        "regex_scripts": [
+            {
+                "id": "xzs-raw-thought-blocks",
+                "scriptName": "新中市｜生成清理·思考与草稿块",
+                "findRegex": "/<(think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\b[^>]*>[\\s\\S]*?(?:<\\/\\1\\s*>|$)/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": false,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-raw-thought-fences",
+                "scriptName": "新中市｜生成清理·思考与草稿代码块",
+                "findRegex": "/```(?:thinking|think|reasoning|analysis|cot|draft)\\b[^\\n]*\\r?\\n[\\s\\S]*?(?:```|$)/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": false,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-raw-thought-heading",
+                "scriptName": "新中市｜生成清理·思考过程前缀",
+                "findRegex": "/^\\s*(?:思考过程|推理过程|内部分析|analysis|thinking|reasoning)\\s*[:：][\\s\\S]*?(?=<content\\b|$)/i",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": false,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-raw-thought-closers",
+                "scriptName": "新中市｜生成清理·残留思考闭合标签",
+                "findRegex": "/<\\/(?:think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\s*>/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": false,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-raw-transport-tail",
+                "scriptName": "新中市｜生成清理·异常工具协议尾缀",
+                "findRegex": "/(<\\/(?:content|time)\\s*>\\s*)(?:```[^\\r\\n]*\\r?\\n)?(?:call\\s*:\\s*default_api\\s*:\\s*antitrunc_reply\\b|<\\|(?:im_end|eot_id|endoftext)\\|>|\\[DONE\\])[^]*$/gi",
+                "replaceString": "$1",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": false,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-view-thought-blocks",
+                "scriptName": "新中市｜显示与上下文·思考与草稿块",
+                "findRegex": "/<(think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\b[^>]*>[\\s\\S]*?(?:<\\/\\1\\s*>|$)/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-view-thought-fences",
+                "scriptName": "新中市｜显示与上下文·思考与草稿代码块",
+                "findRegex": "/```(?:thinking|think|reasoning|analysis|cot|draft)\\b[^\\n]*\\r?\\n[\\s\\S]*?(?:```|$)/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-view-thought-heading",
+                "scriptName": "新中市｜显示与上下文·思考过程前缀",
+                "findRegex": "/^\\s*(?:思考过程|推理过程|内部分析|analysis|thinking|reasoning)\\s*[:：][\\s\\S]*?(?=<content\\b|$)/i",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-view-thought-closers",
+                "scriptName": "新中市｜显示与上下文·残留思考闭合标签",
+                "findRegex": "/<\\/(?:think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\s*>/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-view-transport-tail",
+                "scriptName": "新中市｜显示与上下文·异常工具协议尾缀",
+                "findRegex": "/(<\\/(?:content|time)\\s*>\\s*)(?:```[^\\r\\n]*\\r?\\n)?(?:call\\s*:\\s*default_api\\s*:\\s*antitrunc_reply\\b|<\\|(?:im_end|eot_id|endoftext)\\|>|\\[DONE\\])[^]*$/gi",
+                "replaceString": "$1",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-view-partial-tag",
+                "scriptName": "新中市｜显示与上下文·流式未完成标签",
+                "findRegex": "/<(?:[A-Za-z_/][^>\\r\\n]*)?$/g",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-native-reasoning",
+                "scriptName": "新中市｜隐藏原生思维链（显示与上下文）",
+                "findRegex": "/[\\s\\S]+/g",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    6
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": true,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-preset-content-wrapper-v01",
+                "scriptName": "新中市｜隐藏正文边界（仅显示）",
+                "findRegex": "/<\\/?content\\b[^>]*>/gi",
+                "replaceString": "",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "xzs-summary-display-1166",
+                "scriptName": "新中市｜思考摘要折叠显示",
+                "findRegex": "/<xzs_summary\\b[^>]*>([\\s\\S]*?)<\\/xzs_summary\\s*>/gi",
+                "replaceString": "<details class=\"xzs-thinking-summary\"><summary>思考摘要</summary>$1</details>",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            }
+        ]
     },
-    "regex_scripts": [
-      {
-        "id": "xzs-raw-thought-blocks",
-        "scriptName": "新中市｜生成清理·思考与草稿块",
-        "findRegex": "/<(think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\b[^>]*>[\\s\\S]*?(?:<\\/\\1\\s*>|$)/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": false,
-        "promptOnly": false,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-raw-thought-fences",
-        "scriptName": "新中市｜生成清理·思考与草稿代码块",
-        "findRegex": "/```(?:thinking|think|reasoning|analysis|cot|draft)\\b[^\\n]*\\r?\\n[\\s\\S]*?(?:```|$)/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": false,
-        "promptOnly": false,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-raw-thought-heading",
-        "scriptName": "新中市｜生成清理·思考过程前缀",
-        "findRegex": "/^\\s*(?:思考过程|推理过程|内部分析|analysis|thinking|reasoning)\\s*[:：][\\s\\S]*?(?=<content\\b|$)/i",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": false,
-        "promptOnly": false,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-raw-thought-closers",
-        "scriptName": "新中市｜生成清理·残留思考闭合标签",
-        "findRegex": "/<\\/(?:think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\s*>/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": false,
-        "promptOnly": false,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-raw-transport-tail",
-        "scriptName": "新中市｜生成清理·异常工具协议尾缀",
-        "findRegex": "/(<\\/(?:content|time)\\s*>\\s*)(?:```[^\\r\\n]*\\r?\\n)?(?:call\\s*:\\s*default_api\\s*:\\s*antitrunc_reply\\b|<\\|(?:im_end|eot_id|endoftext)\\|>|\\[DONE\\])[^]*$/gi",
-        "replaceString": "$1",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": false,
-        "promptOnly": false,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-view-thought-blocks",
-        "scriptName": "新中市｜显示与上下文·思考与草稿块",
-        "findRegex": "/<(think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\b[^>]*>[\\s\\S]*?(?:<\\/\\1\\s*>|$)/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-view-thought-fences",
-        "scriptName": "新中市｜显示与上下文·思考与草稿代码块",
-        "findRegex": "/```(?:thinking|think|reasoning|analysis|cot|draft)\\b[^\\n]*\\r?\\n[\\s\\S]*?(?:```|$)/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-view-thought-heading",
-        "scriptName": "新中市｜显示与上下文·思考过程前缀",
-        "findRegex": "/^\\s*(?:思考过程|推理过程|内部分析|analysis|thinking|reasoning)\\s*[:：][\\s\\S]*?(?=<content\\b|$)/i",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-view-thought-closers",
-        "scriptName": "新中市｜显示与上下文·残留思考闭合标签",
-        "findRegex": "/<\\/(?:think|thinking|reasoning|analysis|ECoT|cot|draft|draft_notes|acg_think|lore_search|combat_driver|story_driver|dice_calculation|parallel_line_drive)\\s*>/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-view-transport-tail",
-        "scriptName": "新中市｜显示与上下文·异常工具协议尾缀",
-        "findRegex": "/(<\\/(?:content|time)\\s*>\\s*)(?:```[^\\r\\n]*\\r?\\n)?(?:call\\s*:\\s*default_api\\s*:\\s*antitrunc_reply\\b|<\\|(?:im_end|eot_id|endoftext)\\|>|\\[DONE\\])[^]*$/gi",
-        "replaceString": "$1",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-view-partial-tag",
-        "scriptName": "新中市｜显示与上下文·流式未完成标签",
-        "findRegex": "/<(?:[A-Za-z_/][^>\\r\\n]*)?$/g",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-native-reasoning",
-        "scriptName": "新中市｜隐藏原生思维链（显示与上下文）",
-        "findRegex": "/[\\s\\S]+/g",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          6
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": true,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      },
-      {
-        "id": "xzs-preset-content-wrapper-v01",
-        "scriptName": "新中市｜隐藏正文边界（仅显示）",
-        "findRegex": "/<\\/?content\\b[^>]*>/gi",
-        "replaceString": "",
-        "trimStrings": [],
-        "placement": [
-          2
-        ],
-        "disabled": false,
-        "markdownOnly": true,
-        "promptOnly": false,
-        "runOnEdit": true,
-        "substituteRegex": 0,
-        "minDepth": null,
-        "maxDepth": null
-      }
-    ]
-  },
-  "media_inlining": true,
-  "tool_reasoning_mode": "disabled",
-  "verbosity": "auto"
+    "media_inlining": true,
+    "tool_reasoning_mode": "disabled",
+    "verbosity": "auto"
 }

@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.8-20261108000324",
+  "release": "2026.11.8-20261108191253",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "11.8累计发布：课堂音乐与临时代课修复、旧提示清理、按日期归档日志、专属预设及手机布局、30项同源规则挂载、更新器24预设安装更新与参数兼容；预设不自动选择。",
+  "notes": "累计修复首次时间、聊天分支与同场剧情衔接；补齐吹奏乐选拔与校园圈层、社团同好、伍六七人物身份；修正凌路能力边界、人物年龄并清理失效子目。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5834799,
-      "sha256": "60cd4463f8300307db4ae268d2845572de5e9a437966dec9152bb923a00dbc5b",
-      "path": "assets/60cd4463f8300307db4ae268d2845572de5e9a437966dec9152bb923a00dbc5b/shell.js",
+      "bytes": 5858676,
+      "sha256": "7755c54a5d11b4fa92fbc153a5e2cec8126aecfdf504c298ecbe4c51ff0c002a",
+      "path": "assets/7755c54a5d11b4fa92fbc153a5e2cec8126aecfdf504c298ecbe4c51ff0c002a/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "bbabf1c2",
+      "contentHash": "bfb38fbb",
       "compatibleHashes": [
-        "bbabf1c2"
+        "bfb38fbb"
       ]
     },
     "updater": {
@@ -44,13 +44,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 12308671,
-      "sha256": "b9538394153677675c1dbb674b91551bc6f7a903b1fd31a859ed0cb8de019eeb",
-      "path": "assets/b9538394153677675c1dbb674b91551bc6f7a903b1fd31a859ed0cb8de019eeb/worldbook.json",
+      "bytes": 12888384,
+      "sha256": "07f5ee0e1af6baf8e46c47bd4ecfb4e96df3e59f165abcf521e405b7e14d5426",
+      "path": "assets/07f5ee0e1af6baf8e46c47bd4ecfb4e96df3e59f165abcf521e405b7e14d5426/worldbook.json",
       "kind": "world",
-      "contentHash": "e01048ae",
+      "contentHash": "3988dbfa",
       "compatibleHashes": [
-        "e01048ae"
+        "3988dbfa"
       ]
     },
     "fields": {
@@ -169,10 +169,10 @@
       "apiId": "openai",
       "autoSelect": false,
       "label": "专属预设（不自动选择）",
-      "bytes": 58708,
-      "sha256": "911f2442302342e53512895dd7f09c73808be4a35df3697974175091f15edc07",
-      "contentHash": "327295f2",
-      "path": "assets/911f2442302342e53512895dd7f09c73808be4a35df3697974175091f15edc07/preset.json"
+      "bytes": 69857,
+      "sha256": "7485604161fe33417e7e1f3fad6ba3f11eba0bc9786bff3725385596d5aa07d1",
+      "contentHash": "fb1e174b",
+      "path": "assets/7485604161fe33417e7e1f3fad6ba3f11eba0bc9786bff3725385596d5aa07d1/preset.json"
     }
   }
 }

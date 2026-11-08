@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.8-20261108000324",
+  "build": "2026.11.8-20261108191253",
   "cardVersion": "2026.11.8",
-  "builtAt": "2026-11-07T16:03:24.972Z",
+  "builtAt": "2026-11-08T11:12:54.917Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "11.8累计发布：课堂音乐与临时代课修复、旧提示清理、按日期归档日志、专属预设及手机布局、30项同源规则挂载、更新器24预设安装更新与参数兼容；预设不自动选择。",
+  "notes": "累计修复首次时间、聊天分支与同场剧情衔接；补齐吹奏乐选拔与校园圈层、社团同好、伍六七人物身份；修正凌路能力边界、人物年龄并清理失效子目。",
   "cardFields": {
     "greetings": 105,
     "fp": "6a7c8d84",
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "37ad9dd8",
-      "bytes": 5834799
+      "hash": "78ab33a3",
+      "bytes": 5858676
     },
     "updater.js": {
       "hash": "be82f434",
@@ -46,8 +46,8 @@
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "0f3127ef",
-      "bytes": 12308671
+      "hash": "eb1ccf4d",
+      "bytes": 12888384
     },
     "cardfields.json": {
       "hash": "e7cc1add",
