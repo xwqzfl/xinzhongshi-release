@@ -1,4 +1,4 @@
-/*XZS_BUILD:2026.11.9-20261109212239*/
+/*XZS_BUILD:2026.11.10-20261110001000*/
 // 新中市通讯 · 悬浮球（酒馆助手全局脚本，验证版 1.0）
 // 运行宿主 = TH-script iframe，本脚本的 document 是宿主的，主页面 = window.parent
 (function () {
@@ -755,11 +755,11 @@ function hpContextRoute1102(data){
    map.forEach(function(e){
     if(String(e.world||'')!==w)return;
     var t=String(e.content||'');if(!/(?:^|\n)[ \t]*race[：:]/i.test(t))return;
-    var g=t.match(/(?:^|\n)[ \t]*gender[：:][ \t]*([^\n]+)/i),a=t.match(/(?:^|\n)[ \t]*age[：:][ \t]*([^\n]+)/i);if(!g||!a)return;
-    var nums=(a[1].match(/\d+(?:\.\d+)?/g)||[]).map(Number),female=/^(?:female\b|女|♀)/i.test(g[1].trim()),minor=nums.some(function(n){return n<18;}),hanAdult=/(?:十八|十九|[二三四五六七八九]十[一二三四五六七八九]?)\s*(?:岁|周岁)/.test(a[1]);
-    people.push({adultFemale:female&&(nums.length>0||hanAdult)&&!minor});
+    var g=t.match(/(?:^|\n)[ \t]*gender[：:][ \t]*([^\n]+)/i);if(!g)return;
+    var female=/^(?:female\b|女|♀)/i.test(g[1].trim());
+    people.push({female:female});
    });
-   var allowed=people.length===0||(people.length===1&&people[0].adultFemale);
+   var allowed=people.length===0||(people.length===1&&people[0].female);
    if(allowed)return;
    map.forEach(function(e,k){if(String(e.world||'')===w&&((e.uid===3810&&e.comment==='女性服装特写')||(e.uid===2311&&e.comment==='情趣服装·JK服')))map.delete(k);});
   });

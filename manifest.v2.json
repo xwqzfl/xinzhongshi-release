@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.9-20261109220500",
+  "release": "2026.11.10-20261110001000",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "清理预设场景分类、角色卡破限2、X站与服装闸门的年龄限制；恢复综合体公共场合性行为与反应概率条目；3810 启用。",
+  "notes": "删除女性服装特写闸门的年龄判断，保留女性与单人限制。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5879827,
-      "sha256": "22c56d3a3535c5ff1d1dcf6fc5b3b426b1adc231272def162ff881857c6cddbb",
-      "path": "assets/22c56d3a3535c5ff1d1dcf6fc5b3b426b1adc231272def162ff881857c6cddbb/shell.js",
+      "bytes": 5879515,
+      "sha256": "5dcd78cabbe9b439a648cad45f1e37ad1d963890f88c779120130f03f22d0364",
+      "path": "assets/5dcd78cabbe9b439a648cad45f1e37ad1d963890f88c779120130f03f22d0364/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "b79a4012",
+      "contentHash": "f14e5c2d",
       "compatibleHashes": [
-        "b79a4012"
+        "f14e5c2d"
       ]
     },
     "updater": {

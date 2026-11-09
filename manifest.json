@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.9-20261109220500",
+  "build": "2026.11.10-20261110001000",
   "cardVersion": "2026.11.9",
-  "builtAt": "2026-11-09T14:08:42.781Z",
+  "builtAt": "2026-11-09T16:12:17.170Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "清理预设场景分类、角色卡破限2、X站与服装闸门的年龄限制；恢复综合体公共场合性行为与反应概率条目；3810 启用。",
+  "notes": "删除女性服装特写闸门的年龄判断，保留女性与单人限制。",
   "cardFields": {
     "greetings": 1,
     "fp": "6a7c8d84",
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "1fd2e5c8",
-      "bytes": 5879827
+      "hash": "055b1165",
+      "bytes": 5879515
     },
     "updater.js": {
       "hash": "be82f434",
