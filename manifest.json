@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.10-20261110001000",
+  "build": "2026.11.10-20261110002000",
   "cardVersion": "2026.11.9",
-  "builtAt": "2026-11-09T16:12:17.170Z",
+  "builtAt": "2026-11-09T16:19:55.801Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "删除女性服装特写闸门的年龄判断，保留女性与单人限制。",
+  "notes": "按本地 23:57 世界书/预设与卡片闸门重新构建；世界书 2873 条，保留 16 启用、4194 不存在。",
   "cardFields": {
     "greetings": 1,
     "fp": "6a7c8d84",
@@ -46,8 +46,8 @@
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "553618be",
-      "bytes": 14134782
+      "hash": "2379d0c8",
+      "bytes": 14066620
     },
     "cardfields.json": {
       "hash": "0bb1c8e0",

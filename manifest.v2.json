@@ -1,9 +1,9 @@
 {
   "schema": 2,
-  "release": "2026.11.10-20261110001000",
+  "release": "2026.11.10-20261110002000",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "删除女性服装特写闸门的年龄判断，保留女性与单人限制。",
+  "notes": "按本地 23:57 世界书/预设与卡片闸门重新构建；世界书 2873 条，保留 16 启用、4194 不存在。",
   "components": {
     "shell": {
       "label": "手机主脚本",
@@ -47,13 +47,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 14134782,
-      "sha256": "22c1dc5892e466291f069fc04738905cdf50bea21207d438c2079a99bc363d44",
-      "path": "assets/22c1dc5892e466291f069fc04738905cdf50bea21207d438c2079a99bc363d44/worldbook.json",
+      "bytes": 14066620,
+      "sha256": "fb9e2231ac7f6f8fea3b51c529a94011f1f302b7a832ed3c194f4dc0046a4b9f",
+      "path": "assets/fb9e2231ac7f6f8fea3b51c529a94011f1f302b7a832ed3c194f4dc0046a4b9f/worldbook.json",
       "kind": "world",
-      "contentHash": "bced5f43",
+      "contentHash": "e0c91b7e",
       "compatibleHashes": [
-        "bced5f43"
+        "e0c91b7e"
       ]
     },
     "fields": {
@@ -181,10 +181,10 @@
       "apiId": "openai",
       "autoSelect": false,
       "label": "专属预设（不自动选择）",
-      "bytes": 83116,
-      "sha256": "f0a4c56411ebdee48ed31926c819532c702065401b0a88272584bd92c38584fc",
-      "contentHash": "534cd398",
-      "path": "assets/f0a4c56411ebdee48ed31926c819532c702065401b0a88272584bd92c38584fc/preset.json"
+      "bytes": 83053,
+      "sha256": "8da225e4efa9da6240f9580d0e8764621085d007ced5ced41f5baa743516b975",
+      "contentHash": "1e3ea023",
+      "path": "assets/8da225e4efa9da6240f9580d0e8764621085d007ced5ced41f5baa743516b975/preset.json"
     }
   }
 }
