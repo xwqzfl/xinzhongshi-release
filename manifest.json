@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.8-20261108223835",
-  "cardVersion": "2026.11.8",
-  "builtAt": "2026-11-08T14:38:36.544Z",
+  "build": "2026.11.9-20261109220500",
+  "cardVersion": "2026.11.9",
+  "builtAt": "2026-11-09T14:08:42.781Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市个人删减版（更新）",
   "worldbookNamePrefix": "新中市个人删减版",
@@ -10,9 +10,9 @@
   "songMark": "10",
   "jbMark": 5,
   "updateUpdater": true,
-  "notes": "预设规则核对改用世界书原标题/UID及原文引用，清理自拟概括；新增参考青果原文的防抢话开关，默认关闭，保留用户确认的六处正文修改。",
+  "notes": "清理预设场景分类、角色卡破限2、X站与服装闸门的年龄限制；恢复综合体公共场合性行为与反应概率条目；3810 启用。",
   "cardFields": {
-    "greetings": 105,
+    "greetings": 1,
     "fp": "6a7c8d84",
     "firstMesLen": 29988
   },
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "fbc30216",
-      "bytes": 5869342
+      "hash": "1fd2e5c8",
+      "bytes": 5879827
     },
     "updater.js": {
       "hash": "be82f434",
@@ -46,16 +46,16 @@
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "8ec5f6e5",
-      "bytes": 12888216
+      "hash": "553618be",
+      "bytes": 14134782
     },
     "cardfields.json": {
-      "hash": "e7cc1add",
-      "bytes": 847794
+      "hash": "0bb1c8e0",
+      "bytes": 847240
     },
     "jailbreaks.json": {
-      "hash": "a3547118",
-      "bytes": 72247
+      "hash": "a8be4628",
+      "bytes": 126519
     },
     "regexscript.json": {
       "hash": "fbd918a1",
