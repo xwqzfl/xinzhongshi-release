@@ -1,9 +1,9 @@
 {
   "schema": 2,
-  "release": "2026.11.11-20261111004000",
+  "release": "2026.11.11-20261111005333",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
-  "notes": "按本地 11.11 卡与世界书整合版构建；世界书 3632 条，来源 新中市整合版（更新）.json。",
+  "notes": "更新器第 27 版使用酒馆原生 API 保存并回读世界书，修复首次导入后误报失败和保存失败后误报成功。",
   "components": {
     "shell": {
       "label": "手机主脚本",
@@ -19,15 +19,15 @@
     },
     "updater": {
       "label": "更新器",
-      "bytes": 57015,
-      "sha256": "b68e9bde6edc7328ed493eef941582730aa0cc85a5e9f09c8094143f9b32cd9f",
-      "path": "assets/b68e9bde6edc7328ed493eef941582730aa0cc85a5e9f09c8094143f9b32cd9f/updater.js",
+      "bytes": 60345,
+      "sha256": "fa88c99b5ec62b85381227e067a15a1e43b9826ad8082d53b5ac0aca062bf0b3",
+      "path": "assets/fa88c99b5ec62b85381227e067a15a1e43b9826ad8082d53b5ac0aca062bf0b3/updater.js",
       "kind": "script",
       "name": "新中市更新器",
-      "contentHash": "e49bced1",
-      "mark": 26,
+      "contentHash": "a791383a",
+      "mark": 27,
       "compatibleHashes": [
-        "e49bced1"
+        "a791383a"
       ]
     },
     "song": {
