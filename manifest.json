@@ -1,12 +1,12 @@
 {
-  "build": "2026.11.11-20261111001800",
+  "build": "2026.11.11-20261111003000",
   "cardVersion": "2026.11.11",
-  "builtAt": "2026-11-10T16:21:16.464Z",
+  "builtAt": "2026-11-10T16:31:52.741Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
   "worldbookMark": "【系统】世界书版本",
-  "updaterMark": "24",
+  "updaterMark": "26",
   "songMark": "10",
   "jbMark": 6,
   "updateUpdater": true,
@@ -38,8 +38,8 @@
       "bytes": 5889395
     },
     "updater.js": {
-      "hash": "be82f434",
-      "bytes": 51856
+      "hash": "bc46a2c1",
+      "bytes": 57015
     },
     "songscript.js": {
       "hash": "b6c4ef42",

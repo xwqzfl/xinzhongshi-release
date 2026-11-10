@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "release": "2026.11.11-20261111001800",
+  "release": "2026.11.11-20261111003000",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
   "notes": "按本地 11.11 卡与世界书整合版构建；世界书 3632 条，来源 新中市整合版（更新）.json。",
@@ -19,15 +19,15 @@
     },
     "updater": {
       "label": "更新器",
-      "bytes": 51856,
-      "sha256": "241effe195bf1b6d31ef4b8d6eecbd1b3188f5ad7332bd77a303c8164d665438",
-      "path": "assets/241effe195bf1b6d31ef4b8d6eecbd1b3188f5ad7332bd77a303c8164d665438/updater.js",
+      "bytes": 57015,
+      "sha256": "b68e9bde6edc7328ed493eef941582730aa0cc85a5e9f09c8094143f9b32cd9f",
+      "path": "assets/b68e9bde6edc7328ed493eef941582730aa0cc85a5e9f09c8094143f9b32cd9f/updater.js",
       "kind": "script",
       "name": "新中市更新器",
-      "contentHash": "b5d7ab76",
-      "mark": 24,
+      "contentHash": "e49bced1",
+      "mark": 26,
       "compatibleHashes": [
-        "b5d7ab76"
+        "e49bced1"
       ]
     },
     "song": {

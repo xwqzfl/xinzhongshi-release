@@ -1,4 +1,4 @@
-/*XZS_UPDATER:24*/
+/*XZS_UPDATER:26*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -133,8 +133,9 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=24;
-  const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,readNotice:5000,readTimeout:25000,auto:8000};
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=26;
+  const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
+  const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
   try { while(host.parent&&host.parent!==host&&host.parent.document)host=host.parent; }catch(_){}
   const timer=host.setTimeout.bind(host),clear=host.clearTimeout.bind(host);
@@ -163,7 +164,7 @@ function xzsModel19() {
   ];
   function api(n,required=true){const f=host.TavernHelper?.[n]||window[n];if(typeof f==='function')return f.bind(host.TavernHelper||window);if(required)throw Error('酒馆助手缺少接口：'+n);return null;}
   function context(){try{return host.SillyTavern?.getContext?.()||{};}catch(_){return {};}}
-  function identity(){const c=context();return JSON.stringify([api('getCurrentCharacterName',false)?.()||c.name2||'',c.getCurrentChatId?.()||c.chatId||c.chat_id||'',c.chatMetadata?.world_info||'',c.groupId??c.group_id??'',c.characters?.[c.characterId]?.avatar||'']);}
+  function identity(){const c=context();return JSON.stringify([api('getCurrentCharacterName',false)?.()||c.name2||'',c.getCurrentChatId?.()||c.chatId||c.chat_id||'',c.groupId??c.group_id??'',c.characters?.[c.characterId]?.avatar||'']);}
   function binding(){const ctx=context();let chat=ctx.chatMetadata?.world_info; if(chat===undefined&&!ctx.chatMetadata)chat=api('getChatWorldbookName',false)?.('current');return {global:api('getGlobalWorldbookNames',false)?.()||[],char:api('getCharWorldbookNames',false)?.('current')||{},chat:chat||''};}
   function guard(s){if(identity()!==s.identity||M.stable(binding())!==s.binding)throw Error('角色、聊天或世界书绑定已改变。已停止继续写入，请回到原聊天检查。');}
   function mb(n){return (n/1048576).toFixed(2)+' MiB';}
@@ -283,6 +284,63 @@ function xzsModel19() {
   const fieldChoice=(c,d)=>({target:d.sha256,actual:M.hash(M.canonicalFields(c))});
   async function readWorld(name){try{return await waitRead('读取世界书',()=>api('getWorldbook')(name));}catch(e){const names=api('getWorldbookNames',false)?.();if(names&&!names.includes(name))return null;throw e;}}
   function chooseBook(m,b){const names=[b.char.primary,...(b.char.additional||[]),b.chat,...b.global].filter(Boolean);if(names.includes(m.worldbookName))return m.worldbookName;return names.find(n=>n.startsWith(m.worldbookNamePrefix))||m.worldbookName;}
+  function legacyBinding(b){return [b.char.primary,...(b.char.additional||[]),b.chat,...b.global].includes(OLD_WORLD);}
+  function renamedBinding(b){
+    const names=list=>[...new Set(list.map(name=>name===OLD_WORLD?NEW_WORLD:name))];
+    const primary=b.char.primary===OLD_WORLD?NEW_WORLD:b.char.primary;
+    const charChanged=b.char.primary===OLD_WORLD||(b.char.additional||[]).includes(OLD_WORLD);
+    const char=charChanged?{...b.char,primary,additional:names(b.char.additional||[]).filter(name=>name!==primary)}:b.char;
+    return {global:b.global.includes(OLD_WORLD)?names(b.global):b.global,char,chat:b.chat===OLD_WORLD?NEW_WORLD:b.chat};
+  }
+  function renameKey(s,release){return 'world-name:'+s.name+':'+release+':'+s.identity;}
+  async function writeBindingPart(s,key,next){
+    guard(s);
+    const expected={...binding(),[key]:next};
+    if(key==='global')await waitWrite('迁移全局世界书绑定',()=>api('rebindGlobalWorldbooks')(next));
+    if(key==='char')await waitWrite('迁移角色世界书绑定',()=>api('rebindCharWorldbooks')('current',next));
+    if(key==='chat')await waitWrite('迁移本聊天世界书绑定',()=>api('rebindChatWorldbook')('current',next));
+    const actual=binding();
+    if(identity()!==s.identity||M.stable(actual)!==M.stable(expected))throw Error('世界书绑定迁移回读不一致，请在原聊天重试');
+    s.binding=M.stable(actual);
+  }
+  async function migrateWorldName(s,m){
+    const b=binding();
+    if(m.worldbookName!==NEW_WORLD||!legacyBinding(b))return;
+    const world=await readWorld(NEW_WORLD);guard(s);
+    const descriptor=Object.values(m.components).find(d=>d.kind==='world');
+    if(!world||!descriptor||!matches(M.hash(M.world(world)),descriptor))throw Error('整合版世界书尚未通过回读，旧绑定保留');
+    const key=renameKey(s,m.release), previous=await storage(key);guard(s);
+    const next=renamedBinding(b), saved={parts:{...previous?.parts}};
+    for(const part of ['global','char','chat'])if(M.stable(b[part])!==M.stable(next[part])){
+      const method={global:'rebindGlobalWorldbooks',char:'rebindCharWorldbooks',chat:'rebindChatWorldbook'}[part];api(method);
+      saved.parts[part]={before:b[part],after:next[part]};
+    }
+    await storage(key,saved);
+    if(M.stable(await storage(key))!==M.stable(saved))throw Error('旧绑定备份回读失败，已停止迁移');
+    for(const [part,change] of Object.entries(saved.parts)){
+      guard(s);
+      if(M.stable(binding()[part])===M.stable(change.before))await writeBindingPart(s,part,change.after);
+    }
+  }
+  async function restoreWorldName(s,j){
+    const key=renameKey(s,j.release), saved=await storage(key);guard(s);
+    if(!saved?.parts)return;
+    for(const [part,change] of Object.entries(saved.parts).reverse()){
+      guard(s);
+      if(M.stable(binding()[part])===M.stable(change.after))await writeBindingPart(s,part,change.before);
+    }
+  }
+  function renamePresetLinks(preset){
+    if(!preset)return null;
+    const next=M.clone(preset);let changed=false;
+    const owned=['a96fd1d0-f40b-4222-a269-71c35b47a163','c6142ca1-05d9-4ec4-99cd-8d687ae8a192'];
+    for(const script of next.extensions?.tavern_helper?.scripts||[]){
+      if(!owned.includes(script.id)||!script.content?.includes(OLD_WORLD)||script.content.includes(NEW_WORLD))continue;
+      script.content=script.content.split(OLD_WORLD).join(NEW_WORLD);
+      new Function(script.content);changed=true;
+    }
+    return changed?next:null;
+  }
   async function waitWrite(label,fn){status('write',label);const t=timer(()=>status('uncertain',label+'\n保存耗时较长，结果尚未确认。请勿重复提交；可以保持页面等待，或重开后检查备份记录。'),CONFIG.writeNotice);try{return await fn();}finally{clear(t);}}
   async function waitRead(label,fn){
     let notice,limit;
@@ -300,17 +358,21 @@ function xzsModel19() {
     // first message, reload scripts and re-open the card during verification.
     return replace(name,next,{render:'none'});
   }
-  async function writeChecked(label,write,verify,s){
-    let last;for(let i=0;i<3;i++){
-      guard(s);let thrown=null;try{const result=await waitWrite(label+'（第'+(i+1)+'次）',write);if(result===false)thrown=Error(label+'返回失败');}catch(e){thrown=e;}
+  async function writeChecked(label,write,verify,s,opts){
+    const retries=opts?.retries||3,polls=opts?.polls||3,gap=opts?.gap||250,backoff=opts?.backoff||1500;
+    let last;for(let i=0;i<retries;i++){
+      guard(s);let thrown=null;try{const result=await waitWrite(retries>1?label+'（第'+(i+1)+'次）':label,write);if(result===false)thrown=Error(label+'返回失败');}catch(e){thrown=e;}
       guard(s);status('verify','正在回读确认：'+label);
       // A failed/unresolved read is not evidence of a failed write. Do not
       // automatically write a large card again unless a read proves mismatch.
-      for(let poll=0;poll<3;poll++){
+      for(let poll=0;poll<polls;poll++){
         const verified=await waitRead(label,verify);guard(s);if(verified)return;
-        if(poll<2)await new Promise(r=>timer(r,250*(poll+1)));
+        if(poll<polls-1){
+          status('verify','正在回读确认：'+label+'（'+(poll+1)+'/'+polls+'）\n保存尚未落盘，继续等待；不会重复写入。');
+          await new Promise(r=>timer(r,gap));
+        }
       }
-      last=thrown||last||Error(label+'回读不一致');if(i<2)await new Promise(r=>timer(r,1500*(i+1)));
+      last=thrown||last||Error(label+'回读不一致');if(i<retries-1)await new Promise(r=>timer(r,backoff*(i+1)));
     }throw last;
   }
   function validatePayload(d,t){
@@ -337,14 +399,16 @@ function xzsModel19() {
       if(!updater||!Number.isSafeInteger(updater.mark)||updater.mark<minimumMark)throw Error('此源更新器版本较旧，正在尝试其他更新源');
       const target=chooseBook(candidate,b),w=await readWorld(target);guard(s);
       const wbMark=(w||[]).find(e=>(e.name||e.comment)===WB_MARK)?.content||'';
-      const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
+      const oldWorld=target===NEW_WORLD&&legacyBinding(b)?await readWorld(OLD_WORLD):null;guard(s);
+      const oldMark=(oldWorld||[]).find(e=>(e.name||e.comment)===WB_MARK)?.content||'';
+      const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),M.number(oldMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
       if(M.number(candidate.release)<highest)throw Error('此源仍是旧构建，已阻止降级并尝试其他更新源');
       book=target;world=w;
     }));guard(s);
     if(Object.values(m.components).some(d=>d.kind==='fields')&&!M.fieldsReadable(c))throw Error('角色卡字段未完整读出，暂不判断开场白与描述需要更新。请等待卡片加载后重试');
     R.presetNotes=[];const presetsBefore={},presetBasesBefore={};
     for(const d of Object.values(m.components).filter(d=>d.kind==='preset')){presetsBefore[d.name]=await readPreset(d.name);presetBasesBefore[d.name]=await storage('preset-base:'+d.name);guard(s);}
-    let plan=Object.entries(m.components).filter(([key,d])=>d.kind==='world'?!world||!matches(M.hash(M.world(world)),d):d.kind==='preset'?!presetsBefore[d.name]||!(M.hash(presetsBefore[d.name])===d.contentHash||presetBasesBefore[d.name]?.target===d.contentHash):!installed(c,d));
+    let plan=Object.entries(m.components).filter(([key,d])=>d.kind==='world'?!world||!matches(M.hash(M.world(world)),d):d.kind==='preset'?!presetsBefore[d.name]||!(M.hash(presetsBefore[d.name])===d.contentHash||presetBasesBefore[d.name]?.target===d.contentHash||presetBasesBefore[d.name]?.renamedTarget===d.contentHash&&presetBasesBefore[d.name]?.renamedHash===M.hash(presetsBefore[d.name])):!installed(c,d));
     // Older manifests lack per-field hashes. Verify their payload before classifying a difference.
     const fieldEntry=plan.find(([k,d])=>d.kind==='fields');
     if(fieldEntry&&!fieldEntry[1].fieldHashes){const [k,d]=fieldEntry;R.total=d.bytes;R.loaded=0;const t=await download(d.path,d);validatePayload(d,t);d.fieldHashes=M.fieldHashes(JSON.parse(t));if(installed(c,d))plan=plan.filter(([key])=>key!==k);}
@@ -383,7 +447,7 @@ function xzsModel19() {
     const resumeMigration=old?.state==='complete'&&old.release===m.release&&plan.length===1&&plan[0][1].kind==='pack'&&
       old.plan?.some(x=>x.descriptor.sha256===plan[0][1].sha256)&&plan[0][1].items.some(i=>i.retired&&M.scripts(c).some(s=>s.name===i.name))&&
       plan[0][1].items.every(i=>{const hits=M.scripts(c).filter(s=>s.name===i.name);return (i.retired||hits.length>0)&&hits.every(s=>M.scriptHash(s.content)===i.contentHash)});
-    if(!plan.length){if(!keptFields&&old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}await storage('installed:'+name,{release:m.release});status('done',keptFields?'已按你的选择保留自定义卡片字段，其余组件已核实。可手动检查以重新选择。':'所有组件已经核实为最新版本：'+m.release);return;}
+    if(!plan.length){await migrateWorldName(s,m);if(!keptFields&&old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}await storage('installed:'+name,{release:m.release});status('done',keptFields?'已按你的选择保留自定义卡片字段，其余组件已核实。可手动检查以重新选择。':'所有组件已经核实为最新版本：'+m.release);return;}
     R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);R.loaded=0;
     const message='本次更新：\n'+plan.map(([k,d])=>d.label+(d.kind==='fields'?'（差异：'+M.fieldDiff(c,d.fieldHashes).map(k=>fieldLabels[k]).join('、')+'）':'')+' · '+mb(d.bytes)).join('\n')+(plan.some(([k,d])=>d.kind==='preset')?'\n专属预设仅安装/更新，不自动选择；原预设与连接保持当前选择。':'')+'\n总下载量：'+mb(R.total)+'\n将先保存备份，再逐项写入并验证。\n现在更新吗？';
     if(!resumeMigration&&!host.confirm(message)){status('cancelled','已取消更新，未写入。');return;}
@@ -395,14 +459,21 @@ function xzsModel19() {
     const presetWrites={};
     plan=plan.filter(([key,d])=>{
       if(d.kind!=='preset')return true;
-      const incoming=JSON.parse(files[key]),local=presetsBefore[d.name],base=presetBasesBefore[d.name]?.official,conflicts=[];
+      const incoming=JSON.parse(files[key]),local=presetsBefore[d.name],conflicts=[];
+      const base=presetBasesBefore[d.name]?.official||(local&&d.previousOfficialHash===M.hash(local)?local:undefined);
       const merged=local?mergePreset(base,local,incoming,'',conflicts):incoming;
-      if(conflicts.length){R.presetNotes.push('已保留同名预设的自改；需人工合并：'+conflicts.slice(0,8).join('、'));return false;}
+      if(conflicts.length){
+        const renamed=m.worldbookName===NEW_WORLD?renamePresetLinks(local):null;
+        R.presetNotes.push('已保留同名预设的自改；其余差异待人工合并：'+conflicts.slice(0,8).join('、'));
+        if(!renamed)return false;
+        presetWrites[d.name]={applied:renamed,renameOnly:true,target:d.contentHash};return true;
+      }
       presetWrites[d.name]={official:incoming,applied:merged,target:d.contentHash};return true;
     });
     if(!plan.length){status('cancelled',R.presetNotes.join('\n')||'已保留自定义字段，未写入。');return;}
     // Persist full before-images once. Quota failure aborts before any host mutation.
-    let j=resumeMigration||old&&old.state!=='complete'&&old.state!=='restored'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,beforePresets:M.clone(presetsBefore),beforePresetBases:M.clone(presetBasesBefore),previousBackupKey:old?.archivedKey||old?.previousBackupKey||null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
+    const resumeBookRename=old?.state==='complete'&&old.release===m.release&&old.book===book&&book===NEW_WORLD&&legacyBinding(b);
+    let j=resumeMigration||resumeBookRename||old&&old.state!=='complete'&&old.state!=='restored'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,beforePresets:M.clone(presetsBefore),beforePresetBases:M.clone(presetBasesBefore),previousBackupKey:old?.archivedKey||old?.previousBackupKey||null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
     if(j.book!==book)throw Error('恢复记录的世界书目标不一致');
     j.beforePresets=j.beforePresets||{};j.beforePresetBases=j.beforePresetBases||{};
     for(const [k,d]of plan)if(d.kind==='preset'&&!Object.hasOwn(j.beforePresets,d.name)){
@@ -421,16 +492,20 @@ function xzsModel19() {
     // The transaction now survives iframe replacement in the parent realm.
     const wd=plan.find(([k,d])=>d.kind==='world');
     if(wd){api('importRawWorldbook');const [k,d]=wd;j.state='world';await storage('journal:'+name,j);
-      await writeChecked('保存世界书',()=>api('importRawWorldbook')(book,files[k]),async()=>{const w=await readWorld(book);return !!w&&matches(M.hash(M.world(w)),d)},s);
-      if(![b.char.primary,...(b.char.additional||[]),b.chat,...b.global].includes(book)){guard(s);j.addedBinding=true;await storage('journal:'+name,j);await waitWrite('绑定世界书',()=>api('rebindGlobalWorldbooks')([...b.global,book]));const now=binding();if(!now.global.includes(book))throw Error('世界书已保存，但绑定未通过回读');s.binding=M.stable(now);}
+      // 世界书体积大，保存到磁盘需要时间：只写入一次，然后长轮询确认，
+      // 避免三次重写互相覆盖导致永远读不到稳定结果。
+      await writeChecked('保存世界书',()=>api('importRawWorldbook')(book,files[k]),async()=>{const w=await readWorld(book);return !!w&&matches(M.hash(M.world(w)),d)},s,{retries:1,polls:24,gap:2000});
+      if(!(book===NEW_WORLD&&legacyBinding(b))&&![b.char.primary,...(b.char.additional||[]),b.chat,...b.global].includes(book)){guard(s);j.addedBinding=true;await storage('journal:'+name,j);await waitWrite('绑定世界书',()=>api('rebindGlobalWorldbooks')([...b.global,book]));const now=binding();if(!now.global.includes(book))throw Error('世界书已保存，但绑定未通过回读');s.binding=M.stable(now);}
     }
     for(const [presetName,write]of Object.entries(presetWrites)){
       j.state='presets';await storage('journal:'+name,j);
       await writeChecked('保存专属预设（不切换）',()=>savePreset(presetName,write.applied,presetsBefore[presetName]),async()=>M.hash(await readPreset(presetName))===M.hash(write.applied),s);
-      await storage('preset-base:'+presetName,{target:write.target,official:write.official,appliedHash:M.hash(write.applied)});
+      if(write.renameOnly)await storage('preset-base:'+presetName,{...presetBasesBefore[presetName],renamedTarget:write.target,renamedHash:M.hash(write.applied)});
+      else await storage('preset-base:'+presetName,{target:write.target,official:write.official,appliedHash:M.hash(write.applied)});
     }
     const cardPlan=plan.filter(([k,d])=>!['world','preset'].includes(d.kind));
     if(cardPlan.length){j.state='card';await storage('journal:'+name,j);await writeChecked('保存角色卡及更新器',()=>editCard(name,card=>{for(const [k,d]of cardPlan)M.apply(card,d,files[k]);return card;},s),async()=>{const read=await api('getCharacter')(name);return cardPlan.every(([k,d])=>installed(read,d))},s);}
+    await migrateWorldName(s,m);
     j.state='complete';await storage('journal:'+name,j);await storage('installed:'+name,{release:m.release});
     try{host.localStorage.setItem('xzs_notes',String(m.notes||''));}catch(_){}
     status('done','更新完成：'+m.release+'\n本次选定组件均已保存并回读验证。\n备份已保留，可刷新页面继续。'+(f&&!plan.some(([k,d])=>d.kind==='fields')?'\n已按你的选择保留自定义字段。':'')+(Object.keys(presetWrites).length?'\n专属预设已安装/更新，未自动选择；刷新后可手动选择。':'')+(R.presetNotes.length?'\n'+R.presetNotes.join('\n'):''));
@@ -470,6 +545,7 @@ function xzsModel19() {
       const card=await api('getCharacter')(j.name);
       return j.plan.filter(x=>!['world','preset'].includes(x.descriptor.kind)).every(x=>{const d=x.descriptor;if(d.kind==='fields')return M.fieldsReadable(card)&&M.hash(M.canonicalFields(card))===M.hash(M.canonicalFields(j.beforeCard));if(d.kind==='regex'){const names=d.items.map(i=>i.name),owned=c=>(M.ext(c).regex_scripts||[]).filter(r=>names.includes(M.rxName(r)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));}const names=M.ownedNames(d),owned=c=>M.scripts(c).filter(x=>names.includes(x.name)).sort((a,b)=>String(a.id).localeCompare(String(b.id)));return M.hash(owned(card))===M.hash(owned(j.beforeCard));});
     },s);
+    await restoreWorldName(s,j);
     // Only undo our added binding; never delete a book or revert unrelated global edits.
     if(j.addedBinding){guard(s);const now=binding();if(now.global.includes(j.book)){await waitWrite('恢复世界书绑定',()=>api('rebindGlobalWorldbooks')(now.global.filter(n=>n!==j.book)));if(binding().global.includes(j.book))throw Error('恢复世界书绑定未通过回读');s.binding=M.stable(binding());}}
     j.state='restored';await storage('journal:'+j.name,j);status('done','已恢复更新前的组件。新建的世界书文件保留，未删除聊天或存档。请刷新页面。');
