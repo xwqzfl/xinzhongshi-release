@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.10-20261110002000",
-  "worldbookName": "新中市个人删减版（更新）",
-  "worldbookNamePrefix": "新中市个人删减版",
-  "notes": "按本地 23:57 世界书/预设与卡片闸门重新构建；世界书 2873 条，保留 16 启用、4194 不存在。",
+  "release": "2026.11.11-20261111001800",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "notes": "按本地 11.11 卡与世界书整合版构建；世界书 3632 条，来源 新中市整合版（更新）.json。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5879515,
-      "sha256": "5dcd78cabbe9b439a648cad45f1e37ad1d963890f88c779120130f03f22d0364",
-      "path": "assets/5dcd78cabbe9b439a648cad45f1e37ad1d963890f88c779120130f03f22d0364/shell.js",
+      "bytes": 5889395,
+      "sha256": "7600ade36d3cea6ccfb568891e053f73c086ae90043846245abaddb81fe8fc2a",
+      "path": "assets/7600ade36d3cea6ccfb568891e053f73c086ae90043846245abaddb81fe8fc2a/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "f14e5c2d",
+      "contentHash": "1972e4e2",
       "compatibleHashes": [
-        "f14e5c2d"
+        "1972e4e2"
       ]
     },
     "updater": {
@@ -47,13 +47,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 14066620,
-      "sha256": "fb9e2231ac7f6f8fea3b51c529a94011f1f302b7a832ed3c194f4dc0046a4b9f",
-      "path": "assets/fb9e2231ac7f6f8fea3b51c529a94011f1f302b7a832ed3c194f4dc0046a4b9f/worldbook.json",
+      "bytes": 17879877,
+      "sha256": "1559c3ace97bec6851e3f65fcfd713a4e10edc81d5ba4969bb6f013db3e1f3fa",
+      "path": "assets/1559c3ace97bec6851e3f65fcfd713a4e10edc81d5ba4969bb6f013db3e1f3fa/worldbook.json",
       "kind": "world",
-      "contentHash": "e0c91b7e",
+      "contentHash": "e1c1a605",
       "compatibleHashes": [
-        "e0c91b7e"
+        "e1c1a605"
       ]
     },
     "fields": {
@@ -76,14 +76,14 @@
     },
     "managed": {
       "label": "托管脚本",
-      "bytes": 126519,
-      "sha256": "e3f6c46f84f63bb07267c88dc284d797fec14db2e7ebeb372352e13130be71ef",
-      "path": "assets/e3f6c46f84f63bb07267c88dc284d797fec14db2e7ebeb372352e13130be71ef/jailbreaks.json",
+      "bytes": 133207,
+      "sha256": "5f40b17f5268b9117f2e2c19f2dcc6774dc41fa2ec9e91b09c9a6d73ee973e50",
+      "path": "assets/5f40b17f5268b9117f2e2c19f2dcc6774dc41fa2ec9e91b09c9a6d73ee973e50/jailbreaks.json",
       "kind": "pack",
       "items": [
         {
           "name": "破限1·身份重置",
-          "contentHash": "ab1f4d88",
+          "contentHash": "d215a9e4",
           "replaces": [
             "加强破限A",
             "加强破限B",
@@ -96,20 +96,24 @@
         },
         {
           "name": "破限2·边界申明",
-          "contentHash": "6b9e7969"
+          "contentHash": "57670d51"
         },
         {
           "name": "破限3·反自审",
-          "contentHash": "f5362d98"
+          "contentHash": "dc9ddbd2"
         },
         {
           "name": "破限4·硬派论证",
-          "contentHash": "553501e6"
+          "contentHash": "cd2c78e6"
         },
         {
           "name": "抗截断A",
           "contentHash": "54eab7c1",
           "retired": true
+        },
+        {
+          "name": "破限5·执笔人",
+          "contentHash": "13aa0d50"
         },
         {
           "name": "抗截断-01",
@@ -119,9 +123,9 @@
           ]
         }
       ],
-      "contentHash": "c902cbf8",
+      "contentHash": "0e75071a",
       "compatibleHashes": [
-        "c902cbf8"
+        "0e75071a"
       ]
     },
     "regex": {
@@ -181,10 +185,10 @@
       "apiId": "openai",
       "autoSelect": false,
       "label": "专属预设（不自动选择）",
-      "bytes": 83053,
-      "sha256": "8da225e4efa9da6240f9580d0e8764621085d007ced5ced41f5baa743516b975",
-      "contentHash": "1e3ea023",
-      "path": "assets/8da225e4efa9da6240f9580d0e8764621085d007ced5ced41f5baa743516b975/preset.json"
+      "bytes": 101975,
+      "sha256": "8daf38fe2899299bcfe4079b4d1841dbd72079c2a248cc40eb0702421866dc01",
+      "contentHash": "5c88446e",
+      "path": "assets/8daf38fe2899299bcfe4079b4d1841dbd72079c2a248cc40eb0702421866dc01/preset.json"
     }
   }
 }

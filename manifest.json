@@ -1,16 +1,16 @@
 {
-  "build": "2026.11.10-20261110002000",
-  "cardVersion": "2026.11.9",
-  "builtAt": "2026-11-09T16:19:55.801Z",
+  "build": "2026.11.11-20261111001800",
+  "cardVersion": "2026.11.11",
+  "builtAt": "2026-11-10T16:21:16.464Z",
   "appScript": "新中市通讯 · 验证版 1.0",
-  "worldbookName": "新中市个人删减版（更新）",
-  "worldbookNamePrefix": "新中市个人删减版",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
   "worldbookMark": "【系统】世界书版本",
   "updaterMark": "24",
   "songMark": "10",
-  "jbMark": 5,
+  "jbMark": 6,
   "updateUpdater": true,
-  "notes": "按本地 23:57 世界书/预设与卡片闸门重新构建；世界书 2873 条，保留 16 启用、4194 不存在。",
+  "notes": "按本地 11.11 卡与世界书整合版构建；世界书 3632 条，来源 新中市整合版（更新）.json。",
   "cardFields": {
     "greetings": 1,
     "fp": "6a7c8d84",
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "055b1165",
-      "bytes": 5879515
+      "hash": "f7de5938",
+      "bytes": 5889395
     },
     "updater.js": {
       "hash": "be82f434",
@@ -46,16 +46,16 @@
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "2379d0c8",
-      "bytes": 14066620
+      "hash": "a86ad360",
+      "bytes": 17879877
     },
     "cardfields.json": {
       "hash": "0bb1c8e0",
       "bytes": 847240
     },
     "jailbreaks.json": {
-      "hash": "a8be4628",
-      "bytes": 126519
+      "hash": "50bbc6b6",
+      "bytes": 133207
     },
     "regexscript.json": {
       "hash": "fbd918a1",
