@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.11-20261111003000",
+  "build": "2026.11.11-20261111004000",
   "cardVersion": "2026.11.11",
-  "builtAt": "2026-11-10T16:31:52.741Z",
+  "builtAt": "2026-11-10T16:33:40.381Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "f7de5938",
-      "bytes": 5889395
+      "hash": "cf7ee428",
+      "bytes": 5889586
     },
     "updater.js": {
       "hash": "bc46a2c1",

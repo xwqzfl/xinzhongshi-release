@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.11-20261111003000",
+  "release": "2026.11.11-20261111004000",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
   "notes": "按本地 11.11 卡与世界书整合版构建；世界书 3632 条，来源 新中市整合版（更新）.json。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5889395,
-      "sha256": "7600ade36d3cea6ccfb568891e053f73c086ae90043846245abaddb81fe8fc2a",
-      "path": "assets/7600ade36d3cea6ccfb568891e053f73c086ae90043846245abaddb81fe8fc2a/shell.js",
+      "bytes": 5889586,
+      "sha256": "dbe8c70e7a39dedc2da1effceaed3a34294b91c1fc10c565fef06a8226e8dfec",
+      "path": "assets/dbe8c70e7a39dedc2da1effceaed3a34294b91c1fc10c565fef06a8226e8dfec/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "1972e4e2",
+      "contentHash": "a6cec432",
       "compatibleHashes": [
-        "1972e4e2"
+        "a6cec432"
       ]
     },
     "updater": {
