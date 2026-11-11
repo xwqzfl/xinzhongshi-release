@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.11-20261111220135",
+  "release": "2026.11.11-20261112000433",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
-  "notes": "修复旧版更新器无法升级：统一清单、手机脚本与世界书构建标记，修正开场白计数和卡字段版本，并加入发布兼容性检查。\n抗截断-01 v1.3.0：补全工具正文、原生系统指令和明确截断信号的兼容，修复嵌套与半截思考标签的续写边界。新增默认关闭的 Gemini 防路由实验开关，仅为本次请求添加短随机标记，不增加重试；可能降低缓存命中率，内部路由效果未经验证。\n修复回复前出现执笔人等级标记：仅删除破限5·执笔人中要求生成该记录的提示段，保留脚本其余内容和现有设置。\n本轮：世界书新增 5 名角色子目与 4 条学生会机制条目，妄想学生会改为校方认可的正式组织；专属预设新增破限三项开关（叙事外壳／示例锚定／输入扰动）并补故事引擎档。",
+  "notes": "完善拒绝路由：不拒绝正常接续，首次拒绝不启动，已开始片段拒绝后不重投；补齐“不想继续”及拒绝后另问一句的收尾；五名妄想学生会成员按设定图校订发色、瞳色、制服与体型描述，角色子目格式统一。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5890500,
-      "sha256": "a964da4431672468634d04daf37f5a1eb3c9d3daccc10578a8a9dac4bcb4a801",
-      "path": "assets/a964da4431672468634d04daf37f5a1eb3c9d3daccc10578a8a9dac4bcb4a801/shell.js",
+      "bytes": 5897824,
+      "sha256": "27ffb2b757ad41dc59755f49ee35546d1629ced398a6f455ec51e23a7130a629",
+      "path": "assets/27ffb2b757ad41dc59755f49ee35546d1629ced398a6f455ec51e23a7130a629/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "73c5c157",
+      "contentHash": "bcda81cd",
       "compatibleHashes": [
-        "73c5c157"
+        "bcda81cd"
       ]
     },
     "updater": {
@@ -47,31 +47,31 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 17919888,
-      "sha256": "7745f793bebf0923fc46b4a9bb61a7a0983c52592edb75ce69e3a017c48eded1",
-      "path": "assets/7745f793bebf0923fc46b4a9bb61a7a0983c52592edb75ce69e3a017c48eded1/worldbook.json",
+      "bytes": 17945830,
+      "sha256": "49c65442ccb62ce2c8d1d76ad9e1c31e1e009b5e8318068d8410b5a7321385b3",
+      "path": "assets/49c65442ccb62ce2c8d1d76ad9e1c31e1e009b5e8318068d8410b5a7321385b3/worldbook.json",
       "kind": "world",
-      "contentHash": "f9a69ffa",
+      "contentHash": "805b158d",
       "compatibleHashes": [
-        "f9a69ffa"
+        "805b158d"
       ]
     },
     "fields": {
       "label": "开场白与描述",
-      "bytes": 847796,
-      "sha256": "451015b7aa1f4d456fa2d6310442838d72924027300c986ab46f2e118f09aa2a",
-      "path": "assets/451015b7aa1f4d456fa2d6310442838d72924027300c986ab46f2e118f09aa2a/cardfields.json",
+      "bytes": 848281,
+      "sha256": "8c5904819346f0a971ba4753074b6aa2a3fecb439767f421e7d06567ec3f9e55",
+      "path": "assets/8c5904819346f0a971ba4753074b6aa2a3fecb439767f421e7d06567ec3f9e55/cardfields.json",
       "kind": "fields",
-      "contentHash": "e023f0ac",
+      "contentHash": "92bc8451",
       "fieldHashes": {
         "version": "6156cdef",
-        "first_messages": "1f3e98d6",
+        "first_messages": "2306172b",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
         "description": "ffcaaa85"
       },
       "compatibleHashes": [
-        "e023f0ac"
+        "92bc8451"
       ]
     },
     "managed": {
@@ -187,7 +187,7 @@
       "label": "专属预设（不自动选择）",
       "bytes": 109185,
       "sha256": "2849bba9cb8331a6e0c0f0a484092000df44c1a6ff141d2d331466ec4577f3f6",
-      "contentHash": "5c88446e",
+      "contentHash": "cf79da6c",
       "path": "assets/2849bba9cb8331a6e0c0f0a484092000df44c1a6ff141d2d331466ec4577f3f6/preset.json"
     }
   }

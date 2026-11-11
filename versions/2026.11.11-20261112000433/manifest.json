@@ -1,0 +1,65 @@
+{
+  "build": "2026.11.11-20261112000433",
+  "cardVersion": "2026.11.11",
+  "builtAt": "2026-11-11T16:56:11.110Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "27",
+  "songMark": "10",
+  "jbMark": 6,
+  "updateUpdater": true,
+  "notes": "完善拒绝路由：不拒绝正常接续，首次拒绝不启动，已开始片段拒绝后不重投；补齐“不想继续”及拒绝后另问一句的收尾；五名妄想学生会成员按设定图校订发色、瞳色、制服与体型描述，角色子目格式统一。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "b67fc910",
+    "firstMesLen": 30471
+  },
+  "regexFields": {
+    "count": 9,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤",
+      "正文·抗截断尾部残片过滤"
+    ],
+    "fp": "84661698"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "12fa4c45",
+      "bytes": 5897824
+    },
+    "updater.js": {
+      "hash": "f99b7390",
+      "bytes": 60345
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "worldbook.json": {
+      "hash": "941a4531",
+      "bytes": 17945830
+    },
+    "cardfields.json": {
+      "hash": "250ca091",
+      "bytes": 848281
+    },
+    "jailbreaks.json": {
+      "hash": "ed361317",
+      "bytes": 141756
+    },
+    "regexscript.json": {
+      "hash": "fbd918a1",
+      "bytes": 103622
+    }
+  }
+}
