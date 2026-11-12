@@ -1,33 +1,33 @@
 {
   "schema": 2,
-  "release": "2026.11.11-20261112095310",
+  "release": "2026.11.13-20261113001342",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
-  "notes": "补齐水之江梅的角色档案、妄想学生会书记编制、高一B名册与对应关系；加入与霞之丘诗羽的文学前后辈往来、和津田隆利同为常识人的亲密友谊，以及萩村铃对驹絽的亲近照顾；校内联系改为自然行文。",
+  "notes": "更新器29：按官方包完整替换受管理组件，取消玩家自改合并和跳过；角色卡与专属预设以服务器保存及回读为准，统一卡片和首楼版本，全部组件核实后才报完成；无变化时安静检查，优先国内可达备用源。\n清理376条已退役的旧事件迁移记录，完整条目与编号对照归档到项目；保留现有剧情、主线、场景、来源编号和分支进度机制。\n新增FX主角团四人及福贺家父母：久留美20岁大二、四人均成年；梢获救后在听心打工还债；六人形象按用户最新指示采用动画及商业漫画版，依据官方立绘、剧照和漫画画面核对。同步已获批准的大学名册、听心店员及工作关系。\n按用户2026-11-12指定区分芽吹年利109%与影视转介月息15%，以听心条目统一店方知情范围，安子22岁、梢39岁对齐关联资料，并补全大二名册日常问法。\n修正盘友会六类问题：移除九条水菜的圈内身份，补齐13名成员与星野千鹤外围关联的主档对应，包含梢带入的由比滨优子、宇崎月、古见秀子；区分资金路径、放开后续分支、清理编辑残留并修复漏检和串场。\n修正萌智子、李健与亩苟影视的分工、私人合作与公司边界、成年后合作时间线、历史本金与现金周转衔接及有效分支；拆出行业常识和私下合作两个必要子目，修复小金库、演员表、校园片场和普通写真的误触发。\n为容易包含在其他人物全名中的简称增加定向消歧；保留原简称、群体key与已知亲属入口，补齐受影响人物的已设全名入口，并对齐三位乃爱的语境检索。只改70个人物条目的key。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5898270,
-      "sha256": "abe913997887ec96609a5e0daf9d4f8753a2af701ff5c5f07ca94b699c915b9a",
-      "path": "assets/abe913997887ec96609a5e0daf9d4f8753a2af701ff5c5f07ca94b699c915b9a/shell.js",
+      "bytes": 5900080,
+      "sha256": "23d0dd46a0efd8ca33ae81aeb98f1096063c138663254c320773de465b2bc579",
+      "path": "assets/23d0dd46a0efd8ca33ae81aeb98f1096063c138663254c320773de465b2bc579/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "391b1d80",
+      "contentHash": "b72e0d91",
       "compatibleHashes": [
-        "391b1d80"
+        "b72e0d91"
       ]
     },
     "updater": {
       "label": "更新器",
-      "bytes": 63255,
-      "sha256": "a4ed7b90a1c0ff0caed7a37464fe979fec538dd204f5df66f63845aa6eb250f8",
-      "path": "assets/a4ed7b90a1c0ff0caed7a37464fe979fec538dd204f5df66f63845aa6eb250f8/updater.js",
+      "bytes": 64824,
+      "sha256": "46965a6fad7f7981e6bd251dc93884946e3f32225bf318b4deff8f7bca51535a",
+      "path": "assets/46965a6fad7f7981e6bd251dc93884946e3f32225bf318b4deff8f7bca51535a/updater.js",
       "kind": "script",
       "name": "新中市更新器",
-      "contentHash": "2f9e440c",
-      "mark": 28,
+      "contentHash": "7af7a8a3",
+      "mark": 29,
       "compatibleHashes": [
-        "2f9e440c"
+        "7af7a8a3"
       ]
     },
     "song": {
@@ -41,44 +41,44 @@
         }
       ],
       "contentHash": "9a3b3943",
-      "bytes": 236,
-      "sha256": "ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1",
-      "path": "assets/ca5659594777d23e203bd8ae45d913d903e40f8b24146355e1505caec470baf1/songscript.js"
+      "bytes": 287,
+      "sha256": "f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414",
+      "path": "assets/f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414/songscript.js"
     },
     "world": {
       "label": "世界书",
-      "bytes": 17954930,
-      "sha256": "6a270cebaea296a9d668ae4f1e0a27c66104c4211f0b98747e3817dd436208c3",
-      "path": "assets/6a270cebaea296a9d668ae4f1e0a27c66104c4211f0b98747e3817dd436208c3/worldbook.json",
+      "bytes": 18497919,
+      "sha256": "cc6906d500c3f59811d89c4e06dbe158598ed84448c85ed751635b2b16aedbd1",
+      "path": "assets/cc6906d500c3f59811d89c4e06dbe158598ed84448c85ed751635b2b16aedbd1/worldbook.json",
       "kind": "world",
-      "contentHash": "f597fb58",
+      "contentHash": "88aed460",
       "compatibleHashes": [
-        "f597fb58"
+        "88aed460"
       ]
     },
     "fields": {
       "label": "开场白与描述",
-      "bytes": 848281,
-      "sha256": "8c5904819346f0a971ba4753074b6aa2a3fecb439767f421e7d06567ec3f9e55",
-      "path": "assets/8c5904819346f0a971ba4753074b6aa2a3fecb439767f421e7d06567ec3f9e55/cardfields.json",
+      "bytes": 878547,
+      "sha256": "31bb80096a9117f6c6e238e9c905b741e66ad102bf69e35e40f9ab558f82c26b",
+      "path": "assets/31bb80096a9117f6c6e238e9c905b741e66ad102bf69e35e40f9ab558f82c26b/cardfields.json",
       "kind": "fields",
-      "contentHash": "92bc8451",
+      "contentHash": "1917d2b5",
       "fieldHashes": {
-        "version": "6156cdef",
-        "first_messages": "2306172b",
+        "version": "715b644d",
+        "first_messages": "6dd430f1",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
         "description": "ffcaaa85"
       },
       "compatibleHashes": [
-        "92bc8451"
+        "1917d2b5"
       ]
     },
     "managed": {
       "label": "托管脚本",
-      "bytes": 141756,
-      "sha256": "3f4c3683b822b997bc480ea85b352a2966feff55a346b413ed782c82c7332570",
-      "path": "assets/3f4c3683b822b997bc480ea85b352a2966feff55a346b413ed782c82c7332570/jailbreaks.json",
+      "bytes": 141620,
+      "sha256": "bbbb9d18e48efb22d3c9f7ebbe21959717cc15caee38c119b68de2fbd7c78bfc",
+      "path": "assets/bbbb9d18e48efb22d3c9f7ebbe21959717cc15caee38c119b68de2fbd7c78bfc/jailbreaks.json",
       "kind": "pack",
       "items": [
         {
@@ -107,11 +107,6 @@
           "contentHash": "cd2c78e6"
         },
         {
-          "name": "抗截断A",
-          "retired": true,
-          "contentHash": "54eab7c1"
-        },
-        {
           "name": "破限5·执笔人",
           "contentHash": "484837ca"
         },
@@ -121,18 +116,23 @@
           "replaces": [
             "抗截断A"
           ]
+        },
+        {
+          "name": "抗截断A",
+          "retired": true,
+          "contentHash": "594c913b"
         }
       ],
-      "contentHash": "71448713",
+      "contentHash": "b84cbe4f",
       "compatibleHashes": [
-        "71448713"
+        "b84cbe4f"
       ]
     },
     "regex": {
       "label": "官方正则",
-      "bytes": 103622,
-      "sha256": "4c60f157e3da1f408ff25603d77b1cfe1ef83976d303feb74d10d081541b6229",
-      "path": "assets/4c60f157e3da1f408ff25603d77b1cfe1ef83976d303feb74d10d081541b6229/regexscript.json",
+      "bytes": 103847,
+      "sha256": "9aaf4654580d163401f721ee825ede92e57127df95eade825c4341dacb29bcfb",
+      "path": "assets/9aaf4654580d163401f721ee825ede92e57127df95eade825c4341dacb29bcfb/regexscript.json",
       "kind": "regex",
       "items": [
         {
@@ -172,9 +172,9 @@
           "contentHash": "b1ab9411"
         }
       ],
-      "contentHash": "eba51733",
+      "contentHash": "01292d62",
       "compatibleHashes": [
-        "eba51733"
+        "01292d62"
       ]
     }
   },
