@@ -1,0 +1,65 @@
+{
+  "build": "2026.11.11-20261112083237",
+  "cardVersion": "2026.11.11",
+  "builtAt": "2026-11-12T00:36:54.935Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "28",
+  "songMark": "10",
+  "jbMark": 6,
+  "updateUpdater": true,
+  "notes": "平冢敏深新增“平冢”触发词；修复世界书保存重试、保存后误报未完成、跨版本失败记录阻塞及世界书缺失时的备份恢复。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "b67fc910",
+    "firstMesLen": 30471
+  },
+  "regexFields": {
+    "count": 9,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤",
+      "正文·抗截断尾部残片过滤"
+    ],
+    "fp": "84661698"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "96253188",
+      "bytes": 5897994
+    },
+    "updater.js": {
+      "hash": "fc251572",
+      "bytes": 63255
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "worldbook.json": {
+      "hash": "0ba49d7b",
+      "bytes": 17945848
+    },
+    "cardfields.json": {
+      "hash": "250ca091",
+      "bytes": 848281
+    },
+    "jailbreaks.json": {
+      "hash": "ed361317",
+      "bytes": 141756
+    },
+    "regexscript.json": {
+      "hash": "fbd918a1",
+      "bytes": 103622
+    }
+  }
+}

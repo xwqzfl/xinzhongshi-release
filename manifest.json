@@ -1,16 +1,16 @@
 {
-  "build": "2026.11.11-20261112000433",
+  "build": "2026.11.11-20261112083237",
   "cardVersion": "2026.11.11",
-  "builtAt": "2026-11-11T16:56:11.110Z",
+  "builtAt": "2026-11-12T00:36:54.935Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
   "worldbookMark": "【系统】世界书版本",
-  "updaterMark": "27",
+  "updaterMark": "28",
   "songMark": "10",
   "jbMark": 6,
   "updateUpdater": true,
-  "notes": "完善拒绝路由：不拒绝正常接续，首次拒绝不启动，已开始片段拒绝后不重投；补齐“不想继续”及拒绝后另问一句的收尾；五名妄想学生会成员按设定图校订发色、瞳色、制服与体型描述，角色子目格式统一。",
+  "notes": "平冢敏深新增“平冢”触发词；修复世界书保存重试、保存后误报未完成、跨版本失败记录阻塞及世界书缺失时的备份恢复。",
   "cardFields": {
     "greetings": 105,
     "fp": "b67fc910",
@@ -34,20 +34,20 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "12fa4c45",
-      "bytes": 5897824
+      "hash": "96253188",
+      "bytes": 5897994
     },
     "updater.js": {
-      "hash": "f99b7390",
-      "bytes": 60345
+      "hash": "fc251572",
+      "bytes": 63255
     },
     "songscript.js": {
       "hash": "b6c4ef42",
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "941a4531",
-      "bytes": 17945830
+      "hash": "0ba49d7b",
+      "bytes": 17945848
     },
     "cardfields.json": {
       "hash": "250ca091",

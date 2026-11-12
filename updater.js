@@ -1,4 +1,4 @@
-/*XZS_UPDATER:27*/
+/*XZS_UPDATER:28*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -133,7 +133,7 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=27;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=28;
   const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
   const CONFIG={connect:20000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
@@ -285,7 +285,7 @@ function xzsModel19() {
   async function worldRequest(label,endpoint,body){
     const headers=context().getRequestHeaders?.();if(!headers)throw Error(label+'需要酒馆原生请求接口');
     const response=await host.fetch(endpoint,{method:'POST',headers,body:JSON.stringify(body),cache:'no-store'});
-    if(!response.ok)throw Error(label+'失败（HTTP '+response.status+'）');
+    if(!response.ok){const error=Error(label+'失败（HTTP '+response.status+'）');error.status=response.status;throw error;}
     return response.json();
   }
   const worldEntries=world=>Object.values(world.entries);
@@ -299,28 +299,50 @@ function xzsModel19() {
     if(!Array.isArray(world_names))throw Error('原生世界书列表格式无效');
     return world_names.includes(name)?world:null;
   });}
-  async function ensureWorldListed(name,s){
+  async function ensureWorldListed(name,s,module){
     const ctx=context(),names=ctx.getWorldInfoNames||api('getWorldbookNames');
     if(!names().includes(name)){
-      if(!ctx.updateWorldInfoList)throw Error('酒馆缺少刷新世界书列表的接口');
-      await ctx.updateWorldInfoList();guard(s);
+      const refresh=ctx.updateWorldInfoList||module?.updateWorldInfoList;
+      if(!refresh)throw Error('世界书已保存，但酒馆缺少刷新世界书列表的接口；请整页刷新后重试检查');
+      await refresh();guard(s);
       if(!names().includes(name))throw Error('世界书已保存，但列表刷新失败，请刷新页面后重试');
     }
   }
   async function refreshWorldView(name,world,s){
-    const {worldInfoCache}=await import('/scripts/world-info.js');guard(s);
-    worldInfoCache.set(name,world);
-    await ensureWorldListed(name,s);guard(s);
-    const ctx=context();ctx.reloadWorldInfoEditor?.(name);
-    if(ctx.eventTypes?.WORLDINFO_UPDATED)await ctx.eventSource?.emit(ctx.eventTypes.WORLDINFO_UPDATED,name,world);
+    let module;
+    try{module=await import('/scripts/world-info.js');}catch(_){R.refreshNotes.push('世界书已回读验证；请整页刷新以加载页面缓存。');}
+    guard(s);
+    if(module?.worldInfoCache?.set)module.worldInfoCache.set(name,world);
+    else if(module)R.refreshNotes.push('世界书已回读验证；当前酒馆需整页刷新才能更新缓存。');
+    await ensureWorldListed(name,s,module);guard(s);
+    const ctx=context();
+    // Extension/editor listeners are notifications, not evidence of persistence.
+    try{await ctx.reloadWorldInfoEditor?.(name);}catch(_){guard(s);R.refreshNotes.push('世界书编辑器刷新失败，请整页刷新；已保存的内容不受影响。');}
+    guard(s);
+    try{if(ctx.eventTypes?.WORLDINFO_UPDATED)await ctx.eventSource?.emit(ctx.eventTypes.WORLDINFO_UPDATED,name,world);}
+    catch(_){guard(s);R.refreshNotes.push('其他扩展的世界书通知失败，请整页刷新；已保存的内容不受影响。');}
     guard(s);
   }
+  async function importWorld(label,name,data){
+    const headers=context().getRequestHeaders?.();if(!headers)throw Error(label+'需要酒馆原生请求接口');
+    const uploadHeaders={...headers};for(const key of Object.keys(uploadHeaders))if(key.toLowerCase()==='content-type')delete uploadHeaders[key];
+    // Extended filename keeps Chinese book names intact in Multer/Busboy.
+    const boundary='xzs-world-'+Date.now().toString(36);uploadHeaders['Content-Type']='multipart/form-data; boundary='+boundary;
+    const body=new host.Blob(['--'+boundary+'\r\nContent-Disposition: form-data; name="avatar"; filename="world.json"; filename*=UTF-8\'\''+encodeURIComponent(name+'.json')+'\r\nContent-Type: application/json\r\n\r\n',JSON.stringify(data),'\r\n--'+boundary+'--\r\n']);
+    const response=await host.fetch('/api/worldinfo/import',{method:'POST',headers:uploadHeaders,body});
+    if(!response.ok)throw Error(label+'文件导入失败（HTTP '+response.status+'）');
+    if((await response.json()).name!==name)throw Error(label+'文件导入名称不一致，已停止');
+  }
   async function writeWorld(label,name,data,s){
-    guard(s);
-    const result=await waitWrite(label,()=>worldRequest(label,'/api/worldinfo/edit',{name,data}));
-    guard(s);
-    if(result?.ok!==true)throw Error(label+'未得到服务器保存确认');
-    status('verify','正在回读确认：'+label);
+    let upload=false;
+    await writeChecked(label,async()=>{
+      if(upload)return importWorld(label,name,data);
+      try{await worldRequest(label,'/api/worldinfo/edit',{name,data});}
+      catch(error){if([413,404,405].includes(error.status))upload=true;throw error;}
+    },async()=>{
+      const persisted=await readWorld(name);guard(s);
+      return !!persisted&&M.stable(persisted)===M.stable(data);
+    },s);
     const persisted=await readWorld(name);guard(s);
     if(!persisted||M.stable(persisted)!==M.stable(data))throw Error(label+'回读不一致');
     await refreshWorldView(name,persisted,s);
@@ -436,6 +458,7 @@ function xzsModel19() {
     if(d.kind==='pack'||d.kind==='regex'){const p=JSON.parse(t);if(!Array.isArray(p.scripts)||p.scripts.length!==d.items.length)throw Error('脚本包条目不一致');const names=new Set();for(let i=0;i<p.scripts.length;i++){const v=p.scripts[i],n=d.kind==='pack'?v.name:M.rxName(v);const expected=d.items.find(x=>x.name===n);if(names.has(n)||!expected||(d.kind==='pack'?M.scriptHash(v.content):M.hash(M.rx(v)))!==expected.contentHash)throw Error('脚本包内容不一致');if(d.kind==='pack'&&(!!v.retired!==!!expected.retired||M.stable(v.replaces||[])!==M.stable(expected.replaces||[])))throw Error('脚本迁移规则不一致');names.add(n);if(d.kind==='pack')new Function(v.content);}}
   }
   async function execute(manual){
+    R.refreshNotes=[];
     status('check','正在读取角色卡');const ctx=context();if((ctx.groupId??ctx.group_id)!=null&&String(ctx.groupId??ctx.group_id)!=='')throw Error('群聊中不能确定要更新哪张角色卡，请从对应角色卡检查更新');
     const s={identity:identity(),binding:M.stable(binding())};const c=await waitRead('读取角色卡',()=>api('getCharacter')('current'));guard(s);
     if(!String(c.avatar||'').includes('新中市人间世'))throw Error('当前不是新中市角色卡');
@@ -496,11 +519,12 @@ function xzsModel19() {
         }
         confirmed=confirmed&&hit;
       }
-      guard(s);if(!confirmed)throw Error('上次更新的部分组件仍未保存完整；已保留原始备份并停止新版本写入，请恢复备份后再检查');
+      guard(s);if(!['prepared','world','presets','card','updater'].includes(old.state)||!old.beforeCard||!Array.isArray(old.plan)||!old.plan.length)throw Error('上次更新备份结构无效，已停止写入；请先导出备份检查');
       const archive='history:'+name+':'+old.release+':'+(old.at||'unknown');
-      const completed={...old,state:'complete',confirmedAgainstRelease:m.release};
+      const completed={...old,state:confirmed?'complete':'superseded',confirmedAgainstRelease:confirmed?m.release:undefined,supersededBy:confirmed?undefined:m.release};
       await storage(archive,completed);if(M.encode(await storage(archive))!==M.encode(completed))throw Error('上次备份归档回读失败，已停止');
-      Object.assign(old,completed,{archivedKey:archive});await storage('journal:'+name,old);
+      Object.assign(old,completed,{archivedKey:archive});
+      // Keep the active journal untouched until the player confirms and the new backup is committed.
     }
     // v17/18 can download the replacement but cannot remove retired entries. Finish only
     // that already-approved, byte-identical migration, retaining its original before-image.
@@ -537,7 +561,7 @@ function xzsModel19() {
     if(!plan.length){status('cancelled',R.presetNotes.join('\n')||'已保留自定义字段，未写入。');return;}
     // Persist full before-images once. Quota failure aborts before any host mutation.
     const resumeBookRename=old?.state==='complete'&&old.release===m.release&&old.book===book&&book===NEW_WORLD&&legacyBinding(b);
-    let j=resumeMigration||resumeBookRename||old&&old.state!=='complete'&&old.state!=='restored'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,beforePresets:M.clone(presetsBefore),beforePresetBases:M.clone(presetBasesBefore),previousBackupKey:old?.archivedKey||old?.previousBackupKey||null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
+    let j=resumeMigration||resumeBookRename||old&&old.state!=='complete'&&old.state!=='restored'&&old.state!=='superseded'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,beforePresets:M.clone(presetsBefore),beforePresetBases:M.clone(presetBasesBefore),previousBackupKey:old?.archivedKey||old?.previousBackupKey||null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
     if(j.book!==book)throw Error('恢复记录的世界书目标不一致');
     j.beforePresets=j.beforePresets||{};j.beforePresetBases=j.beforePresetBases||{};
     for(const [k,d]of plan)if(d.kind==='preset'&&!Object.hasOwn(j.beforePresets,d.name)){
@@ -573,10 +597,10 @@ function xzsModel19() {
     await migrateWorldName(s,m);
     j.state='complete';await storage('journal:'+name,j);await storage('installed:'+name,{release:m.release});
     try{host.localStorage.setItem('xzs_notes',String(m.notes||''));}catch(_){}
-    status('done','更新完成：'+m.release+'\n本次选定组件均已保存并回读验证。\n备份已保留，可刷新页面继续。'+(f&&!plan.some(([k,d])=>d.kind==='fields')?'\n已按你的选择保留自定义字段。':'')+(Object.keys(presetWrites).length?'\n专属预设已安装/更新，未自动选择；刷新后可手动选择。':'')+(R.presetNotes.length?'\n'+R.presetNotes.join('\n'):''));
+    status('done','更新完成：'+m.release+'\n本次选定组件均已保存并回读验证。\n备份已保留，可刷新页面继续。'+(R.refreshNotes.length?'\n'+[...new Set(R.refreshNotes)].join('\n'):'')+(f&&!plan.some(([k,d])=>d.kind==='fields')?'\n已按你的选择保留自定义字段。':'')+(Object.keys(presetWrites).length?'\n专属预设已安装/更新，未自动选择；刷新后可手动选择。':'')+(R.presetNotes.length?'\n'+R.presetNotes.join('\n'):''));
   }
   function check(manual=true){if(R.busy){panel();return R.promise;}R.busy=true;R.cancelled=false;
-    const work=async()=>{try{await execute(manual);}catch(e){status(R.cancelled?'cancelled':'error',(R.cancelled?'已取消。':'更新未完成：')+e.message+'\n已保存的备份会保留；可重试检查或恢复备份。');}finally{R.busy=false;panel();}};
+    const work=async()=>{try{await execute(manual);}catch(e){status(R.cancelled?'cancelled':'error',(R.cancelled?'已取消。':'更新未完成：')+e.message+'\n可重试检查；若已有备份，可按需导出或恢复。');}finally{R.busy=false;panel();}};
     R.promise=withLock(work);return R.promise;
   }
   async function currentJournal(){const ctx=context();if((ctx.groupId??ctx.group_id)!=null&&String(ctx.groupId??ctx.group_id)!=='')throw Error('请从对应角色卡读取更新备份');const s={identity:identity(),binding:M.stable(binding())};const c=await waitRead('读取备份角色卡',()=>api('getCharacter')('current'));guard(s);const name=String(c.avatar||'').replace(/\.png$/,'');const j=await storage('journal:'+name);guard(s);if(!j)throw Error('当前角色卡没有本地备份');if(j.name!==name||!j.beforeCard||typeof j.beforeCard!=='object'||j.beforeCard.avatar&&j.beforeCard.avatar!==c.avatar||!Array.isArray(j.plan)||!j.plan.length||j.plan.some(x=>!x||!x.descriptor||!['world','script','pack','regex','fields','preset'].includes(x.descriptor.kind)))throw Error('备份目标或组件记录无效，已停止恢复');s.name=name;s.avatar=c.avatar;return {journal:j,scope:s};}
@@ -586,6 +610,7 @@ function xzsModel19() {
   }
   function withLock(work){return Promise.resolve().then(()=>host.navigator?.locks?host.navigator.locks.request('xzs-updater-write17',{ifAvailable:true},lock=>{if(!lock)throw Error('其他页面正在更新或恢复，请稍后重试');return work();}):work()).catch(e=>{R.busy=false;status('error','更新操作未完成：'+(e?.message||e));});}
   async function recoverWork(){try{
+    R.refreshNotes=[];
     const {journal:j,scope:s}=await currentJournal();if(!host.confirm('恢复本角色卡最近一次更新前的组件和世界书？聊天消息不会被替换。'))return;
     for(const item of j.plan.filter(x=>x.descriptor.kind==='preset')){
       if(!j.beforePresets||!Object.hasOwn(j.beforePresets,item.descriptor.name))throw Error('预设备份缺失，未恢复');
@@ -596,7 +621,12 @@ function xzsModel19() {
       if(Array.isArray(j.beforeWorld)){
         // Older journals stored the helper projection rather than the raw server file.
         const expected=M.hash(M.world(j.beforeWorld));let persisted;
-        await writeChecked('恢复世界书',()=>api('replaceWorldbook')(j.book,M.clone(j.beforeWorld)),async()=>{
+        await writeChecked('恢复世界书',async()=>{
+          const createOrReplace=api('createOrReplaceWorldbook',false);
+          if(createOrReplace)return createOrReplace(j.book,M.clone(j.beforeWorld),{render:'immediate'});
+          if(!await readWorld(j.book)){await writeWorld('重建待恢复世界书',j.book,{entries:{}},s);}
+          return api('replaceWorldbook')(j.book,M.clone(j.beforeWorld));
+        },async()=>{
           persisted=await readWorld(j.book);return !!persisted&&worldHash(persisted)===expected;
         },s,{retries:1,polls:24,gap:2000});
         await refreshWorldView(j.book,persisted,s);
@@ -622,7 +652,7 @@ function xzsModel19() {
     await restoreWorldName(s,j);
     // Only undo our added binding; never delete a book or revert unrelated global edits.
     if(j.addedBinding){guard(s);const now=binding();if(now.global.includes(j.book)){await waitWrite('恢复世界书绑定',()=>api('rebindGlobalWorldbooks')(now.global.filter(n=>n!==j.book)));if(binding().global.includes(j.book))throw Error('恢复世界书绑定未通过回读');s.binding=M.stable(binding());}}
-    j.state='restored';await storage('journal:'+j.name,j);status('done','已恢复更新前的组件。新建的世界书文件保留，未删除聊天或存档。请刷新页面。');
+    j.state='restored';await storage('journal:'+j.name,j);status('done','已恢复更新前的组件。'+(j.beforeWorld?'':'备份时目标世界书尚不存在，无旧世界书需要恢复。')+'新建的世界书文件保留，未删除聊天或存档。请刷新页面。'+(R.refreshNotes.length?'\n'+[...new Set(R.refreshNotes)].join('\n'):''));
   }catch(e){status('error','恢复未完成：'+e.message+'。备份仍保留。');}finally{R.busy=false;panel();}}
   R.api={check,recover,exportBackup,state:R,model:M};window.__xzsUpdater=R.api;
   R.autoTimer=timer(()=>check(false),CONFIG.auto);

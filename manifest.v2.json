@@ -1,33 +1,33 @@
 {
   "schema": 2,
-  "release": "2026.11.11-20261112000433",
+  "release": "2026.11.11-20261112083237",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
-  "notes": "完善拒绝路由：不拒绝正常接续，首次拒绝不启动，已开始片段拒绝后不重投；补齐“不想继续”及拒绝后另问一句的收尾；五名妄想学生会成员按设定图校订发色、瞳色、制服与体型描述，角色子目格式统一。",
+  "notes": "平冢敏深新增“平冢”触发词；修复世界书保存重试、保存后误报未完成、跨版本失败记录阻塞及世界书缺失时的备份恢复。",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 5897824,
-      "sha256": "27ffb2b757ad41dc59755f49ee35546d1629ced398a6f455ec51e23a7130a629",
-      "path": "assets/27ffb2b757ad41dc59755f49ee35546d1629ced398a6f455ec51e23a7130a629/shell.js",
+      "bytes": 5897994,
+      "sha256": "b88c8d55b92d4e6b3589628d85e2dfb1d75a81a49315cfe4f04ab3d4be48201f",
+      "path": "assets/b88c8d55b92d4e6b3589628d85e2dfb1d75a81a49315cfe4f04ab3d4be48201f/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "bcda81cd",
+      "contentHash": "208d1d52",
       "compatibleHashes": [
-        "bcda81cd"
+        "208d1d52"
       ]
     },
     "updater": {
       "label": "更新器",
-      "bytes": 60345,
-      "sha256": "fa88c99b5ec62b85381227e067a15a1e43b9826ad8082d53b5ac0aca062bf0b3",
-      "path": "assets/fa88c99b5ec62b85381227e067a15a1e43b9826ad8082d53b5ac0aca062bf0b3/updater.js",
+      "bytes": 63255,
+      "sha256": "a4ed7b90a1c0ff0caed7a37464fe979fec538dd204f5df66f63845aa6eb250f8",
+      "path": "assets/a4ed7b90a1c0ff0caed7a37464fe979fec538dd204f5df66f63845aa6eb250f8/updater.js",
       "kind": "script",
       "name": "新中市更新器",
-      "contentHash": "a791383a",
-      "mark": 27,
+      "contentHash": "2f9e440c",
+      "mark": 28,
       "compatibleHashes": [
-        "a791383a"
+        "2f9e440c"
       ]
     },
     "song": {
@@ -47,13 +47,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 17945830,
-      "sha256": "49c65442ccb62ce2c8d1d76ad9e1c31e1e009b5e8318068d8410b5a7321385b3",
-      "path": "assets/49c65442ccb62ce2c8d1d76ad9e1c31e1e009b5e8318068d8410b5a7321385b3/worldbook.json",
+      "bytes": 17945848,
+      "sha256": "81f143990d18c2e0c5886ebecaabacd1b4c7acff60f988dab899f9bbdff4137b",
+      "path": "assets/81f143990d18c2e0c5886ebecaabacd1b4c7acff60f988dab899f9bbdff4137b/worldbook.json",
       "kind": "world",
-      "contentHash": "805b158d",
+      "contentHash": "1cb6bfc7",
       "compatibleHashes": [
-        "805b158d"
+        "1cb6bfc7"
       ]
     },
     "fields": {
@@ -108,8 +108,8 @@
         },
         {
           "name": "抗截断A",
-          "contentHash": "54eab7c1",
-          "retired": true
+          "retired": true,
+          "contentHash": "54eab7c1"
         },
         {
           "name": "破限5·执笔人",
@@ -123,9 +123,9 @@
           ]
         }
       ],
-      "contentHash": "fbbbf39f",
+      "contentHash": "71448713",
       "compatibleHashes": [
-        "fbbbf39f"
+        "71448713"
       ]
     },
     "regex": {
