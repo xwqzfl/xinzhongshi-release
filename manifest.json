@@ -1,7 +1,7 @@
 {
-  "build": "2026.11.11-20261112083237",
+  "build": "2026.11.11-20261112095310",
   "cardVersion": "2026.11.11",
-  "builtAt": "2026-11-12T00:36:54.935Z",
+  "builtAt": "2026-11-12T01:55:16.818Z",
   "appScript": "新中市通讯 · 验证版 1.0",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
@@ -10,7 +10,7 @@
   "songMark": "10",
   "jbMark": 6,
   "updateUpdater": true,
-  "notes": "平冢敏深新增“平冢”触发词；修复世界书保存重试、保存后误报未完成、跨版本失败记录阻塞及世界书缺失时的备份恢复。",
+  "notes": "补齐水之江梅的角色档案、妄想学生会书记编制、高一B名册与对应关系；加入与霞之丘诗羽的文学前后辈往来、和津田隆利同为常识人的亲密友谊，以及萩村铃对驹絽的亲近照顾；校内联系改为自然行文。",
   "cardFields": {
     "greetings": 105,
     "fp": "b67fc910",
@@ -34,8 +34,8 @@
   "regexMark": "72bfc5b9",
   "payloads": {
     "shell.js": {
-      "hash": "96253188",
-      "bytes": 5897994
+      "hash": "6faf803e",
+      "bytes": 5898270
     },
     "updater.js": {
       "hash": "fc251572",
@@ -46,8 +46,8 @@
       "bytes": 143
     },
     "worldbook.json": {
-      "hash": "0ba49d7b",
-      "bytes": 17945848
+      "hash": "a74548f9",
+      "bytes": 17954930
     },
     "cardfields.json": {
       "hash": "250ca091",

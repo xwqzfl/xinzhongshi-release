@@ -1,0 +1,65 @@
+{
+  "build": "2026.11.11-20261112095310",
+  "cardVersion": "2026.11.11",
+  "builtAt": "2026-11-12T01:55:16.818Z",
+  "appScript": "新中市通讯 · 验证版 1.0",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "worldbookMark": "【系统】世界书版本",
+  "updaterMark": "28",
+  "songMark": "10",
+  "jbMark": 6,
+  "updateUpdater": true,
+  "notes": "补齐水之江梅的角色档案、妄想学生会书记编制、高一B名册与对应关系；加入与霞之丘诗羽的文学前后辈往来、和津田隆利同为常识人的亲密友谊，以及萩村铃对驹絽的亲近照顾；校内联系改为自然行文。",
+  "cardFields": {
+    "greetings": 105,
+    "fp": "b67fc910",
+    "firstMesLen": 30471
+  },
+  "regexFields": {
+    "count": 9,
+    "names": [
+      "自定义开局",
+      "回退按钮·仅提示词剥离",
+      "抗年龄截断",
+      "上下文·通知存档过滤",
+      "上下文·开局界面过滤",
+      "上下文·历史草稿过滤",
+      "上下文·旧版剧情规划过滤",
+      "上下文·旧版技术规划过滤",
+      "正文·抗截断尾部残片过滤"
+    ],
+    "fp": "84661698"
+  },
+  "regexMark": "72bfc5b9",
+  "payloads": {
+    "shell.js": {
+      "hash": "6faf803e",
+      "bytes": 5898270
+    },
+    "updater.js": {
+      "hash": "fc251572",
+      "bytes": 63255
+    },
+    "songscript.js": {
+      "hash": "b6c4ef42",
+      "bytes": 143
+    },
+    "worldbook.json": {
+      "hash": "a74548f9",
+      "bytes": 17954930
+    },
+    "cardfields.json": {
+      "hash": "250ca091",
+      "bytes": 848281
+    },
+    "jailbreaks.json": {
+      "hash": "ed361317",
+      "bytes": 141756
+    },
+    "regexscript.json": {
+      "hash": "fbd918a1",
+      "bytes": 103622
+    }
+  }
+}
