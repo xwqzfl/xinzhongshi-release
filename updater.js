@@ -1,4 +1,4 @@
-/*XZS_UPDATER:29*/
+/*XZS_UPDATER:30*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -9,6 +9,13 @@ function xzsModel19() {
   const decode = s => JSON.parse(s,(k,x)=>x&&typeof x.$xzsRegex==='string'?new RegExp(x.$xzsRegex,x.flags):x);
   function stable(v) { if(Array.isArray(v))return '['+v.map(stable).join(',')+']'; if(v&&typeof v==='object')return '{'+Object.keys(v).sort().filter(k=>v[k]!==undefined).map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}'; return JSON.stringify(v); }
   const hash = x => fnv(stable(x));
+  function presetContent(value) {
+    const p=clone(value);
+    for(const key of ['temperature','frequency_penalty','presence_penalty','top_p','top_k','top_a','min_p','repetition_penalty','openai_max_context','openai_max_tokens','max_context_unlocked','stream_openai','n','seed','reasoning_effort','show_thoughts','request_images','function_calling','enable_web_search','inline_image_quality','video_inlining','bias_preset_selected','media_inlining','tool_reasoning_mode','verbosity'])delete p[key];
+    const helper=p.extensions?.tavern_helper;
+    if(helper){delete helper.variables;for(const script of helper.scripts||[]){delete script.data;delete script.enabled;}}
+    return p;
+  }
   const scriptHash = s => fnv(norm(s));
   // Local SHA-256 fallback for ordinary HTTP LAN access, where SubtleCrypto is unavailable.
   function sha256Bytes(bytes) {
@@ -140,7 +147,7 @@ function xzsModel19() {
     if(Object.keys(ex).length)patch.data.extensions=ex;return patch;
   }
 
-  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scriptRoots,scripts,restoreScripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames,helperRegex,serverRegex,fromServer,serverPatch};
+  return {norm,fnv,clone,encode,decode,stable,hash,presetContent,scriptHash,sha256Bytes,build,number,mark,ext,scriptRoots,scripts,restoreScripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames,helperRegex,serverRegex,fromServer,serverPatch};
 }
 
 
@@ -158,7 +165,7 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=29;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=30;
   const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
   const CONFIG={connect:8000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
@@ -254,7 +261,13 @@ function xzsModel19() {
     if(expected!==undefined){const actual=await readPreset(name);if(M.stable(actual)!==M.stable(expected)&&M.stable(actual)!==M.stable(preset))throw Error('保存期间预设变化，请重新检查');}
     await presetPost('/api/presets/save',{name,preset:M.clone(preset),apiId:'openai'});
   }
-  async function presetInstalled(d){const actual=await readPreset(d.name);return !!actual&&M.hash(actual)===d.contentHash;}
+  async function presetInstalled(d,actual){
+    if(actual===undefined)actual=await readPreset(d.name);
+    if(!actual)return false;
+    if(M.hash(actual)===d.contentHash)return true;
+    const text=await download(d.path,d);validatePayload(d,text);
+    return M.hash(M.presetContent(actual))===M.hash(M.presetContent(JSON.parse(text)));
+  }
   // Official managed components replace the previous release after a verified backup.
   
 
@@ -514,7 +527,11 @@ function xzsModel19() {
     if(Object.values(m.components).some(d=>d.kind==='fields')&&!M.fieldsReadable(c))throw Error('角色卡字段未完整读出，暂不判断开场白与描述需要更新。请等待卡片加载后重试');
     const presetsBefore={};
     for(const d of Object.values(m.components).filter(d=>d.kind==='preset')){presetsBefore[d.name]=await readPreset(d.name);guard(s);}
-    let plan=Object.entries(m.components).filter(([key,d])=>d.kind==='world'?!world||!matches(worldHash(world),d):d.kind==='preset'?!presetsBefore[d.name]||M.hash(presetsBefore[d.name])!==d.contentHash:!installed(c,d));
+    let plan=[];
+    for(const [key,d]of Object.entries(m.components)){
+      const present=d.kind==='world'?!!world&&matches(worldHash(world),d):d.kind==='preset'?await presetInstalled(d,presetsBefore[d.name]):installed(c,d);guard(s);
+      if(!present)plan.push([key,d]);
+    }
     // Older manifests lack per-field hashes. Verify their payload before classifying a difference.
     const fieldEntry=plan.find(([k,d])=>d.kind==='fields');
     if(fieldEntry&&!fieldEntry[1].fieldHashes){const [k,d]=fieldEntry;R.total=d.bytes;R.loaded=0;const t=await download(d.path,d);validatePayload(d,t);d.fieldHashes=M.fieldHashes(JSON.parse(t));if(installed(c,d))plan=plan.filter(([key])=>key!==k);}
