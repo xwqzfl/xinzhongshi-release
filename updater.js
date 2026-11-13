@@ -1,4 +1,4 @@
-/*XZS_UPDATER:31*/
+/*XZS_UPDATER:32*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -9,13 +9,6 @@ function xzsModel19() {
   const decode = s => JSON.parse(s,(k,x)=>x&&typeof x.$xzsRegex==='string'?new RegExp(x.$xzsRegex,x.flags):x);
   function stable(v) { if(Array.isArray(v))return '['+v.map(stable).join(',')+']'; if(v&&typeof v==='object')return '{'+Object.keys(v).sort().filter(k=>v[k]!==undefined).map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}'; return JSON.stringify(v); }
   const hash = x => fnv(stable(x));
-  function presetContent(value) {
-    const p=clone(value);
-    for(const key of ['temperature','frequency_penalty','presence_penalty','top_p','top_k','top_a','min_p','repetition_penalty','openai_max_context','openai_max_tokens','max_context_unlocked','stream_openai','n','seed','reasoning_effort','show_thoughts','request_images','function_calling','enable_web_search','inline_image_quality','video_inlining','bias_preset_selected','media_inlining','tool_reasoning_mode','verbosity'])delete p[key];
-    const helper=p.extensions?.tavern_helper;
-    if(helper){delete helper.variables;for(const script of helper.scripts||[]){delete script.data;delete script.enabled;}}
-    return p;
-  }
   const scriptHash = s => fnv(norm(s));
   // Local SHA-256 fallback for ordinary HTTP LAN access, where SubtleCrypto is unavailable.
   function sha256Bytes(bytes) {
@@ -147,7 +140,7 @@ function xzsModel19() {
     if(Object.keys(ex).length)patch.data.extensions=ex;return patch;
   }
 
-  return {norm,fnv,clone,encode,decode,stable,hash,presetContent,scriptHash,sha256Bytes,build,number,mark,ext,scriptRoots,scripts,restoreScripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames,helperRegex,serverRegex,fromServer,serverPatch};
+  return {norm,fnv,clone,encode,decode,stable,hash,scriptHash,sha256Bytes,build,number,mark,ext,scriptRoots,scripts,restoreScripts,rxName,rx,fields,canonicalFields,fieldHashes,fieldDiff,fieldsReadable,worldEntry,world,want,apply,ownedNames,helperRegex,serverRegex,fromServer,serverPatch};
 }
 
 
@@ -165,7 +158,7 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=31;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=32;
   const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
   const CONFIG={connect:8000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
@@ -264,12 +257,36 @@ function xzsModel19() {
     if(expected!==undefined){const actual=await readPreset(name);if(M.stable(actual)!==M.stable(expected)&&M.stable(actual)!==M.stable(preset))throw Error('保存期间预设变化，请重新检查');}
     await presetPost('/api/presets/save',{name,preset:M.clone(preset),apiId:'openai'});
   }
+  const presetVersionKey=name=>'preset-version:'+name;
+  const presetRevision=d=>d.revision===undefined?d.sha256:d.revision;
+  async function recordPresetVersion(d,source){
+    const version={revision:presetRevision(d),sha256:d.sha256,source,recordedAt:Date.now()};
+    await storage(presetVersionKey(d.name),version);
+    if(M.stable(await storage(presetVersionKey(d.name)))!==M.stable(version))throw Error('预设版本记录回读失败');
+  }
+  async function initializePresetVersion(d,actual,journal){
+    if(!actual)return;
+    const recorded=await storage(presetVersionKey(d.name));
+    const completed=journal?.state==='complete'&&journal.plan?.find(x=>x.descriptor?.kind==='preset'&&x.descriptor.name===d.name&&presetRevision(x.descriptor)===presetRevision(d));
+    if(completed&&(!recorded||!recorded.recordedAt||Date.parse(journal.at)>recorded.recordedAt)){await recordPresetVersion(d,'previous-install');return;}
+    if(recorded)return;
+    // An interrupted preset install still needs to finish before recording its target.
+    if(journal&&!['complete','restored','superseded'].includes(journal.state)&&journal.plan?.some(x=>x.descriptor?.kind==='preset'&&x.descriptor.name===d.name))return;
+    const seen=new Set();let previous=journal;
+    while(previous){
+      const installed=previous.state==='complete'&&previous.plan?.find(x=>x.descriptor?.kind==='preset'&&x.descriptor.name===d.name)?.descriptor;
+      if(installed){await recordPresetVersion(installed,'previous-install');return;}
+      const key=previous.previousBackupKey;if(!key||seen.has(key))break;seen.add(key);previous=await storage(key);
+    }
+    // Existing presets without an older version receipt start observing this cloud
+    // revision. Local option values and script content are never compared.
+    await recordPresetVersion(d,'first-seen-cloud');
+  }
   async function presetInstalled(d,actual){
     if(actual===undefined)actual=await readPreset(d.name);
     if(!actual)return false;
-    if(M.hash(actual)===d.contentHash)return true;
-    const text=await download(d.path,d);validatePayload(d,text);
-    return M.hash(M.presetContent(actual))===M.hash(M.presetContent(JSON.parse(text)));
+    const installed=await storage(presetVersionKey(d.name));
+    return !!installed&&installed.revision===presetRevision(d);
   }
   // Official managed components replace the previous release after a verified backup.
   
@@ -279,6 +296,7 @@ function xzsModel19() {
     const names=new Set(),files=Object.values(m.components);if(!files.length)throw Error('清单没有组件');
     for(const d of files){if(!['script','world','pack','regex','fields','preset'].includes(d.kind)||!/^assets\/[a-f0-9]{64}\/[\w.-]+$/.test(d.path)||!Number.isSafeInteger(d.bytes)||d.bytes<=0||d.bytes>50000000||!/^[a-f0-9]{64}$/.test(d.sha256)||!d.label||!d.contentHash)throw Error('清单组件格式错误');
       if(d.kind==='preset'&&(d.name!==PRESET_NAME||d.apiId!=='openai'||d.autoSelect!==false))throw Error('预设目标或默认启用策略无效');
+      if(d.kind==='preset'&&d.revision!==undefined&&(typeof d.revision!=='string'||!d.revision||d.revision.length>128))throw Error('预设组件版本无效');
       if(d.kind==='fields'&&d.fieldHashes){const keys=Object.keys(fieldLabels);if(Object.keys(d.fieldHashes).length!==keys.length||keys.some(k=>!/^[a-f0-9]{8}$/.test(d.fieldHashes[k])))throw Error('卡字段分项指纹格式错误');}
       if(d.path.split('/')[1]!==d.sha256)throw Error('清单文件地址与校验值不一致');
       if(d.kind==='script'){if(!d.name||names.has(d.name))throw Error('脚本名称冲突');names.add(d.name);}
@@ -531,8 +549,9 @@ function xzsModel19() {
       status('done','本地更新器为第 '+minimumMark+' 版，已读到的云端更新器版本较旧。');return;
     }guard(s);
     if(Object.values(m.components).some(d=>d.kind==='fields')&&!M.fieldsReadable(c))throw Error('角色卡字段未完整读出，暂不判断开场白与描述需要更新。请等待卡片加载后重试');
-    const presetsBefore={};
-    for(const d of Object.values(m.components).filter(d=>d.kind==='preset')){presetsBefore[d.name]=await readPreset(d.name);guard(s);}
+    const presetsBefore={},presetVersionsBefore={};
+    const old=await storage('journal:'+name);
+    for(const d of Object.values(m.components).filter(d=>d.kind==='preset')){presetsBefore[d.name]=await readPreset(d.name);guard(s);await initializePresetVersion(d,presetsBefore[d.name],old);presetVersionsBefore[d.name]=await storage(presetVersionKey(d.name));guard(s);}
     let plan=[];
     for(const [key,d]of Object.entries(m.components)){
       const present=d.kind==='world'?!!world&&matches(worldHash(world),d):d.kind==='preset'?await presetInstalled(d,presetsBefore[d.name]):installed(c,d);guard(s);
@@ -543,7 +562,6 @@ function xzsModel19() {
     if(fieldEntry&&!fieldEntry[1].fieldHashes){const [k,d]=fieldEntry;R.total=d.bytes;R.loaded=0;const t=await download(d.path,d);validatePayload(d,t);d.fieldHashes=M.fieldHashes(JSON.parse(t));if(installed(c,d))plan=plan.filter(([key])=>key!==k);}
     // Never install a numerically older updater even if a stale manifest has a newer release label.
     for(const [k,d]of plan)if(d.kind==='script'&&d.name===NAME&&M.scripts(c).some(x=>x.name===NAME&&M.mark(x.content)>d.mark))throw Error('清单中的更新器版本较旧，已停止');
-    const old=await storage('journal:'+name);
     if(old&&old.state!=='complete'&&old.state!=='restored'&&old.release!==m.release){
       // A previous iframe may have died after all writes succeeded. Reconcile
       // its exact descriptors before allowing a later release to proceed.
@@ -579,7 +597,7 @@ function xzsModel19() {
       if(resumeSavedWorld&&world){await refreshWorldView(book,world,s);await bindSavedWorld(s,old);}
       await migrateWorldName(s,m);await verifyRelease(s,m,book);
       if(old&&old.state!=='complete'&&old.state!=='restored'){old.state='complete';await storage('journal:'+name,old);}
-      await storage('installed:'+name,{release:m.release});status('done','所有官方组件已从服务器核实：'+m.release+'\n'+R.versionSummary);return;
+      await storage('installed:'+name,{release:m.release});status('done','所有官方组件版本已检查：'+m.release+'\n'+R.versionSummary);return;
     }
     R.showPanel=true;panel();
     R.total=plan.reduce((n,[k,d])=>n+d.bytes,0);R.loaded=0;
@@ -589,12 +607,14 @@ function xzsModel19() {
     for(const [k,d]of plan){guard(s);const t=await download(d.path,d);status('verify','正在校验：'+d.label);validatePayload(d,t);files[k]=t;}
     stop();guard(s);
     const presetWrites={};
-    for(const[key,d]of plan)if(d.kind==='preset')presetWrites[d.name]={applied:JSON.parse(files[key])};
+    for(const[key,d]of plan)if(d.kind==='preset')presetWrites[d.name]={applied:JSON.parse(files[key]),descriptor:d};
     // Persist full before-images once. Quota failure aborts before any host mutation.
     const resumeBookRename=old?.state==='complete'&&old.release===m.release&&old.book===book&&book===NEW_WORLD&&legacyBinding(b);
-    let j=resumeMigration||resumeBookRename||old&&old.state!=='complete'&&old.state!=='restored'&&old.state!=='superseded'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,beforePresets:M.clone(presetsBefore),previousBackupKey:old?.archivedKey||old?.previousBackupKey||null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
+    let j=resumeMigration||resumeBookRename||old&&old.state!=='complete'&&old.state!=='restored'&&old.state!=='superseded'?old:{state:'prepared',release:m.release,name,book,binding:b,beforeCard:M.clone(c),beforeWorld:world?M.clone(world):null,beforePresets:M.clone(presetsBefore),beforePresetVersions:M.clone(presetVersionsBefore),previousBackupKey:old?.archivedKey||old?.previousBackupKey||null,plan:plan.map(([k,d])=>({key:k,descriptor:d})),at:new Date().toISOString()};
     if(j.book!==book)throw Error('恢复记录的世界书目标不一致');
     j.beforePresets=j.beforePresets||{};
+    j.beforePresetVersions=j.beforePresetVersions||{};
+    for(const [presetName,version]of Object.entries(presetVersionsBefore))if(!Object.hasOwn(j.beforePresetVersions,presetName))j.beforePresetVersions[presetName]=M.clone(version);
     for(const [k,d]of plan)if(d.kind==='preset'&&!Object.hasOwn(j.beforePresets,d.name)){
       if(j.plan.some(x=>x.key===k))throw Error('既有预设备份缺失，未写入');
       j.beforePresets[d.name]=M.clone(presetsBefore[d.name]);
@@ -620,6 +640,7 @@ function xzsModel19() {
     for(const [presetName,write]of Object.entries(presetWrites)){
       j.state='presets';await storage('journal:'+name,j);
       await writeChecked('保存专属预设（不切换）',()=>savePreset(presetName,write.applied,presetsBefore[presetName]),async()=>M.hash(await readPreset(presetName))===M.hash(write.applied),s);
+      await recordPresetVersion(write.descriptor,'installed-and-readback');
 
     }
     const cardPlan=plan.filter(([k,d])=>!['world','preset'].includes(d.kind));
@@ -641,7 +662,7 @@ function xzsModel19() {
     }
     if(failed.length)throw Error('以下组件尚未保存完整：'+failed.join('、')+'；已停止报告完成，请重试检查');
     const wb=world&&worldEntries(world).find(e=>e.comment===WB_MARK)?.content;
-    R.versionSummary='安装包版本：'+m.release+'\n卡片版本：'+card.version+'\n世界书构建：'+(wb||m.release)+'\n更新器：第'+Math.max(...M.scripts(card).filter(s=>s.name===NAME).map(s=>M.mark(s.content)))+'版'+(Object.values(m.components).some(d=>d.kind==='preset')?'\n专属预设：已安装并核实（保持当前预设选择）':'');
+    R.versionSummary='安装包版本：'+m.release+'\n卡片版本：'+card.version+'\n世界书构建：'+(wb||m.release)+'\n更新器：第'+Math.max(...M.scripts(card).filter(s=>s.name===NAME).map(s=>M.mark(s.content)))+'版'+(Object.values(m.components).some(d=>d.kind==='preset')?'\n专属预设：云端版本已登记（保持当前预设选择）':'');
   }
 
   function check(manual=true){if(R.busy){R.showPanel=true;panel();return R.promise;}R.busy=true;R.cancelled=false;R.showPanel=manual;
@@ -681,6 +702,8 @@ function xzsModel19() {
       const presetName=item.descriptor.name,before=j.beforePresets[presetName];
       await writeChecked('恢复专属预设备份',()=>before===null?presetPost('/api/presets/delete',{name:presetName,apiId:'openai'}):savePreset(presetName,before),async()=>M.stable(await readPreset(presetName))===M.stable(before),s);
       await storage('preset-base:'+presetName,j.beforePresetBases?.[presetName]||null);
+      const versionBefore=j.beforePresetVersions?.[presetName];
+      await storage(presetVersionKey(presetName),versionBefore?{...versionBefore,recordedAt:Date.now()}:null);
     }
     await writeChecked('恢复角色卡组件',()=>editCard(j.name,card=>{
       guard(s);const e=M.ext(card),old=M.ext(j.beforeCard);e.tavern_helper=e.tavern_helper||{};
