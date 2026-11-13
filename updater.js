@@ -1,4 +1,4 @@
-/*XZS_UPDATER:30*/
+/*XZS_UPDATER:31*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -165,7 +165,7 @@ function xzsModel19() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=30;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=31;
   const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
   const CONFIG={connect:8000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
@@ -236,13 +236,16 @@ function xzsModel19() {
       stop();if(d){if(received!==d.bytes)throw Error('文件长度不匹配');if(await sha(text)!==d.sha256)throw Error('文件SHA-256校验失败');R.loaded=before+received;panel();}return text;
     }catch(e){R.loaded=before;stop();throw Error(reason||e.message);}finally{clear(connect);clear(idle);clear(limit);R.controller=null;}
   }
-  async function download(path,d,validate){
+  async function download(path,d,validate,latest=false){
     if(d&&R.cache.has(d.sha256)){R.loaded+=d.bytes;panel();return R.cache.get(d.sha256);}
-    let last;const order=[...bases.keys()].sort((a,b)=>(a===R.goodSource?-1:b===R.goodSource?1:0));
-    for(const i of order){if(R.failedSources?.has(i))continue;stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));
-      try{const t=await fetchOne(bases[i],path,d);if(validate)await validate(t);stop();R.goodSource=i;if(d)R.cache.set(d.sha256,t);return t;}
+    let last,best;const order=[...bases.keys()].sort((a,b)=>(a===R.goodSource?-1:b===R.goodSource?1:0));
+    for(const i of order){if(R.failedSources?.has(i)||latest&&best&&i>=4)continue;stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));
+      try{const t=await fetchOne(bases[i],path,d),value=validate?await validate(t):null;stop();
+        if(latest){if(!best||M.number(value.release)>M.number(best.release))best={text:t,release:value.release,source:i};continue;}
+        R.goodSource=i;if(d)R.cache.set(d.sha256,t);return t;}
       catch(e){stop();if(e.local)throw e;last=e.message;R.failedSources?.add(i);}
     }
+    if(best){R.goodSource=best.source;return best.text;}
     throw Error('所有可用更新源失败：'+(last||'本轮源均已失败')+'；可重试检查，重新探测更新源');
   }
   const PRESET_NAME='新中市专属预设 v0.1';
@@ -503,6 +506,8 @@ function xzsModel19() {
     const b=binding();let book,world,m,olderUpdaterSource=false,compatibleUpdaterSource=false;
     // A successful HTTP response may still contain a stale CDN manifest. Validate
     // it inside the source loop so a rejected source cannot stop later mirrors.
+    const checkedWorlds=new Map();
+    async function checkedWorld(name){if(!checkedWorlds.has(name))checkedWorlds.set(name,await readWorld(name));return checkedWorlds.get(name);}
     const minimumMark=Math.max(UPDATER_MARK,...M.scripts(c).filter(x=>x.name===NAME).map(x=>M.mark(x.content)));
     try{
       m=manifest(await download('manifest.v2.json',null,async text=>{
@@ -511,14 +516,15 @@ function xzsModel19() {
         if(!updater||!Number.isSafeInteger(updater.mark))throw Error('此源更新器版本无效');
         if(updater.mark<minimumMark){olderUpdaterSource=true;throw Error('此源更新器版本较旧，正在尝试其他更新源');}
         compatibleUpdaterSource=true;
-        const target=chooseBook(candidate,b),w=await readWorld(target);guard(s);
+        const target=chooseBook(candidate,b),w=await checkedWorld(target);guard(s);
         const wbMark=w&&worldEntries(w).find(e=>e.comment===WB_MARK)?.content;
-        const oldWorld=target===NEW_WORLD&&legacyBinding(b)?await readWorld(OLD_WORLD):null;guard(s);
+        const oldWorld=target===NEW_WORLD&&legacyBinding(b)?await checkedWorld(OLD_WORLD):null;guard(s);
         const oldMark=oldWorld&&worldEntries(oldWorld).find(e=>e.comment===WB_MARK)?.content;
         const highest=Math.max(M.number(localRelease?.release),M.number(wbMark),M.number(oldMark),...M.scripts(c).map(x=>M.number(M.build(x.content))));
         if(M.number(candidate.release)<highest)throw Error('此源仍是旧构建，已阻止降级并尝试其他更新源');
-        book=target;world=w;
-      }));
+        return candidate;
+      },true));
+      book=chooseBook(m,b);world=await checkedWorld(book);
     }catch(e){
       guard(s);
       if(R.cancelled||!olderUpdaterSource||compatibleUpdaterSource)throw e;
@@ -635,7 +641,7 @@ function xzsModel19() {
     }
     if(failed.length)throw Error('以下组件尚未保存完整：'+failed.join('、')+'；已停止报告完成，请重试检查');
     const wb=world&&worldEntries(world).find(e=>e.comment===WB_MARK)?.content;
-    R.versionSummary='卡片版本：'+card.version+'\n世界书构建：'+(wb||m.release)+'\n更新器：第'+UPDATER_MARK+'版'+(Object.values(m.components).some(d=>d.kind==='preset')?'\n专属预设：已安装并核实（保持当前预设选择）':'');
+    R.versionSummary='安装包版本：'+m.release+'\n卡片版本：'+card.version+'\n世界书构建：'+(wb||m.release)+'\n更新器：第'+Math.max(...M.scripts(card).filter(s=>s.name===NAME).map(s=>M.mark(s.content)))+'版'+(Object.values(m.components).some(d=>d.kind==='preset')?'\n专属预设：已安装并核实（保持当前预设选择）':'');
   }
 
   function check(manual=true){if(R.busy){R.showPanel=true;panel();return R.promise;}R.busy=true;R.cancelled=false;R.showPanel=manual;

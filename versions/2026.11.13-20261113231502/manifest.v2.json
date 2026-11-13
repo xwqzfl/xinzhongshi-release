@@ -1,0 +1,194 @@
+{
+  "schema": 2,
+  "release": "2026.11.13-20261113231502",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "notes": "更新器30：按官方包完整替换受管理组件，取消玩家自改合并和跳过；角色卡与专属预设以服务器保存及回读为准，统一卡片和首楼版本，全部组件核实后才报完成；无变化时安静检查，优先国内可达备用源。\n清理376条已退役的旧事件迁移记录，完整条目与编号对照归档到项目；保留现有剧情、主线、场景、来源编号和分支进度机制。\n新增FX主角团四人及福贺家父母：久留美20岁大二、四人均成年；梢获救后在听心打工还债；六人形象按用户最新指示采用动画及商业漫画版，依据官方立绘、剧照和漫画画面核对。同步已获批准的大学名册、听心店员及工作关系。\n按用户2026-11-12指定区分芽吹年利109%与影视转介月息15%，以听心条目统一店方知情范围，安子22岁、梢39岁对齐关联资料，并补全大二名册日常问法。\n修正盘友会六类问题：移除九条水菜的圈内身份，补齐13名成员与星野千鹤外围关联的主档对应，包含梢带入的由比滨优子、宇崎月、古见秀子；区分资金路径、放开后续分支、清理编辑残留并修复漏检和串场。\n修正萌智子、李健与亩苟影视的分工、私人合作与公司边界、成年后合作时间线、历史本金与现金周转衔接及有效分支；拆出行业常识和私下合作两个必要子目，修复小金库、演员表、校园片场和普通写真的误触发。\n为容易包含在其他人物全名中的简称增加定向消歧；保留原简称、群体key与已知亲属入口，补齐受影响人物的已设全名入口，并对齐三位乃爱的语境检索。只改70个人物条目的key。\n\n2026.11.13：专属预设结构下拉改为破限A–E（原生、Ny、v0.82、猫神、剑仙JX、我即浪潮），新增 wave 结构；补发更新器30以匹配本地版本；世界书与角色卡脚本内容未改。\n\n2026.11.13：更新器31：核对主要更新源并选择最新有效清单，修复旧CDN清单遮蔽新版本；更新面板显示已核实的安装包版本和服务器实际更新器版号。",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 5900080,
+      "sha256": "23d0dd46a0efd8ca33ae81aeb98f1096063c138663254c320773de465b2bc579",
+      "path": "assets/23d0dd46a0efd8ca33ae81aeb98f1096063c138663254c320773de465b2bc579/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "b72e0d91",
+      "compatibleHashes": [
+        "b72e0d91"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 66392,
+      "sha256": "9b96ff41172704cd053491d2c0c26cebae7304e9fb714e14480836cc04c17dc5",
+      "path": "assets/9b96ff41172704cd053491d2c0c26cebae7304e9fb714e14480836cc04c17dc5/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "f5208446",
+      "mark": 31,
+      "compatibleHashes": [
+        "f5208446"
+      ]
+    },
+    "song": {
+      "label": "音乐集成迁移",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "唱歌 · 音频直链",
+          "retired": true,
+          "contentHash": "6f0264fc"
+        }
+      ],
+      "contentHash": "9a3b3943",
+      "bytes": 287,
+      "sha256": "f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414",
+      "path": "assets/f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414/songscript.js"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 18497919,
+      "sha256": "cc6906d500c3f59811d89c4e06dbe158598ed84448c85ed751635b2b16aedbd1",
+      "path": "assets/cc6906d500c3f59811d89c4e06dbe158598ed84448c85ed751635b2b16aedbd1/worldbook.json",
+      "kind": "world",
+      "contentHash": "88aed460",
+      "compatibleHashes": [
+        "88aed460"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 878547,
+      "sha256": "31bb80096a9117f6c6e238e9c905b741e66ad102bf69e35e40f9ab558f82c26b",
+      "path": "assets/31bb80096a9117f6c6e238e9c905b741e66ad102bf69e35e40f9ab558f82c26b/cardfields.json",
+      "kind": "fields",
+      "contentHash": "1917d2b5",
+      "fieldHashes": {
+        "version": "715b644d",
+        "first_messages": "6dd430f1",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      },
+      "compatibleHashes": [
+        "1917d2b5"
+      ]
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 141620,
+      "sha256": "bbbb9d18e48efb22d3c9f7ebbe21959717cc15caee38c119b68de2fbd7c78bfc",
+      "path": "assets/bbbb9d18e48efb22d3c9f7ebbe21959717cc15caee38c119b68de2fbd7c78bfc/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "d215a9e4",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "57670d51"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "dc9ddbd2"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "cd2c78e6"
+        },
+        {
+          "name": "破限5·执笔人",
+          "contentHash": "484837ca"
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "342f1866",
+          "replaces": [
+            "抗截断A"
+          ]
+        },
+        {
+          "name": "抗截断A",
+          "retired": true,
+          "contentHash": "594c913b"
+        }
+      ],
+      "contentHash": "b84cbe4f",
+      "compatibleHashes": [
+        "b84cbe4f"
+      ]
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 103847,
+      "sha256": "9aaf4654580d163401f721ee825ede92e57127df95eade825c4341dacb29bcfb",
+      "path": "assets/9aaf4654580d163401f721ee825ede92e57127df95eade825c4341dacb29bcfb/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        },
+        {
+          "name": "上下文·通知存档过滤",
+          "contentHash": "1c61db5e"
+        },
+        {
+          "name": "上下文·开局界面过滤",
+          "contentHash": "d01d3d15"
+        },
+        {
+          "name": "上下文·历史草稿过滤",
+          "contentHash": "b6a05491"
+        },
+        {
+          "name": "上下文·旧版剧情规划过滤",
+          "contentHash": "569b467b"
+        },
+        {
+          "name": "上下文·旧版技术规划过滤",
+          "contentHash": "e50f478b"
+        },
+        {
+          "name": "正文·抗截断尾部残片过滤",
+          "contentHash": "b1ab9411"
+        }
+      ],
+      "contentHash": "01292d62",
+      "compatibleHashes": [
+        "01292d62"
+      ]
+    }
+  },
+  "optionalComponents": {
+    "preset": {
+      "kind": "preset",
+      "name": "新中市专属预设 v0.1",
+      "apiId": "openai",
+      "autoSelect": false,
+      "label": "专属预设（不自动选择）",
+      "bytes": 187407,
+      "sha256": "67e4f7c223b9bd98596ef61886b5a4f0319acf446f0ee66ca08fe91d01860659",
+      "contentHash": "4078c63c",
+      "path": "assets/67e4f7c223b9bd98596ef61886b5a4f0319acf446f0ee66ca08fe91d01860659/preset.json"
+    }
+  }
+}
