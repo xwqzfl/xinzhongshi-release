@@ -1,4 +1,4 @@
-/*XZS_UPDATER:32*/
+/*XZS_UPDATER:33*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -145,6 +145,185 @@ function xzsModel19() {
 
 
 /* Source is bundled with model.cjs by build.cjs. No runtime dependency download. */
+function xzsStorageInspector33() {
+(function () {
+  'use strict';
+  var ID = 'tt-webstorage-inspector-v1', host = null;
+  [window.top, window.parent, window].some(function (candidate) {
+    try {
+      if (candidate.document.getElementById('send_textarea') || candidate.__TAURITAVERN__) { host = candidate; return true; }
+    } catch (ignore) {}
+    return false;
+  });
+  if (!host) { alert('请从 TauriTavern 的酒馆助手脚本库运行，以检查应用主窗口的存储。'); return; }
+  var doc = host.document, existing = doc.getElementById(ID);
+  if (existing) { existing.style.display = 'flex'; return; }
+  var root = doc.createElement('div'); root.id = ID; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', '全应用 WebStorage 检查与手动清理');
+  root.innerHTML = `<style>
+    #tt-webstorage-inspector-v1{position:fixed;inset:0;z-index:2147483610;display:flex;align-items:center;justify-content:center;background:#000b;padding:10px;box-sizing:border-box;color:#e7edf5;font:14px/1.5 system-ui,sans-serif;text-align:left}
+    #tt-webstorage-inspector-v1 *{box-sizing:border-box}
+    #tt-webstorage-inspector-v1 .tw-panel{background:#172334;border:1px solid #4b5a70;border-radius:12px;max-width:940px;width:100%;max-height:94vh;max-height:94dvh;display:flex;flex-direction:column;overflow:hidden}
+    #tt-webstorage-inspector-v1 .tw-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #425064}
+    #tt-webstorage-inspector-v1 h2{font-size:18px;margin:0;flex:1;color:#fff}
+    #tt-webstorage-inspector-v1 .tw-scroll{overflow:auto;padding:12px 14px;overscroll-behavior:contain}
+    #tt-webstorage-inspector-v1 p{margin:0 0 9px}
+    #tt-webstorage-inspector-v1 .tw-muted{color:#b0bfd2;font-size:12px;overflow-wrap:anywhere}
+    #tt-webstorage-inspector-v1 .tw-stats{padding:10px;background:#22334b;border-radius:7px;white-space:pre-line;margin-bottom:10px}
+    #tt-webstorage-inspector-v1 .tw-tools{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
+    #tt-webstorage-inspector-v1 button,#tt-webstorage-inspector-v1 select,#tt-webstorage-inspector-v1 input[type=search]{font:inherit;color:#eef4fc;background:#263950;border:1px solid #60728b;border-radius:6px;padding:7px 10px;min-height:36px;margin:0}
+    #tt-webstorage-inspector-v1 button{cursor:pointer}#tt-webstorage-inspector-v1 button:disabled{opacity:.45;cursor:default}
+    #tt-webstorage-inspector-v1 input[type=search]{flex:1;min-width:130px}
+    #tt-webstorage-inspector-v1 input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin:3px 0;accent-color:#73b5ff}
+    #tt-webstorage-inspector-v1 .tw-item{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid #34445c}
+    #tt-webstorage-inspector-v1 .tw-key{font-family:ui-monospace,monospace;overflow-wrap:anywhere;word-break:break-word;color:#fff}
+    #tt-webstorage-inspector-v1 .tw-name{flex:1;min-width:0}#tt-webstorage-inspector-v1 .tw-size{white-space:nowrap;color:#ffd37e;font-size:12px}
+    #tt-webstorage-inspector-v1 .tw-actions{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+    #tt-webstorage-inspector-v1 textarea{width:100%;height:180px;min-height:100px;resize:vertical;white-space:pre;font:12px/1.45 ui-monospace,monospace;background:#0e1725;color:#dce8fb;border:1px solid #64748b;border-radius:6px;padding:8px}
+    #tt-webstorage-inspector-v1 .tw-preview{padding:10px 0}#tt-webstorage-inspector-v1 .tw-preview[hidden]{display:none}
+    #tt-webstorage-inspector-v1 .tw-delete-area{margin-top:14px;padding:12px;background:#22334b;border-radius:7px}
+    #tt-webstorage-inspector-v1 .tw-ack{display:flex;gap:8px;align-items:flex-start;margin:10px 0}
+    #tt-webstorage-inspector-v1 .tw-danger{background:#763842;border-color:#d88892}
+    #tt-webstorage-inspector-v1 .tw-status{white-space:pre-wrap;overflow-wrap:anywhere;padding:9px 0;color:#b8dfbb}
+    @media(max-width:420px){#tt-webstorage-inspector-v1{padding:5px}#tt-webstorage-inspector-v1 .tw-head,#tt-webstorage-inspector-v1 .tw-scroll{padding:10px}#tt-webstorage-inspector-v1 .tw-item{gap:7px}#tt-webstorage-inspector-v1 .tw-key{font-size:12px}}
+  </style>
+  <section class="tw-panel">
+    <header class="tw-head"><h2>全应用缓存检查</h2><button type="button" data-action="close">关闭</button></header>
+    <div class="tw-scroll">
+      <p data-field="origin" class="tw-muted"></p>
+      <p>检查当前应用存储域下所有卡片、插件和系统项，按占用从大到小排列。导入与扫描只读取数据。</p>
+      <p class="tw-muted">覆盖全部 localStorage 与 sessionStorage。大小按键和值的 UTF-16 字节估算；不代表磁盘占用或剩余配额。IndexedDB、网络缓存和原生文件不在本工具覆盖范围。</p>
+      <div class="tw-stats" data-field="stats"></div>
+      <p class="tw-muted">遇到 localStorage 配额报错时优先检查 localStorage 项；清理 sessionStorage 不会直接释放 localStorage 的配额。</p>
+      <div class="tw-tools"><button type="button" data-action="scan">刷新扫描</button><button type="button" data-action="report">导出占用清单</button><button type="button" data-action="copy-report">复制占用清单</button></div>
+      <div class="tw-tools"><input type="search" placeholder="搜索键名或来源" aria-label="搜索缓存" data-field="search"><select aria-label="显示条数" data-field="limit"><option value="20">最大的20项</option><option value="50">最大的50项</option><option value="all">显示全部</option></select></div>
+      <p class="tw-muted" data-field="count"></p><div data-field="list"></div>
+      <section class="tw-preview" data-field="preview" hidden><p class="tw-key" data-field="preview-title"></p><textarea readonly aria-label="存储项原始内容" data-field="preview-value"></textarea><div class="tw-tools"><button type="button" data-action="copy-value">复制原始内容</button><button type="button" data-action="hide-preview">收起内容</button></div></section>
+      <section class="tw-delete-area">
+        <p data-field="selected">尚未选择删除目标。</p>
+        <p class="tw-muted">键名只能帮助判断来源，不能证明数据冗余。先查看内容，选择你确认可以移除的项目。选择项的原始值会进入备份；占用清单不包含原始值。</p>
+        <div class="tw-tools"><button type="button" data-action="backup-file" disabled>备份选中项为文件</button><button type="button" data-action="backup-copy" disabled>复制选中项备份</button></div>
+        <label class="tw-ack"><input type="checkbox" data-field="backup-ack" disabled><span>我已将本次选中项的完整备份保存到应用外，并确认这些项目可以删除。</span></label>
+        <button type="button" data-action="delete" class="tw-danger" disabled>删除选中的本机缓存</button>
+      </section>
+      <p class="tw-status" role="status" data-field="status"></p>
+    </div>
+  </section>`;
+  doc.body.appendChild(root);
+  var field = function (name) { return root.querySelector('[data-field="' + name + '"]'); }, action = function (name) { return root.querySelector('[data-action="' + name + '"]'); };
+  var state = { records: [], selected: new Set(), errors: [], backup: null, preview: '', result: null }, stores = {};
+  function say(text) { field('status').textContent = text; }
+  function size(value) { return value >= 1048576 ? (value / 1048576).toFixed(2) + ' MiB' : value >= 1024 ? (value / 1024).toFixed(1) + ' KiB' : value + ' B'; }
+  function source(key) {
+    if (/_userInput$/.test(key)) return '系统输入草稿：可能含未发送文字';
+    if (/^xzs:state:1018:/.test(key)) return '新中市钱包／物品本机存档';
+    if (/^xzs:notifications:1093:/.test(key)) return '新中市通知本机缓存';
+    if (/^(?:hp|xzs:)/.test(key)) return '疑似新中市相关（按键名推测）';
+    if (/^tt:|tauritavern/i.test(key)) return '疑似 TauriTavern 设置（按键名推测）';
+    return '其他卡片、插件或系统项：来源待确认';
+  }
+  function chosen() { return state.records.filter(function (r) { return state.selected.has(r.id); }); }
+  function signature(records) { return JSON.stringify(records.map(function (r) { return [r.area, r.key]; }).sort()); }
+  function selectionChanged() {
+    state.backup = null; field('backup-ack').checked = false; field('backup-ack').disabled = true; action('delete').disabled = true;
+    var records = chosen(); action('backup-file').disabled = action('backup-copy').disabled = records.length === 0;
+    field('selected').textContent = records.length ? '已选 ' + records.length + ' 项，估算 ' + size(records.reduce(function (n, r) { return n + r.bytes; }, 0)) + '。' : '尚未选择删除目标。';
+  }
+  function render() {
+    var query = field('search').value.trim().toLowerCase(), filtered = state.records.filter(function (r) { return (r.area + ' ' + r.key + ' ' + r.source).toLowerCase().includes(query); }), limit = field('limit').value, list = field('list');
+    list.replaceChildren(); var visible = limit === 'all' ? filtered : filtered.slice(0, Number(limit));
+    field('count').textContent = '扫描共 ' + state.records.length + ' 项；匹配 ' + filtered.length + ' 项，当前显示 ' + visible.length + ' 项。';
+    visible.forEach(function (r) {
+      var row = doc.createElement('div'); row.className = 'tw-item'; row.dataset.storageArea = r.area; row.dataset.storageKey = r.key;
+      var box = doc.createElement('input'); box.type = 'checkbox'; box.checked = state.selected.has(r.id); box.setAttribute('aria-label', '选择 ' + r.area + ' ' + r.key);
+      box.addEventListener('change', function () { if (box.checked) state.selected.add(r.id); else state.selected.delete(r.id); selectionChanged(); });
+      var name = doc.createElement('div'); name.className = 'tw-name'; var key = doc.createElement('div'); key.className = 'tw-key'; key.textContent = r.key;
+      var sub = doc.createElement('div'); sub.className = 'tw-muted'; sub.textContent = r.area + ' · ' + r.source; name.append(key, sub);
+      var side = doc.createElement('div'); side.className = 'tw-actions'; var weight = doc.createElement('span'); weight.className = 'tw-size'; weight.textContent = size(r.bytes);
+      var view = doc.createElement('button'); view.type = 'button'; view.textContent = '查看'; view.addEventListener('click', function () {
+        try { var value = stores[r.area].getItem(r.key); state.preview = value === null ? '（该项已不存在，请刷新）' : value; field('preview-title').textContent = r.area + ' / ' + r.key; field('preview-value').value = state.preview; field('preview').hidden = false; }
+        catch (error) { say('读取失败：' + error.message); }
+      }); side.append(weight, view); row.append(box, name, side); list.appendChild(row);
+    });
+    if (!visible.length) { var empty = doc.createElement('p'); empty.textContent = '没有匹配的存储项。'; list.appendChild(empty); }
+  }
+  function scan() {
+    state.records = []; state.errors = []; state.selected.clear(); state.backup = null; stores = {}; field('preview').hidden = true;
+    ['localStorage', 'sessionStorage'].forEach(function (area) {
+      try {
+        var store = host[area]; stores[area] = store; var keys = [];
+        for (var i = 0; i < store.length; i++) keys.push(store.key(i));
+        keys.forEach(function (key) { if (key === null) return; var value = store.getItem(key); if (value === null) return; state.records.push({ id: area + '\u0000' + key, area: area, key: key, value: value, bytes: (key.length + value.length) * 2, chars: value.length, source: source(key) }); });
+      } catch (error) { state.errors.push(area + '：' + error.message); }
+    });
+    state.records.sort(function (a, b) { return b.bytes - a.bytes || a.area.localeCompare(b.area) || a.key.localeCompare(b.key); });
+    field('stats').textContent = ['localStorage', 'sessionStorage'].map(function (area) { var rows = state.records.filter(function (r) { return r.area === area; }); return area + '：' + rows.length + ' 项 · 估算 ' + size(rows.reduce(function (n, r) { return n + r.bytes; }, 0)); }).join('\n');
+    selectionChanged(); render(); say(state.errors.length ? '部分区域无法读取：\n' + state.errors.join('\n') : '扫描完成。当前没有删除或改写任何存储项。');
+  }
+  function report() {
+    return { type: 'tt-webstorage-usage', version: 1, at: new Date().toISOString(), origin: host.location.origin, coverage: ['localStorage', 'sessionStorage'], excluded: ['IndexedDB', 'Cache Storage', 'WebView native cache', 'native files'], sizeMethod: '(key.length + value.length) * 2; UTF-16 estimate, not disk usage or remaining quota', errors: state.errors.slice(), records: state.records.map(function (r) { return { area: r.area, key: r.key, estimatedBytes: r.bytes, valueChars: r.chars, sourceHint: r.source }; }), lastDeletion: state.result };
+  }
+  function filename(kind) { return 'TauriTavern-' + kind + '-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json'; }
+  function download(data, name) {
+    var url = host.URL.createObjectURL(new host.Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })), a = doc.createElement('a'); a.href = url; a.download = name; doc.body.appendChild(a); a.click(); a.remove(); host.setTimeout(function () { host.URL.revokeObjectURL(url); }, 60000);
+  }
+  async function copy(text) { if (!host.navigator.clipboard || !host.navigator.clipboard.writeText) throw Error('剪贴板接口不可用，可从下方内容框手动复制或下载文件。'); await host.navigator.clipboard.writeText(text); }
+  function backup() {
+    var records = chosen(); if (!records.length) throw Error('先选择项目。');
+    records.forEach(function (r) { if (stores[r.area].getItem(r.key) !== r.value) throw Error('所选项已经变化：' + r.key + '。请刷新后重新查看、选择。'); });
+    return { signature: signature(records), data: { type: 'tt-webstorage-backup', version: 1, at: new Date().toISOString(), origin: host.location.origin, records: records.map(function (r) { return { area: r.area, key: r.key, value: r.value }; }) } };
+  }
+  async function saveBackup(mode) {
+    try {
+      var prepared = backup(), text = JSON.stringify(prepared.data, null, 2); state.preview = text; field('preview-title').textContent = '选中项的完整备份'; field('preview-value').value = text; field('preview').hidden = false;
+      if (mode === 'file') download(prepared.data, filename('cache-backup')); else await copy(text);
+      state.backup = prepared; field('backup-ack').disabled = false;
+      say(mode === 'file' ? '已发起备份下载。请确认文件保存成功；不能下载时可使用“复制选中项备份”。保存到应用外后再勾选确认。' : '备份已复制。请粘贴并保存到应用外，再勾选确认。');
+    } catch (error) { state.backup = null; field('backup-ack').checked = false; field('backup-ack').disabled = true; action('delete').disabled = true; say('备份未完成：' + error.message); }
+  }
+  function removeSelected() {
+    var records = chosen();
+    if (!records.length || !state.backup || !field('backup-ack').checked || state.backup.signature !== signature(records)) { say('请先备份当前选中项，并确认备份已保存在应用外。'); return; }
+    var message = '确认删除这 ' + records.length + ' 个选中的本机 WebStorage 项？\n\n' + records.slice(0, 10).map(function (r) { return r.area + ' / ' + r.key; }).join('\n') + (records.length > 10 ? '\n……' : '') + '\n\n这些项目的内容可能只保存在本机。只有你确认它们冗余并已保存备份时才继续。';
+    if (!host.confirm(message)) { say('已取消，没有删除。'); return; }
+    var result = { at: new Date().toISOString(), deleted: [], changed: [], failed: [] }, saved = state.backup.data.records;
+    records.forEach(function (r) {
+      var prior = saved.find(function (item) { return item.area === r.area && item.key === r.key; });
+      try {
+        if (!prior || stores[r.area].getItem(r.key) !== prior.value) { result.changed.push({ area: r.area, key: r.key }); return; }
+        stores[r.area].removeItem(r.key);
+        if (stores[r.area].getItem(r.key) !== null) throw Error('删除后仍有值，未再次删除，请刷新检查');
+        result.deleted.push({ area: r.area, key: r.key });
+      } catch (error) { result.failed.push({ area: r.area, key: r.key, error: error.message }); }
+    });
+    state.result = result; scan(); say('已删除并回读确认 ' + result.deleted.length + ' 项。\n因内容已变化而跳过 ' + result.changed.length + ' 项；失败 ' + result.failed.length + ' 项。\n未选中的项目未处理。删除后的应用效果需要关闭并重新打开相关界面确认。');
+  }
+  action('scan').addEventListener('click', scan); field('search').addEventListener('input', render); field('limit').addEventListener('change', render);
+  action('report').addEventListener('click', function () { try { download(report(), filename('cache-usage')); say('已发起占用清单下载；清单不包含缓存原始值。'); } catch (error) { say('导出失败：' + error.message); } });
+  action('copy-report').addEventListener('click', async function () { var text = JSON.stringify(report(), null, 2); state.preview = text; field('preview-title').textContent = '全量占用清单（不含原始值）'; field('preview-value').value = text; field('preview').hidden = false; try { await copy(text); say('已复制全量占用清单，不含原始值。'); } catch (error) { say(error.message); } });
+  action('copy-value').addEventListener('click', async function () { try { await copy(state.preview); say('已复制当前内容。'); } catch (error) { say(error.message); } });
+  action('hide-preview').addEventListener('click', function () { field('preview').hidden = true; });
+  action('backup-file').addEventListener('click', function () { saveBackup('file'); }); action('backup-copy').addEventListener('click', function () { saveBackup('copy'); });
+  field('backup-ack').addEventListener('change', function () { action('delete').disabled = !field('backup-ack').checked || !state.backup; });
+  action('delete').addEventListener('click', removeSelected);
+  function close() { root.remove(); window.removeEventListener('pagehide', close); }
+  action('close').addEventListener('click', close); window.addEventListener('pagehide', close, { once: true });
+  field('origin').textContent = '当前存储域：' + host.location.origin; scan();
+})();
+
+  for (const candidate of [window.top, window.parent, window]) {
+    try {
+      const panel=candidate.document.getElementById('tt-webstorage-inspector-v1');
+      if (!panel) continue;
+      if (typeof panel.showPopover==='function') {
+        panel.setAttribute('popover','manual');
+        Object.assign(panel.style,{margin:'0',border:'0',width:'100vw',height:'100dvh',maxWidth:'none',maxHeight:'none'});
+        if (!panel.matches(':popover-open')) panel.showPopover();
+      }
+      break;
+    } catch (_) {}
+  }
+}
+
 (function bootstrap() {
   'use strict';
   const owner=window;let parent=owner;
@@ -154,11 +333,11 @@ function xzsModel19() {
   const start=parent.Function('createModel','return ('+runtime.toString()+')(createModel);');
   const createModel=parent.Function('return ('+xzsModel19.toString()+');')();
   const service=start(createModel);owner.__xzsUpdater=service;
-  try{owner.replaceScriptButtons?.([{name:'检查更新',visible:true},{name:'恢复更新备份',visible:true}]);owner.eventOnButton?.('检查更新',()=>service.check(true));owner.eventOnButton?.('恢复更新备份',service.recover);}catch(_){}
+  try{owner.replaceScriptButtons?.([{name:'检查更新',visible:true},{name:'恢复更新备份',visible:true},{name:'缓存检查',visible:true}]);owner.eventOnButton?.('检查更新',()=>service.check(true));owner.eventOnButton?.('恢复更新备份',service.recover);owner.eventOnButton?.('缓存检查',()=>xzsStorageInspector33());}catch(_){}
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=32;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=33;
   const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
   const CONFIG={connect:8000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
