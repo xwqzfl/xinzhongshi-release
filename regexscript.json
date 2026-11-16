@@ -197,6 +197,72 @@
       "run_on_edit": true,
       "min_depth": null,
       "max_depth": null
+    },
+    {
+      "id": "xzs-display-footer-leaks-1294",
+      "script_name": "正文后缀·隐藏分组回显与多余引擎JSON",
+      "enabled": true,
+      "find_regex": "/(?:^[ \\t]*【本轮分组】[^\\r\\n<]*(?:\\r?\\n|$))|(<\\/time\\s*>)(?:[ \\t\\r\\n]*(?:【本轮分组】[^\\r\\n<]*|(?:\\x60{3}(?:json)?[ \\t\\r\\n]*)?\\{\\s*(?:\"version\"\\s*:\\s*\"[^\"\\r\\n]*\"\\s*,\\s*\"model\"\\s*:\\s*\"xzs-engine\"|\"model\"\\s*:\\s*\"xzs-engine\"\\s*,\\s*\"version\"\\s*:\\s*\"[^\"\\r\\n]*\")\\s*\\}(?:[ \\t\\r\\n]*\\x60{3})?))*[ \\t\\r\\n]*(?![\\s\\S])/gim",
+      "replace_string": "$1",
+      "trim_strings": [],
+      "source": {
+        "user_input": false,
+        "ai_output": true,
+        "slash_command": false,
+        "world_info": false,
+        "reasoning": false
+      },
+      "destination": {
+        "display": true,
+        "prompt": false
+      },
+      "run_on_edit": true,
+      "min_depth": null,
+      "max_depth": null
+    },
+    {
+      "id": "xzs-display-footer-1294",
+      "script_name": "正文后缀·仅显示时间地点天气",
+      "enabled": true,
+      "find_regex": "/<time\\b[^>]*>[ \\t\\r\\n]*([^\\r\\n<]+?)[ \\t]*(?=\\r?\\n|[ \\t]+\\/[ \\t]+(?:scene|天气|weather|环境音|ambience|ambient|环境分支|场景分类)[ \\t]*[:：]|<|(?![\\s\\S]))(?=[^<]*?(?:\\r?\\n[ \\t]*|[ \\t]+\\/[ \\t]+)scene[ \\t]*[:：][ \\t]*([^\\r\\n<]+?)(?=\\r?\\n|[ \\t]+\\/[ \\t]+(?:scene|天气|weather|环境音|ambience|ambient|环境分支|场景分类)[ \\t]*[:：]|<|(?![\\s\\S])))(?=[^<]*?(?:\\r?\\n[ \\t]*|[ \\t]+\\/[ \\t]+)(?:天气|weather)[ \\t]*[:：][ \\t]*([^\\r\\n<]+?)(?=\\r?\\n|[ \\t]+\\/[ \\t]+(?:scene|天气|weather|环境音|ambience|ambient|环境分支|场景分类)[ \\t]*[:：]|<|(?![\\s\\S])))[^<]*(?:<\\/time\\s*>|<\\/?(?:t(?:i(?:m(?:e)?)?)?)?[ \\t]*(?![\\s\\S])|(?![\\s\\S]))[ \\t\\r\\n]*(?![\\s\\S])/gi",
+      "replace_string": "<time>$1<br>地点：$2<br>天气：$3</time>",
+      "trim_strings": [],
+      "source": {
+        "user_input": false,
+        "ai_output": true,
+        "slash_command": false,
+        "world_info": false,
+        "reasoning": false
+      },
+      "destination": {
+        "display": true,
+        "prompt": false
+      },
+      "run_on_edit": true,
+      "min_depth": null,
+      "max_depth": null
+    },
+    {
+      "id": "xzs-display-footer-unknown-weather-1294",
+      "script_name": "正文后缀·天气未注明时显示未知",
+      "enabled": true,
+      "find_regex": "/<time\\b[^>]*>[ \\t\\r\\n]*([^\\r\\n<]+?)[ \\t]*(?=\\r?\\n|[ \\t]+\\/[ \\t]+(?:scene|天气|weather|环境音|ambience|ambient|环境分支|场景分类)[ \\t]*[:：]|<|(?![\\s\\S]))(?=[^<]*?(?:\\r?\\n[ \\t]*|[ \\t]+\\/[ \\t]+)scene[ \\t]*[:：][ \\t]*([^\\r\\n<]+?)(?=\\r?\\n|[ \\t]+\\/[ \\t]+(?:scene|天气|weather|环境音|ambience|ambient|环境分支|场景分类)[ \\t]*[:：]|<|(?![\\s\\S])))[^<]*(?:<\\/time\\s*>|<\\/?(?:t(?:i(?:m(?:e)?)?)?)?[ \\t]*(?![\\s\\S])|(?![\\s\\S]))[ \\t\\r\\n]*(?![\\s\\S])/gi",
+      "replace_string": "<time>$1<br>地点：$2<br>天气：未知</time>",
+      "trim_strings": [],
+      "source": {
+        "user_input": false,
+        "ai_output": true,
+        "slash_command": false,
+        "world_info": false,
+        "reasoning": false
+      },
+      "destination": {
+        "display": true,
+        "prompt": false
+      },
+      "run_on_edit": true,
+      "min_depth": null,
+      "max_depth": null
     }
   ]
 }
