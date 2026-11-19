@@ -1,4 +1,4 @@
-/*XZS_UPDATER:33*/
+/*XZS_UPDATER:35*/
 /* Shared canonical forms: browser updater and offline builder must agree. */
 /* Shared canonical forms: browser updater and offline builder must agree. */
 function xzsModel19() {
@@ -337,7 +337,7 @@ function xzsStorageInspector33() {
   function runtime(createModel) {
   'use strict';
   const M=createModel();
-  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=33;
+  const NAME='新中市更新器', WB_MARK='【系统】世界书版本', UPDATER_MARK=35;
   const OLD_WORLD="新中市个人删减版（更新）", NEW_WORLD="新中市整合版（更新）";
   const CONFIG={connect:8000,idle:45000,total:600000,writeNotice:20000,readNotice:8000,readTimeout:60000,auto:8000};
   let host=window;
@@ -358,7 +358,7 @@ function xzsStorageInspector33() {
   if(previous?.autoTimer)clear(previous.autoTimer);
   const R={durable:true,version:UPDATER_MARK,busy:false,cancelled:false,stage:'idle',message:'尚未检查',cache:previous?.cache||new Map(),loaded:0,total:0,controller:null,api:null};
   host.__xzsUpdaterRuntime17=R;
-  const bases=[["https://fastly.jsdelivr.net/gh/xwqzfl/xinzhongshi-release@main/",""],["https://gh-proxy.com/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/",""],["https://cdn.jsdelivr.net/gh/xwqzfl/xinzhongshi-release@main/",""],["https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/",""],["https://api.github.com/repos/xwqzfl/xinzhongshi-release/contents/","api"],["https://ghproxy.net/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/",""]];
+  const bases=[["https://api.github.com/repos/xwqzfl/xinzhongshi-release/contents/","api"],["https://gh-proxy.com/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/",""],["https://ghfast.top/https://raw.githubusercontent.com/xwqzfl/xinzhongshi-release/main/",""]];
   function api(n,required=true){const f=host.TavernHelper?.[n]||window[n];if(typeof f==='function')return f.bind(host.TavernHelper||window);if(required)throw Error('酒馆助手缺少接口：'+n);return null;}
   function context(){try{return host.SillyTavern?.getContext?.()||{};}catch(_){return {};}}
   function identity(){const c=context();return JSON.stringify([api('getCurrentCharacterName',false)?.()||c.name2||'',c.getCurrentChatId?.()||c.chatId||c.chat_id||'',c.groupId??c.group_id??'',c.characters?.[c.characterId]?.avatar||'']);}
@@ -411,7 +411,7 @@ function xzsStorageInspector33() {
   async function download(path,d,validate,latest=false){
     if(d&&R.cache.has(d.sha256)){R.loaded+=d.bytes;panel();return R.cache.get(d.sha256);}
     let last,best;const order=[...bases.keys()].sort((a,b)=>(a===R.goodSource?-1:b===R.goodSource?1:0));
-    for(const i of order){if(R.failedSources?.has(i)||latest&&best&&i>=4)continue;stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));
+    for(const i of order){if(R.failedSources?.has(i))continue;stop();status(d?'download':'check',(d?'正在下载 '+d.label:'正在检查版本')+'\n更新源 '+(i+1)+'/'+bases.length+(last?' · 上个源：'+last:''));
       try{const t=await fetchOne(bases[i],path,d),value=validate?await validate(t):null;stop();
         if(latest){if(!best||M.number(value.release)>M.number(best.release))best={text:t,release:value.release,source:i};continue;}
         R.goodSource=i;if(d)R.cache.set(d.sha256,t);return t;}
