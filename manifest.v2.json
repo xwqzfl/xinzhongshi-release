@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.20-20261120003149",
+  "release": "2026.11.20-20261120225506",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
-  "notes": "2026.11.20\n- 新增学生借款会谈。玩家向学生借到钱后，下次到校由本班班主任通知前往教师办公室，与平冢静和出借学生会谈。会谈开始后由玩家自由续写。\n- 修正小手机新建钱包按个人可支配财力分档的判定。已有角色的固定金额须匹配当前世界书角色档案及玩家明确身份。旧存档按原余额读取。\n- 按现行地图核对住址和通学动线。千年公寓位于新中八街，步行到七街校南门约3–5分钟。听心按摩店位于四街西段。同步校正平安公寓、红叶庄、STARRY、旧校舍主播部及小手机地图说明。\n\n2026.11.19\n- 修正开新聊天时小手机沿用旧聊天的时间。新聊天从当前开局重新确认剧情时间。\n- 补充由比滨结衣对凌路的日常称呼，以及校园四霸成员与食堂日常设定。\n- 明确旧校舍东墙外挂钢楼梯、咕咕咕主播部东部走廊和午休楼外偶遇的适用范围。\n- 新增小手机跟随当前剧情打开相关应用或显示通知。新增幸运小站，包含数字彩票、刮刮乐和老虎机。老虎机各条线独立设倍数，可指定自动转轮数，也可手动停止。\n",
+  "notes": "2026.11.20\n- 新增学生借款会谈。玩家向学生借到钱后，下次到校由本班班主任通知前往教师办公室，与平冢静和出借学生会谈。会谈开始后由玩家自由续写。\n- 修正小手机新建钱包按个人可支配财力分档的判定。已有角色的固定金额须匹配当前世界书角色档案及玩家明确身份。旧存档按原余额读取。\n- 按现行地图核对住址和通学动线。千年公寓位于新中八街，步行到七街校南门约3–5分钟。听心按摩店位于四街西段。同步校正平安公寓、红叶庄、STARRY、旧校舍主播部及小手机地图说明。\n- 校准数字彩票与刮刮乐的成本、奖金和频率，数字彩票支持一次购买多注。小手机催眠指令改为静默发送。\n- 改进钱包多金额、扣款和退款识别。可核对原文收支、对应物品和交易记录，小手机请求报告增加单轮诊断。\n- 小手机增加剧情资料卡、重要原话与来源、按楼层导出正文 TXT 及已确认日程的一键起草。\n- 专属预设增加用户偏好、按 Persona 保存的补充和本轮叙事选择。更新内置文风，修复 A–G 结构、预填及工具接入，并让防抢话和只扩写本轮互斥。\n- 补明樱花庄前后幢的沿革、住户门牌与夫妻实习课住宿。大谷持有土地并按月收取学校地租，受托管理后幢。其收养的猫娘获低额住宿安排、帮工抵租和校园开放公共区域通行。\n- 山海雅苑边缘的新彩社别墅用作公司配套住房与联动场地。登记 36 位成员及姐街，校正搬迁角色的门牌、场景位置和私人房间权限。\n\n2026.11.19\n",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 6530877,
-      "sha256": "4632ae76e7cea9a7f1e24077d5ec784167c9b07a5d2ddf4a0d8e56f5e9b64728",
-      "path": "assets/4632ae76e7cea9a7f1e24077d5ec784167c9b07a5d2ddf4a0d8e56f5e9b64728/shell.js",
+      "bytes": 6579311,
+      "sha256": "ba6129e1aacadd2d3a392f3a7b9226250c39fcc7d5c20b74b915562e86373581",
+      "path": "assets/ba6129e1aacadd2d3a392f3a7b9226250c39fcc7d5c20b74b915562e86373581/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "deb64741",
+      "contentHash": "3307c27f",
       "compatibleHashes": [
-        "deb64741"
+        "3307c27f"
       ]
     },
     "updater": {
@@ -47,13 +47,13 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 19251699,
-      "sha256": "cbe8090a423645d38fdbdaa375ea83b5e1497622e002ed2905ba248cc081c778",
-      "path": "assets/cbe8090a423645d38fdbdaa375ea83b5e1497622e002ed2905ba248cc081c778/worldbook.json",
+      "bytes": 19262180,
+      "sha256": "9a818e6b6996cd748f46cea8e69ff4829b07699ce02ffeb1a13f63d92a4437e4",
+      "path": "assets/9a818e6b6996cd748f46cea8e69ff4829b07699ce02ffeb1a13f63d92a4437e4/worldbook.json",
       "kind": "world",
-      "contentHash": "246a62ca",
+      "contentHash": "e83fb460",
       "compatibleHashes": [
-        "246a62ca"
+        "e83fb460"
       ]
     },
     "fields": {
@@ -76,9 +76,9 @@
     },
     "managed": {
       "label": "托管脚本",
-      "bytes": 142407,
-      "sha256": "7399f46e24b894506ee4e4edd2bdb612cfb895e2ea8ba16eda538e7f8fea1ed0",
-      "path": "assets/7399f46e24b894506ee4e4edd2bdb612cfb895e2ea8ba16eda538e7f8fea1ed0/jailbreaks.json",
+      "bytes": 151185,
+      "sha256": "e042ec5a4eebddceec3e0d2cf20a70234f1ee0dd3df459d1d55fa42949253367",
+      "path": "assets/e042ec5a4eebddceec3e0d2cf20a70234f1ee0dd3df459d1d55fa42949253367/jailbreaks.json",
       "kind": "pack",
       "items": [
         {
@@ -112,7 +112,7 @@
         },
         {
           "name": "抗截断-01",
-          "contentHash": "77a1b625",
+          "contentHash": "778dc33f",
           "replaces": [
             "抗截断A"
           ]
@@ -123,9 +123,9 @@
           "contentHash": "594c913b"
         }
       ],
-      "contentHash": "4dcdac1e",
+      "contentHash": "b7d202ee",
       "compatibleHashes": [
-        "4dcdac1e"
+        "b7d202ee"
       ]
     },
     "regex": {
@@ -205,10 +205,10 @@
       "apiId": "openai",
       "autoSelect": false,
       "label": "专属预设（不自动选择）",
-      "bytes": 207874,
-      "sha256": "915ab168f6d5bd2298dce47e1fb961d5735e2dead16e510dca40bb746df8a87a",
-      "contentHash": "6f9ed240",
-      "path": "assets/915ab168f6d5bd2298dce47e1fb961d5735e2dead16e510dca40bb746df8a87a/preset.json"
+      "bytes": 248971,
+      "sha256": "7d93519c0592862c74ea36b23b9507735e09c7692bf5cd82af88142e657c4188",
+      "contentHash": "cb3d48c2",
+      "path": "assets/7d93519c0592862c74ea36b23b9507735e09c7692bf5cd82af88142e657c4188/preset.json"
     }
   }
 }
