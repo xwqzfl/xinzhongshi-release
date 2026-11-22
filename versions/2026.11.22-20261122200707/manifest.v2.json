@@ -1,0 +1,214 @@
+{
+  "schema": 2,
+  "release": "2026.11.22-20261122200707",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "notes": "2026.11.22\n- 同步本机酒馆当前专属预设：移除蓝图（blueprint）与 MVU 变量结算结构，仅保留 Ny Gemini 越狱层；世界书、角色卡、正则、日常分流与其他破限结构不变。\n- 同步本机酒馆当前世界书：群玉阁玉符权限改为宗主、少宗主（少主）、阁主、副阁主不受点牌，总管、圣女、长老及以下仍有效；林雨涵、林雪乃不随身携带玉符，需向裴语涵申请。专属预设同步 DeepSeek 专用短正文自动续写与通用最终字数契约；保留日常分流与现有结构。\n- 补齐专属预设 DeepSeek 六套破限结构；NSFW 场景直白用词核对改为思维链必读项，仅 adult/discipline/role 生效，日常分流不变。\n- 修复专属预设中 Gemini 和 DeepSeek 的分流思维链。回复结束后可收起和重新展开创作规划，清理最终正文中的原生推理。DeepSeek 收到所选正文字数范围，预设只统计正文可见字符。\n- 修复小手机未处理通知在刷新时消失。酒馆补齐新回复的默认序号后，同一分支的通知仍可读回。未读超过八条时也会保留，已处理的通知按原规则撤回。\n- 修复催眠规则列表刷新变空。读取暂时失败时仍显示本分支已保存记录，旧回包不能覆盖新记录，已解除的规则不会被旧正文恢复。\n- 专属预设补全 DeepSeek 破限结构，沿用本地已应用的完整结构正文。\n\n2026.11.21\n- 修复常规剧情的场景分流额外触发一次模型请求的问题。日常、手动分组和回复分支继续按当前有效剧情衔接。\n- 专属预设可选 Gemini 或 DeepSeek。DeepSeek 的五套写作约束与五套破限结构独立选择，破限可关闭。已有档位保留原搭配。\n- 修复手机端海岛开局偶尔上下重复显示。开局菜单随内容和屏幕宽度调整高度，使用聊天区滚动。\n- 修复小手机把「紧实一点」等普通措辞当作凌晨校时的问题。只有玩家明确设定时间、等待或跳时才直接推进或校准时钟。\n- 调整专属预设创作规划，避免每轮硬留问题。普通过渡简写、关键动作写到落地，对白按人物接话，减少旁白和多人重复解释。「现代日常」原文及所选篇幅继续沿用。\n- X站直播取消开播实名和内容分时段，保留 L0–L3 分级、L2 成年要求及主播排期。违反分级要求时降低该场直播的推荐权重，直播继续播出。\n",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 6592303,
+      "sha256": "cbac7bcbf5b607f0d45009f98f6956a4e63aebed686024e2a50fa46f3eb000f8",
+      "path": "assets/cbac7bcbf5b607f0d45009f98f6956a4e63aebed686024e2a50fa46f3eb000f8/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "79c482de",
+      "compatibleHashes": [
+        "79c482de"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 87397,
+      "sha256": "1a32a7535f1f305ae176df1a1057531b7e22480a0c67a7fdf8eef691e3828537",
+      "path": "assets/1a32a7535f1f305ae176df1a1057531b7e22480a0c67a7fdf8eef691e3828537/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "041f7045",
+      "mark": 35,
+      "compatibleHashes": [
+        "041f7045"
+      ]
+    },
+    "song": {
+      "label": "音乐集成迁移",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "唱歌 · 音频直链",
+          "retired": true,
+          "contentHash": "6f0264fc"
+        }
+      ],
+      "contentHash": "9a3b3943",
+      "bytes": 287,
+      "sha256": "f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414",
+      "path": "assets/f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414/songscript.js"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 19268592,
+      "sha256": "75ec9db08d0a88116974c242aea3d601231e303ca02e29122a204b6181d5b7f2",
+      "path": "assets/75ec9db08d0a88116974c242aea3d601231e303ca02e29122a204b6181d5b7f2/worldbook.json",
+      "kind": "world",
+      "contentHash": "5574f5cb",
+      "compatibleHashes": [
+        "5574f5cb"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 852795,
+      "sha256": "8c39aae24a896b0e3c7e2a264517ab4e31d10051d9df585337089eb0e035eedb",
+      "path": "assets/8c39aae24a896b0e3c7e2a264517ab4e31d10051d9df585337089eb0e035eedb/cardfields.json",
+      "kind": "fields",
+      "contentHash": "9ed489f0",
+      "fieldHashes": {
+        "version": "080d03c5",
+        "first_messages": "713d0c90",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      },
+      "compatibleHashes": [
+        "9ed489f0"
+      ]
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 151185,
+      "sha256": "e042ec5a4eebddceec3e0d2cf20a70234f1ee0dd3df459d1d55fa42949253367",
+      "path": "assets/e042ec5a4eebddceec3e0d2cf20a70234f1ee0dd3df459d1d55fa42949253367/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "d215a9e4",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "57670d51"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "dc9ddbd2"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "cd2c78e6"
+        },
+        {
+          "name": "破限5·执笔人",
+          "contentHash": "484837ca"
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "778dc33f",
+          "replaces": [
+            "抗截断A"
+          ]
+        },
+        {
+          "name": "抗截断A",
+          "retired": true,
+          "contentHash": "594c913b"
+        }
+      ],
+      "contentHash": "b7d202ee",
+      "compatibleHashes": [
+        "b7d202ee"
+      ]
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 195525,
+      "sha256": "1cc06885566c3623aa9ad813787b6d2f94ef079e7e98c6f045b9a7143421f49b",
+      "path": "assets/1cc06885566c3623aa9ad813787b6d2f94ef079e7e98c6f045b9a7143421f49b/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        },
+        {
+          "name": "上下文·通知存档过滤",
+          "contentHash": "1c61db5e"
+        },
+        {
+          "name": "上下文·开局界面过滤",
+          "contentHash": "d01d3d15"
+        },
+        {
+          "name": "上下文·历史草稿过滤",
+          "contentHash": "b6a05491"
+        },
+        {
+          "name": "上下文·旧版剧情规划过滤",
+          "contentHash": "569b467b"
+        },
+        {
+          "name": "上下文·旧版技术规划过滤",
+          "contentHash": "e50f478b"
+        },
+        {
+          "name": "正文·抗截断尾部残片过滤",
+          "contentHash": "b1ab9411"
+        },
+        {
+          "name": "正文后缀·隐藏分组回显与多余引擎JSON",
+          "contentHash": "1eb09c9d"
+        },
+        {
+          "name": "正文后缀·仅显示时间地点天气",
+          "contentHash": "b205dd40"
+        },
+        {
+          "name": "正文后缀·天气未注明时显示未知",
+          "contentHash": "7ce2df62"
+        },
+        {
+          "name": "X站·玩家直播（聊天渲染）",
+          "contentHash": "bcaaca3e"
+        },
+        {
+          "name": "X站·玩家直播增量（仅显示过滤）",
+          "contentHash": "5842b35c"
+        }
+      ],
+      "contentHash": "d06638f8",
+      "compatibleHashes": [
+        "d06638f8"
+      ]
+    }
+  },
+  "optionalComponents": {
+    "preset": {
+      "kind": "preset",
+      "name": "新中市专属预设 v0.1",
+      "apiId": "openai",
+      "autoSelect": false,
+      "label": "专属预设（不自动选择）",
+      "bytes": 335234,
+      "sha256": "d34bca525510c7992df969c5bd092d2bd5af43d2940f36a7de536c276059b70f",
+      "contentHash": "08b9bf9b",
+      "path": "assets/d34bca525510c7992df969c5bd092d2bd5af43d2940f36a7de536c276059b70f/preset.json"
+    }
+  }
+}
