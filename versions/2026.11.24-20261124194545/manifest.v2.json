@@ -1,0 +1,214 @@
+{
+  "schema": 2,
+  "release": "2026.11.24-20261124194545",
+  "worldbookName": "新中市整合版（更新）",
+  "worldbookNamePrefix": "新中市整合版",
+  "notes": "2026.11.24\n- 修复「第二天清晨」等跨日跳时后时钟仍停在前一晚的问题。\n- 将国立学校校内食堂一层的小卖部与南门外樱花便利店明确区分，校内购买沿校内场景接续。\n- 小手机外壳的上下键可以在可见回复之间逐条跳转，向上到回复开头，向下到回复末尾。\n- 实验、体育、家政、社团及课外活动放慢每轮经过的剧情时间，事件和其他角色照常自然发展。\n\n2026.11.23\n- 同一条 LINE 来信在正文和文末重复出现时，小手机只显示一次。\n- 次要角色按场所、作息、职责、资历和人物习惯选角，实际交流时自然交代身份。\n- 小手机悬浮外壳新增上下键，点击即可跳到当前聊天最新一条可见回复的首尾。\n- 修复白白书归档后刷新导致当前分支的催眠和私聊被误判失效。\n- 修复网购搜索受分类和钱包读取阻挡，以及明确的正文报价未出现在搜索结果的问题。\n- 合并重开档后小手机对同一楼层状态的并发保存，避免一次正文触发多次楼层刷新。\n",
+  "components": {
+    "shell": {
+      "label": "手机主脚本",
+      "bytes": 6606155,
+      "sha256": "792caa500c4ebf8fd1908d5ebd13e4d47e05b4f5872a1db8257ce5f21a406ca9",
+      "path": "assets/792caa500c4ebf8fd1908d5ebd13e4d47e05b4f5872a1db8257ce5f21a406ca9/shell.js",
+      "kind": "script",
+      "name": "新中市通讯 · 验证版 1.0",
+      "contentHash": "929ee300",
+      "compatibleHashes": [
+        "929ee300"
+      ]
+    },
+    "updater": {
+      "label": "更新器",
+      "bytes": 87397,
+      "sha256": "1a32a7535f1f305ae176df1a1057531b7e22480a0c67a7fdf8eef691e3828537",
+      "path": "assets/1a32a7535f1f305ae176df1a1057531b7e22480a0c67a7fdf8eef691e3828537/updater.js",
+      "kind": "script",
+      "name": "新中市更新器",
+      "contentHash": "041f7045",
+      "mark": 35,
+      "compatibleHashes": [
+        "041f7045"
+      ]
+    },
+    "song": {
+      "label": "音乐集成迁移",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "唱歌 · 音频直链",
+          "retired": true,
+          "contentHash": "6f0264fc"
+        }
+      ],
+      "contentHash": "9a3b3943",
+      "bytes": 287,
+      "sha256": "f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414",
+      "path": "assets/f04586a5ae3217e7ceef40244409d8fbd7e6b7bd08dc0ff784df87af057f6414/songscript.js"
+    },
+    "world": {
+      "label": "世界书",
+      "bytes": 19271529,
+      "sha256": "1a84c8b59bb893137564f90011e22ae05eedbe74e172fac384206f9cec889093",
+      "path": "assets/1a84c8b59bb893137564f90011e22ae05eedbe74e172fac384206f9cec889093/worldbook.json",
+      "kind": "world",
+      "contentHash": "f92d3e15",
+      "compatibleHashes": [
+        "f92d3e15"
+      ]
+    },
+    "fields": {
+      "label": "开场白与描述",
+      "bytes": 852795,
+      "sha256": "a22b679f734d448257f29e7e57867be15aa91f3f7bfbd7605ffc362ef2592bb6",
+      "path": "assets/a22b679f734d448257f29e7e57867be15aa91f3f7bfbd7605ffc362ef2592bb6/cardfields.json",
+      "kind": "fields",
+      "contentHash": "583cfb14",
+      "fieldHashes": {
+        "version": "1ffe1f03",
+        "first_messages": "2a627946",
+        "creator": "806ccad4",
+        "creator_notes": "b005410d",
+        "description": "ffcaaa85"
+      },
+      "compatibleHashes": [
+        "583cfb14"
+      ]
+    },
+    "managed": {
+      "label": "托管脚本",
+      "bytes": 151185,
+      "sha256": "e042ec5a4eebddceec3e0d2cf20a70234f1ee0dd3df459d1d55fa42949253367",
+      "path": "assets/e042ec5a4eebddceec3e0d2cf20a70234f1ee0dd3df459d1d55fa42949253367/jailbreaks.json",
+      "kind": "pack",
+      "items": [
+        {
+          "name": "破限1·身份重置",
+          "contentHash": "d215a9e4",
+          "replaces": [
+            "加强破限A",
+            "加强破限B",
+            "加强破限C",
+            "加强破限D",
+            "加强破限E",
+            "加强破限F",
+            "加强破限G"
+          ]
+        },
+        {
+          "name": "破限2·边界申明",
+          "contentHash": "57670d51"
+        },
+        {
+          "name": "破限3·反自审",
+          "contentHash": "dc9ddbd2"
+        },
+        {
+          "name": "破限4·硬派论证",
+          "contentHash": "cd2c78e6"
+        },
+        {
+          "name": "破限5·执笔人",
+          "contentHash": "484837ca"
+        },
+        {
+          "name": "抗截断-01",
+          "contentHash": "778dc33f",
+          "replaces": [
+            "抗截断A"
+          ]
+        },
+        {
+          "name": "抗截断A",
+          "retired": true,
+          "contentHash": "594c913b"
+        }
+      ],
+      "contentHash": "b7d202ee",
+      "compatibleHashes": [
+        "b7d202ee"
+      ]
+    },
+    "regex": {
+      "label": "官方正则",
+      "bytes": 195525,
+      "sha256": "1cc06885566c3623aa9ad813787b6d2f94ef079e7e98c6f045b9a7143421f49b",
+      "path": "assets/1cc06885566c3623aa9ad813787b6d2f94ef079e7e98c6f045b9a7143421f49b/regexscript.json",
+      "kind": "regex",
+      "items": [
+        {
+          "name": "自定义开局",
+          "contentHash": "d443f2cd"
+        },
+        {
+          "name": "回退按钮·仅提示词剥离",
+          "contentHash": "37658115"
+        },
+        {
+          "name": "抗年龄截断",
+          "contentHash": "53717202"
+        },
+        {
+          "name": "上下文·通知存档过滤",
+          "contentHash": "1c61db5e"
+        },
+        {
+          "name": "上下文·开局界面过滤",
+          "contentHash": "d01d3d15"
+        },
+        {
+          "name": "上下文·历史草稿过滤",
+          "contentHash": "b6a05491"
+        },
+        {
+          "name": "上下文·旧版剧情规划过滤",
+          "contentHash": "569b467b"
+        },
+        {
+          "name": "上下文·旧版技术规划过滤",
+          "contentHash": "e50f478b"
+        },
+        {
+          "name": "正文·抗截断尾部残片过滤",
+          "contentHash": "b1ab9411"
+        },
+        {
+          "name": "正文后缀·隐藏分组回显与多余引擎JSON",
+          "contentHash": "1eb09c9d"
+        },
+        {
+          "name": "正文后缀·仅显示时间地点天气",
+          "contentHash": "b205dd40"
+        },
+        {
+          "name": "正文后缀·天气未注明时显示未知",
+          "contentHash": "7ce2df62"
+        },
+        {
+          "name": "X站·玩家直播（聊天渲染）",
+          "contentHash": "bcaaca3e"
+        },
+        {
+          "name": "X站·玩家直播增量（仅显示过滤）",
+          "contentHash": "5842b35c"
+        }
+      ],
+      "contentHash": "d06638f8",
+      "compatibleHashes": [
+        "d06638f8"
+      ]
+    }
+  },
+  "optionalComponents": {
+    "preset": {
+      "kind": "preset",
+      "name": "新中市专属预设 v0.1",
+      "apiId": "openai",
+      "autoSelect": false,
+      "label": "专属预设（不自动选择）",
+      "bytes": 335234,
+      "sha256": "d34bca525510c7992df969c5bd092d2bd5af43d2940f36a7de536c276059b70f",
+      "contentHash": "08b9bf9b",
+      "path": "assets/d34bca525510c7992df969c5bd092d2bd5af43d2940f36a7de536c276059b70f/preset.json"
+    }
+  }
+}

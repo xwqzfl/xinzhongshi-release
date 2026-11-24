@@ -1,20 +1,20 @@
 {
   "schema": 2,
-  "release": "2026.11.23-20261123223524",
+  "release": "2026.11.24-20261124194545",
   "worldbookName": "新中市整合版（更新）",
   "worldbookNamePrefix": "新中市整合版",
-  "notes": "2026.11.23\n- 同一条 LINE 来信在正文和文末重复出现时，小手机只显示一次。\n- 次要角色按场所、作息、职责、资历和人物习惯选角，实际交流时自然交代身份。\n- 小手机悬浮外壳新增上下键，点击即可跳到当前聊天最新一条可见回复的首尾。\n- 修复白白书归档后刷新导致当前分支的催眠和私聊被误判失效。\n- 修复网购搜索受分类和钱包读取阻挡，以及明确的正文报价未出现在搜索结果的问题。\n- 合并重开档后小手机对同一楼层状态的并发保存，避免一次正文触发多次楼层刷新。\n\n2026.11.22\n- 修复小手机未处理通知在刷新时消失。酒馆补齐新回复的默认序号后，同一分支的通知仍可读回。未读超过八条时也会保留，已处理的通知按原规则撤回。\n- 修复催眠规则列表刷新变空。读取暂时失败时仍显示本分支已保存记录，旧回包不能覆盖新记录，已解除的规则不会被旧正文恢复。\n- 专属预设补全 DeepSeek 破限结构，沿用本地已应用的完整结构正文。\n",
+  "notes": "2026.11.24\n- 修复「第二天清晨」等跨日跳时后时钟仍停在前一晚的问题。\n- 将国立学校校内食堂一层的小卖部与南门外樱花便利店明确区分，校内购买沿校内场景接续。\n- 小手机外壳的上下键可以在可见回复之间逐条跳转，向上到回复开头，向下到回复末尾。\n- 实验、体育、家政、社团及课外活动放慢每轮经过的剧情时间，事件和其他角色照常自然发展。\n\n2026.11.23\n- 同一条 LINE 来信在正文和文末重复出现时，小手机只显示一次。\n- 次要角色按场所、作息、职责、资历和人物习惯选角，实际交流时自然交代身份。\n- 小手机悬浮外壳新增上下键，点击即可跳到当前聊天最新一条可见回复的首尾。\n- 修复白白书归档后刷新导致当前分支的催眠和私聊被误判失效。\n- 修复网购搜索受分类和钱包读取阻挡，以及明确的正文报价未出现在搜索结果的问题。\n- 合并重开档后小手机对同一楼层状态的并发保存，避免一次正文触发多次楼层刷新。\n",
   "components": {
     "shell": {
       "label": "手机主脚本",
-      "bytes": 6601807,
-      "sha256": "b5dfaff29e7498825b624bf82c59c82f399839fad1ec0698e88e182d1526ef2f",
-      "path": "assets/b5dfaff29e7498825b624bf82c59c82f399839fad1ec0698e88e182d1526ef2f/shell.js",
+      "bytes": 6606155,
+      "sha256": "792caa500c4ebf8fd1908d5ebd13e4d47e05b4f5872a1db8257ce5f21a406ca9",
+      "path": "assets/792caa500c4ebf8fd1908d5ebd13e4d47e05b4f5872a1db8257ce5f21a406ca9/shell.js",
       "kind": "script",
       "name": "新中市通讯 · 验证版 1.0",
-      "contentHash": "59a408da",
+      "contentHash": "929ee300",
       "compatibleHashes": [
-        "59a408da"
+        "929ee300"
       ]
     },
     "updater": {
@@ -47,31 +47,31 @@
     },
     "world": {
       "label": "世界书",
-      "bytes": 19270308,
-      "sha256": "29e81e057df95f4a96c3e40b5c8a716fac164a24c481ff2c42c9e329f8a1878a",
-      "path": "assets/29e81e057df95f4a96c3e40b5c8a716fac164a24c481ff2c42c9e329f8a1878a/worldbook.json",
+      "bytes": 19271529,
+      "sha256": "1a84c8b59bb893137564f90011e22ae05eedbe74e172fac384206f9cec889093",
+      "path": "assets/1a84c8b59bb893137564f90011e22ae05eedbe74e172fac384206f9cec889093/worldbook.json",
       "kind": "world",
-      "contentHash": "275269b7",
+      "contentHash": "f92d3e15",
       "compatibleHashes": [
-        "275269b7"
+        "f92d3e15"
       ]
     },
     "fields": {
       "label": "开场白与描述",
       "bytes": 852795,
-      "sha256": "492d4ffa4dbd1d0d11ed4f0b394111fbee00174a8bd12903526cd2e8ab609540",
-      "path": "assets/492d4ffa4dbd1d0d11ed4f0b394111fbee00174a8bd12903526cd2e8ab609540/cardfields.json",
+      "sha256": "a22b679f734d448257f29e7e57867be15aa91f3f7bfbd7605ffc362ef2592bb6",
+      "path": "assets/a22b679f734d448257f29e7e57867be15aa91f3f7bfbd7605ffc362ef2592bb6/cardfields.json",
       "kind": "fields",
-      "contentHash": "abd2cc9c",
+      "contentHash": "583cfb14",
       "fieldHashes": {
-        "version": "1e0ae7d0",
-        "first_messages": "a9feddbf",
+        "version": "1ffe1f03",
+        "first_messages": "2a627946",
         "creator": "806ccad4",
         "creator_notes": "b005410d",
         "description": "ffcaaa85"
       },
       "compatibleHashes": [
-        "abd2cc9c"
+        "583cfb14"
       ]
     },
     "managed": {
